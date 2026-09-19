@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import * as BABYLON from "babylonjs";
+import "babylonjs-loaders";
 
 const works = [
   { id: "candle", index: "04", color: "#f26a21", title: "권정현 · Candle", detail: "목재장 B · 3점 + 태블릿 · 전원", prep: "개별 준비 · 멀티탭", size: "가로 900 × 세로 600mm" },
@@ -83,10 +84,14 @@ function Plan({ circulation, electrical, selected, onSelect }) {
           <text x="5050" y="8920">외부 조망 유리벽</text>
         </g>
 
-        <g className="door">
-          <line x1="2850" y1="6720" x2="2850" y2="7920" />
-          <line x1="2850" y1="6720" x2="4050" y2="7920" />
-          <path d="M2850 6720A1200 1200 0 0 1 4050 7920" />
+        <g className="door" aria-label="고정 유리와 여닫이 유리문으로 구성된 폭 1200밀리미터 출입구">
+          <line className="door-opening" x1="2850" y1="6720" x2="2850" y2="7920" />
+          <line className="fixed-glass" x1="2850" y1="6720" x2="2850" y2="6970" />
+          <line className="door-jamb" x1="2805" y1="6720" x2="2895" y2="6720" />
+          <line className="door-jamb" x1="2805" y1="6970" x2="2895" y2="6970" />
+          <line className="door-jamb" x1="2805" y1="7920" x2="2895" y2="7920" />
+          <line className="door-leaf" x1="2850" y1="7920" x2="3800" y2="7920" />
+          <path className="door-swing" d="M2850 6970A950 950 0 0 1 3800 7920" />
           <text x="3190" y="8140">유리 출입문 W1200</text>
         </g>
 
@@ -188,7 +193,7 @@ function ThreeView({ selected, onSelect }) {
     const scene = new BABYLON.Scene(engine);
     scene.clearColor = BABYLON.Color4.FromHexString("#f2f3f5ff");
 
-    const camera = new BABYLON.ArcRotateCamera("camera", -Math.PI * 0.44, Math.PI * 0.24, 12.6, new BABYLON.Vector3(4.7, 1.22, 4.55), scene);
+    const camera = new BABYLON.ArcRotateCamera("camera", -Math.PI * 0.44, Math.PI * 0.24, 15.8, new BABYLON.Vector3(4.7, 1.22, 4.55), scene);
     camera.attachControl(canvas, true);
     camera.lowerRadiusLimit = 7;
     camera.upperRadiusLimit = 19;
@@ -232,8 +237,10 @@ function ThreeView({ selected, onSelect }) {
     box("lower floor", 4.4, 0.08, 3.8, 5.05, -0.04, 7.2, floorMat);
     const wallHeight = 2.85;
     const t = 0.12;
+    box("top wall", 7.25, wallHeight, t, 3.625, wallHeight / 2, 0, wallMat);
     box("right wall", t, wallHeight, 9.1, 7.25, wallHeight / 2, 4.55, wallMat);
-    box("inner vertical", t, wallHeight, 3.8, 2.85, wallHeight / 2, 7.2, wallMat);
+    box("inner vertical north", t, wallHeight, 1.42, 2.85, wallHeight / 2, 6.01, wallMat);
+    box("inner vertical south", t, wallHeight, 1.18, 2.85, wallHeight / 2, 8.51, wallMat);
     box("inner horizontal", 2.85, wallHeight, t, 1.425, wallHeight / 2, 5.3, wallMat);
     box("left wall", t, wallHeight, 5.3, 0, wallHeight / 2, 2.65, wallMat);
     box("fixed partition", 1.3, wallHeight, 3.1, 0.65, wallHeight / 2, 3.05, wallMat);
@@ -243,17 +250,17 @@ function ThreeView({ selected, onSelect }) {
     box("shelf fixture", 0.45, 0.75, 5.8, 7.025, 0.435, 4.475, shelfMat);
     [2.155, 3.315, 4.475, 5.635, 6.795].forEach((z, index) => box(`shelf opening ${index + 1}`, 0.025, 0.32, 0.9, 6.79, 0.43, z, shelfInsetMat));
 
-    [3.4, 4.5, 5.6, 6.7].forEach((x, index) => box(`glass panel ${index + 1}`, 1.02, 2.28, 0.035, x, 1.33, 9.08, glassMat));
-    [2.85, 3.95, 5.05, 6.15, 7.25].forEach((x, index) => box(`glass mullion ${index + 1}`, 0.07, 2.55, 0.09, x, 1.38, 9.08, frameMat));
+    [3.583, 5.05, 6.517].forEach((x, index) => box(`glass panel ${index + 1}`, 1.39, 2.36, 0.035, x, 1.24, 9.08, glassMat));
+    [2.85, 4.317, 5.783, 7.25].forEach((x, index) => box(`glass mullion ${index + 1}`, 0.07, 2.48, 0.09, x, 1.28, 9.08, frameMat));
     box("glass sill", 4.4, 0.08, 0.12, 5.05, 0.08, 9.08, frameMat);
-    box("glass transom", 4.4, 0.08, 0.12, 5.05, 1.82, 9.08, frameMat);
-    box("glass head", 4.4, 0.12, 0.14, 5.05, 2.64, 9.08, frameMat);
-    box("exterior beam", 4.55, 0.2, 0.52, 5.05, 2.92, 9.42, frameMat);
+    box("glass head", 4.4, 0.1, 0.12, 5.05, 2.52, 9.08, frameMat);
+    box("glass wall header", 4.4, 0.28, 0.15, 5.05, 2.71, 9.08, wallMat);
 
-    box("glass entry", 0.035, 2.45, 1.1, 2.87, 1.35, 7.32, glassMat);
-    box("entry post north", 0.09, 2.55, 0.09, 2.87, 1.38, 6.77, frameMat);
-    box("entry post south", 0.09, 2.55, 0.09, 2.87, 1.38, 7.87, frameMat);
-    box("entry head", 0.11, 0.09, 1.2, 2.87, 2.64, 7.32, frameMat);
+    box("entry fixed glass", 0.035, 2.4, 0.2, 2.85, 1.25, 6.845, glassMat);
+    box("entry door glass", 0.035, 2.4, 0.88, 2.85, 1.25, 7.445, glassMat);
+    [6.72, 6.97, 7.92].forEach((z, index) => box(`entry jamb ${index + 1}`, 0.09, 2.5, 0.07, 2.85, 1.28, z, frameMat));
+    box("entry head", 0.11, 0.09, 1.2, 2.85, 2.52, 7.32, frameMat);
+    box("entry door handle", 0.07, 0.34, 0.045, 2.78, 1.18, 7.08, frameMat);
 
     const posterTexture = new BABYLON.DynamicTexture("exhibition graphic", { width: 600, height: 960 }, scene, false);
     const poster = posterTexture.getContext();
@@ -302,32 +309,38 @@ function ThreeView({ selected, onSelect }) {
     box("chair back", 0.33, 0.76, 0.11, 4.265, 0.88, 3.77, workMaterials.halfchairs, "halfchairs");
     box("chair lower half", 0.33, 0.36, 0.16, 4.265, 0.2, 3.48, workMaterials.halfchairs, "halfchairs");
 
-    const skinMat = material("visitor skin", "#a86d4d");
-    const visitorTopMat = material("visitor top", "#59616b");
-    const visitorPantsMat = material("visitor pants", "#182027");
-    const visitorX = 4.38;
-    const visitorZ = 7.45;
-    const head = BABYLON.MeshBuilder.CreateSphere("visitor head", { diameter: 0.24, segments: 16 }, scene);
-    head.position.set(visitorX, 1.66, visitorZ);
-    head.material = skinMat;
-    box("visitor torso", 0.42, 0.68, 0.24, visitorX, 1.23, visitorZ, visitorTopMat);
-    box("visitor left leg", 0.12, 0.72, 0.13, visitorX - 0.12, 0.54, visitorZ, visitorPantsMat);
-    box("visitor right leg", 0.12, 0.72, 0.13, visitorX + 0.12, 0.54, visitorZ, visitorPantsMat);
-    box("visitor left arm", 0.1, 0.68, 0.1, visitorX - 0.28, 1.18, visitorZ, skinMat);
-    box("visitor right arm", 0.1, 0.68, 0.1, visitorX + 0.28, 1.18, visitorZ, skinMat);
-
     const visitorLabelTexture = new BABYLON.DynamicTexture("visitor label", { width: 512, height: 96 }, scene, true);
-    visitorLabelTexture.drawText("관람객 · 176cm", 28, 64, "700 42px Arial", "#272b31", "transparent", true, true);
+    visitorLabelTexture.drawText("170cm", 164, 64, "700 42px Arial", "#272b31", "#ffffff", true, true);
     visitorLabelTexture.hasAlpha = true;
     const visitorLabelMat = new BABYLON.StandardMaterial("visitor label material", scene);
     visitorLabelMat.diffuseTexture = visitorLabelTexture;
     visitorLabelMat.emissiveColor = BABYLON.Color3.White();
-    visitorLabelMat.opacityTexture = visitorLabelTexture;
     visitorLabelMat.backFaceCulling = false;
-    const visitorLabel = BABYLON.MeshBuilder.CreatePlane("visitor label", { width: 1.25, height: 0.23 }, scene);
-    visitorLabel.position.set(visitorX, 1.98, visitorZ);
+    const visitorLabel = BABYLON.MeshBuilder.CreatePlane("visitor label", { width: 0.72, height: 0.18 }, scene);
+    visitorLabel.position.set(4.38, 1.87, 7.45);
     visitorLabel.billboardMode = BABYLON.Mesh.BILLBOARDMODE_ALL;
     visitorLabel.material = visitorLabelMat;
+
+    BABYLON.SceneLoader.ImportMeshAsync("", `${import.meta.env.BASE_URL}assets/`, "person.glb", scene).then(({ meshes }) => {
+      if (scene.isDisposed) return;
+      const visitorRoot = new BABYLON.TransformNode("visitor 170cm", scene);
+      meshes.filter((mesh) => !mesh.parent).forEach((mesh) => { mesh.parent = visitorRoot; });
+      meshes.forEach((mesh) => { mesh.isPickable = false; });
+      visitorRoot.rotation.x = Math.PI / 2;
+      visitorRoot.computeWorldMatrix(true);
+      meshes.forEach((mesh) => mesh.computeWorldMatrix(true));
+      const bounds = meshes.filter((mesh) => mesh.getBoundingInfo).map((mesh) => mesh.getBoundingInfo().boundingBox);
+      const minY = Math.min(...bounds.map((boxInfo) => boxInfo.minimumWorld.y));
+      const maxY = Math.max(...bounds.map((boxInfo) => boxInfo.maximumWorld.y));
+      visitorRoot.scaling.setAll(1.7 / (maxY - minY));
+      visitorRoot.computeWorldMatrix(true);
+      meshes.forEach((mesh) => mesh.computeWorldMatrix(true));
+      const scaledBounds = meshes.filter((mesh) => mesh.getBoundingInfo).map((mesh) => mesh.getBoundingInfo().boundingBox);
+      const minimum = scaledBounds.map((boxInfo) => boxInfo.minimumWorld).reduce((left, right) => BABYLON.Vector3.Minimize(left, right));
+      const maximum = scaledBounds.map((boxInfo) => boxInfo.maximumWorld).reduce((left, right) => BABYLON.Vector3.Maximize(left, right));
+      const center = minimum.add(maximum).scale(0.5);
+      visitorRoot.position.addInPlace(new BABYLON.Vector3(4.38 - center.x, -minimum.y, 7.45 - center.z));
+    }).catch((error) => console.error("사람 3D 모델을 불러오지 못했습니다.", error));
 
     if (workMaterials[selected]) workMaterials[selected].emissiveColor = BABYLON.Color3.FromHexString("#f5b700").scale(0.3);
     selectableMeshes.filter((mesh) => mesh.metadata?.id === selected).forEach((mesh) => {
@@ -410,7 +423,7 @@ export function App() {
       </header>
       <main>
         <section className="sheet">
-          <div className="sheet-heading"><div><p className="drawing-no">EXHIBITION LAYOUT · G09 / B-111</p><h2>작품 배치 평면도</h2></div><div className="revision">REV. 23 · 2026.09.19</div></div>
+          <div className="sheet-heading"><div><p className="drawing-no">EXHIBITION LAYOUT · G09 / B-111</p><h2>작품 배치 평면도</h2></div><div className="revision">REV. 26 · 2026.09.20</div></div>
           <div className="sheet-body">
             {view === "plan" ? <Plan circulation={circulation} electrical={electrical} selected={selected} onSelect={setSelected} /> : <ThreeView selected={selected} onSelect={setSelected} />}
             <Legend selected={selected} onSelect={setSelected} />

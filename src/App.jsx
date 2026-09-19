@@ -66,6 +66,10 @@ function Plan({ circulation, electrical, selected, onSelect }) {
           <text className="cabinet-label" x="2860" y="850">1500 × 600 · H850</text>
           <rect x="4100" y="975" width="2450" height="600" />
           <text x="5325" y="875">목재장 B · 2450 × 600 · H1000</text>
+          <g className="gap-barrier" aria-label="목재장 A와 B 사이 출입 금지 라인">
+            <line x1="3635" y1="1605" x2="4075" y2="1605" />
+            <text x="3855" y="1760">출입 금지</text>
+          </g>
           <rect x="6800" y="1575" width="450" height="5800" className="shelf-base" />
           <text className="rotated-label" x="7040" y="4475">수납형 고정 선반 · 5800 × 450 · H870</text>
           <rect x="2925" y="5300" width="45" height="1250" className="mirror" />
@@ -186,187 +190,336 @@ function Plan({ circulation, electrical, selected, onSelect }) {
 
 function ThreeView({ selected, onSelect }) {
   const canvasRef = useRef(null);
+  const focusRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const engine = new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true });
     const scene = new BABYLON.Scene(engine);
-    scene.clearColor = BABYLON.Color4.FromHexString("#f2f3f5ff");
-
-    const camera = new BABYLON.ArcRotateCamera("camera", -Math.PI * 0.44, Math.PI * 0.24, 15.8, new BABYLON.Vector3(4.7, 1.22, 4.55), scene);
-    camera.attachControl(canvas, true);
+    scene.clearColor = new BABYLON.Color4(0.93, 0.94, 0.95, 1);
+    const camera = new BABYLON.ArcRotateCamera("camera", -1.05, 1.02, 15.8, new BABYLON.Vector3(4.2, 0.7, 4.6), scene);
+    camera.attachControl(true, true, 2);
     camera.lowerRadiusLimit = 7;
-    camera.upperRadiusLimit = 19;
-    camera.wheelPrecision = 45;
-    camera.panningSensibility = 0;
+    camera.upperRadiusLimit = 24;
+    camera.wheelPrecision = 42;
+    camera.panningSensibility = 900;
+    camera.panningInertia = 0.86;
+    camera.pinchToPanMaxDistance = 24;
+    const preventContextMenu = (event) => event.preventDefault();
+    canvas.addEventListener("contextmenu", preventContextMenu);
 
     const hemi = new BABYLON.HemisphericLight("hemi", new BABYLON.Vector3(0, 1, 0), scene);
-    hemi.intensity = 1.2;
-    const light = new BABYLON.DirectionalLight("key", new BABYLON.Vector3(-0.5, -1, 0.4), scene);
-    light.position = new BABYLON.Vector3(6, 10, -4);
-    light.intensity = 0.18;
+    hemi.intensity = 0.9;
+    const key = new BABYLON.DirectionalLight("key", new BABYLON.Vector3(-0.4, -1, 0.25), scene);
+    key.position = new BABYLON.Vector3(7, 10, 2);
+    key.intensity = 0.5;
 
-    const material = (name, hex) => {
+    const material = (name, hex, alpha = 1) => {
       const mat = new BABYLON.StandardMaterial(name, scene);
       mat.diffuseColor = BABYLON.Color3.FromHexString(hex);
+      mat.alpha = alpha;
       mat.specularColor = new BABYLON.Color3(0.06, 0.06, 0.06);
       return mat;
     };
-    const wallMat = material("walls", "#bfc0bd");
-    const floorMat = material("floor", "#ffffff");
-    const fixtureMat = material("fixtures", "#e6e9ee");
-    const shelfMat = material("shelf fixture", "#303235");
-    const shelfInsetMat = material("shelf openings", "#dad8d2");
-    const frameMat = material("window frames", "#22262c");
-    const glassMat = material("glass", "#8fa7b5");
-    glassMat.alpha = 0.34;
+    const wallMat = material("wall", "#f5f5f4");
+    const floorMat = material("floor", "#d7d8da");
+    const fixedMat = material("fixed", "#aeb1b5");
+    const whiteMat = material("white", "#f7f7f7");
+    const glassMat = material("exterior-glass", "#9fc4d2", 0.24);
     glassMat.backFaceCulling = false;
+    glassMat.specularColor = new BABYLON.Color3(0.75, 0.82, 0.88);
+    glassMat.needDepthPrePass = true;
+    const glassFrameMat = material("glass-frame", "#343a40");
+    const anchors = new Map();
+    const exhibitMeshes = new Map();
 
-    const selectableMeshes = [];
-    const box = (name, width, height, depth, x, y, z, mat, id) => {
+    const registerExhibitMesh = (id, mesh, isAnchor = false) => {
+      if (!exhibitMeshes.has(id)) exhibitMeshes.set(id, []);
+      exhibitMeshes.get(id).push(mesh);
+      mesh.metadata = { id };
+      mesh.isPickable = true;
+      if (isAnchor) anchors.set(id, mesh);
+      return mesh;
+    };
+    const box = (name, width, height, depth, x, y, z, mat, pickable = false) => {
       const mesh = BABYLON.MeshBuilder.CreateBox(name, { width, height, depth }, scene);
       mesh.position.set(x, y, z);
       mesh.material = mat;
-      mesh.metadata = id ? { id } : null;
-      mesh.isPickable = Boolean(id);
-      if (id) selectableMeshes.push(mesh);
+      mesh.isPickable = pickable;
       return mesh;
     };
 
-    box("upper floor", 7.25, 0.08, 5.3, 3.625, -0.04, 2.65, floorMat);
-    box("lower floor", 4.4, 0.08, 3.8, 5.05, -0.04, 7.2, floorMat);
-    const wallHeight = 2.85;
-    const t = 0.12;
-    box("top wall", 7.25, wallHeight, t, 3.625, wallHeight / 2, 0, wallMat);
-    box("right wall", t, wallHeight, 9.1, 7.25, wallHeight / 2, 4.55, wallMat);
-    box("inner vertical north", t, wallHeight, 1.42, 2.85, wallHeight / 2, 6.01, wallMat);
-    box("inner vertical south", t, wallHeight, 1.18, 2.85, wallHeight / 2, 8.51, wallMat);
-    box("inner horizontal", 2.85, wallHeight, t, 1.425, wallHeight / 2, 5.3, wallMat);
-    box("left wall", t, wallHeight, 5.3, 0, wallHeight / 2, 2.65, wallMat);
-    box("fixed partition", 1.3, wallHeight, 3.1, 0.65, wallHeight / 2, 3.05, wallMat);
-    box("pillar", 0.8, wallHeight, 0.8, 1.7, wallHeight / 2, 1.1, wallMat);
-    box("cabinet A", 1.5, 0.85, 0.6, 2.86, 0.425, 1.275, fixtureMat);
-    box("cabinet B", 2.45, 1.0, 0.6, 5.325, 0.5, 1.275, fixtureMat);
-    box("shelf fixture", 0.45, 0.75, 5.8, 7.025, 0.435, 4.475, shelfMat);
-    [2.155, 3.315, 4.475, 5.635, 6.795].forEach((z, index) => box(`shelf opening ${index + 1}`, 0.025, 0.32, 0.9, 6.79, 0.43, z, shelfInsetMat));
+    box("floor-upper", 7.25, 0.08, 5.3, 3.625, -0.04, 2.65, floorMat);
+    box("floor-lower", 4.4, 0.08, 3.8, 5.05, -0.04, 7.2, floorMat);
+    box("wall-top", 7.25, 2.85, 0.10, 3.625, 1.425, 0, wallMat);
+    box("wall-right", 0.10, 2.85, 9.1, 7.25, 1.425, 4.55, wallMat);
+    box("exterior-glass-wall", 4.35, 2.08, 0.026, 5.025, 1.08, 9.065, glassMat);
+    [2.85, 4.30, 5.75, 7.20].forEach((x, index) => box("glass-mullion-" + index, 0.065, 2.18, 0.045, x, 1.09, 9.035, glassFrameMat));
+    box("glass-frame-top", 4.35, 0.07, 0.045, 5.025, 2.18, 9.035, glassFrameMat);
+    box("glass-frame-bottom", 4.35, 0.07, 0.045, 5.025, 0.035, 9.035, glassFrameMat);
+    box("glass-wall-header", 4.35, 0.67, 0.10, 5.025, 2.515, 9.1, wallMat);
+    box("outside-sidewalk", 4.35, 0.08, 1.45, 5.025, -0.04, 9.825, material("outside-sidewalk-material", "#686c70"));
+    box("wall-left-upper", 0.10, 2.85, 5.3, 0, 1.425, 2.65, wallMat);
+    box("wall-notch", 2.75, 2.85, 0.10, 1.425, 1.425, 5.3, wallMat);
+    box("wall-entry-a", 0.10, 2.85, 1.37, 2.85, 1.425, 6.035, wallMat);
+    box("wall-entry-b", 0.10, 2.85, 1.145, 2.85, 1.425, 8.4925, wallMat);
 
-    [3.583, 5.05, 6.517].forEach((x, index) => box(`glass panel ${index + 1}`, 1.39, 2.36, 0.035, x, 1.24, 9.08, glassMat));
-    [2.85, 4.317, 5.783, 7.25].forEach((x, index) => box(`glass mullion ${index + 1}`, 0.07, 2.48, 0.09, x, 1.28, 9.08, frameMat));
-    box("glass sill", 4.4, 0.08, 0.12, 5.05, 0.08, 9.08, frameMat);
-    box("glass head", 4.4, 0.1, 0.12, 5.05, 2.52, 9.08, frameMat);
-    box("glass wall header", 4.4, 0.28, 0.15, 5.05, 2.71, 9.08, wallMat);
+    const mirrorTexture = new BABYLON.MirrorTexture("entrance-mirror-reflection", 1024, scene, true);
+    mirrorTexture.mirrorPlane = new BABYLON.Plane(-1, 0, 0, 2.915);
+    mirrorTexture.level = 0.88;
+    const mirrorMat = new BABYLON.StandardMaterial("entrance-mirror-material", scene);
+    mirrorMat.diffuseColor = new BABYLON.Color3(0.08, 0.10, 0.12);
+    mirrorMat.specularColor = BABYLON.Color3.White();
+    mirrorMat.reflectionTexture = mirrorTexture;
+    mirrorMat.backFaceCulling = false;
+    const entranceMirror = BABYLON.MeshBuilder.CreatePlane("entrance-mirror", { width: 1.25, height: 1.95, sideOrientation: BABYLON.Mesh.DOUBLESIDE }, scene);
+    entranceMirror.position.set(2.915, 1.155, 5.925);
+    entranceMirror.rotation.y = Math.PI / 2;
+    entranceMirror.material = mirrorMat;
+    entranceMirror.isPickable = false;
+    const mirrorFrameMat = material("entrance-mirror-frame", "#30353b");
+    box("mirror-frame-top", 0.035, 0.035, 1.32, 2.925, 2.148, 5.925, mirrorFrameMat);
+    box("mirror-frame-bottom", 0.035, 0.035, 1.32, 2.925, 0.163, 5.925, mirrorFrameMat);
+    box("mirror-frame-side-a", 0.035, 2.02, 0.035, 2.925, 1.155, 5.285, mirrorFrameMat);
+    box("mirror-frame-side-b", 0.035, 2.02, 0.035, 2.925, 1.155, 6.565, mirrorFrameMat);
+    box("entry-glass", 0.026, 2.08, 1.12, 2.875, 1.08, 7.32, glassMat);
+    box("entry-frame-a", 0.045, 2.18, 0.075, 2.91, 1.09, 6.72, glassFrameMat);
+    box("entry-frame-b", 0.045, 2.18, 0.075, 2.91, 1.09, 7.92, glassFrameMat);
+    box("entry-frame-top", 0.045, 0.075, 1.29, 2.91, 2.18, 7.32, glassFrameMat);
+    box("entry-frame-bottom", 0.045, 0.075, 1.29, 2.91, 0.04, 7.32, glassFrameMat);
+    box("entry-side-divider", 0.045, 2.14, 0.055, 2.91, 1.08, 6.98, glassFrameMat);
+    box("entry-handle", 0.045, 0.34, 0.05, 2.95, 1.03, 7.70, glassFrameMat);
+    box("entry-lintel", 0.10, 0.67, 1.20, 2.845, 2.515, 7.32, wallMat);
+    box("entry-passage-floor", 1.70, 0.08, 1.20, 2.00, -0.04, 7.32, material("passage-floor", "#aeb0b2"));
+    box("fixed-partition", 1.3, 2.85, 3.1, 0.65, 1.425, 3.05, wallMat);
 
-    box("entry fixed glass", 0.035, 2.4, 0.2, 2.85, 1.25, 6.845, glassMat);
-    box("entry door glass", 0.035, 2.4, 0.88, 2.85, 1.25, 7.445, glassMat);
-    [6.72, 6.97, 7.92].forEach((z, index) => box(`entry jamb ${index + 1}`, 0.09, 2.5, 0.07, 2.85, 1.28, z, frameMat));
-    box("entry head", 0.11, 0.09, 1.2, 2.85, 2.52, 7.32, frameMat);
-    box("entry door handle", 0.07, 0.34, 0.045, 2.78, 1.18, 7.08, frameMat);
+    const introPanelMat = new BABYLON.StandardMaterial("intro-panel-material", scene);
+    const introTexture = new BABYLON.DynamicTexture("intro-panel-texture", { width: 1024, height: 1536 }, scene, true);
+    const introContext = introTexture.getContext();
+    introContext.fillStyle = "#f3efe5";
+    introContext.fillRect(0, 0, 1024, 1536);
+    introContext.fillStyle = "#155eef";
+    introContext.fillRect(0, 0, 1024, 190);
+    introContext.fillStyle = "#ffffff";
+    introContext.font = "700 58px Arial";
+    introContext.fillText("DESIGNART TOKYO 2026", 70, 118);
+    introContext.fillStyle = "#111318";
+    introContext.font = "700 92px Arial";
+    introContext.fillText("EXHIBITION", 70, 380);
+    introContext.fillText("INTRODUCTION", 70, 490);
+    introContext.fillStyle = "#526072";
+    introContext.font = "500 38px Arial";
+    introContext.fillText("MATERIAL · MEMORY", 70, 660);
+    introContext.fillText("NATURE · TECHNOLOGY", 70, 720);
+    introContext.fillStyle = "#9aa3af";
+    for (let y = 850; y <= 1280; y += 72) introContext.fillRect(70, y, 830 - (y % 144 ? 90 : 0), 10);
+    introTexture.update();
+    introPanelMat.diffuseTexture = introTexture;
+    introPanelMat.specularColor = BABYLON.Color3.Black();
+    const introPanel = BABYLON.MeshBuilder.CreatePlane("exhibition-intro-panel", { width: 1.7, height: 2.2, sideOrientation: BABYLON.Mesh.DOUBLESIDE }, scene);
+    introPanel.position.set(1.306, 1.45, 3.05);
+    introPanel.rotation.y = -Math.PI / 2;
+    introPanel.material = introPanelMat;
 
-    const posterTexture = new BABYLON.DynamicTexture("exhibition graphic", { width: 600, height: 960 }, scene, false);
-    const poster = posterTexture.getContext();
-    poster.fillStyle = "#f5f5f2";
-    poster.fillRect(0, 0, 600, 960);
-    poster.fillStyle = "#205bd8";
-    poster.fillRect(0, 0, 600, 120);
-    poster.fillStyle = "#ffffff";
-    poster.font = "700 34px Arial";
-    poster.fillText("DESIGNART TOKYO", 34, 54);
-    poster.font = "700 22px Arial";
-    poster.fillText("2026 · HIBIYA OKUROJI", 34, 91);
-    poster.fillStyle = "#20242a";
-    poster.font = "800 46px Arial";
-    poster.fillText("EXHIBITION", 34, 210);
-    poster.fillText("INTRODUCTION", 34, 264);
-    poster.font = "700 24px Arial";
-    poster.fillText("NAME · MEMORY", 34, 350);
-    poster.fillText("NATURE · TECHNOLOGY", 34, 390);
-    poster.strokeStyle = "#9ca3ad";
-    poster.lineWidth = 5;
-    [460, 535, 610, 685, 760, 835].forEach((y) => { poster.beginPath(); poster.moveTo(34, y); poster.lineTo(566, y); poster.stroke(); });
-    posterTexture.update();
-    const posterMat = new BABYLON.StandardMaterial("exhibition graphic material", scene);
-    posterMat.diffuseTexture = posterTexture;
-    posterMat.emissiveColor = new BABYLON.Color3(0.18, 0.18, 0.18);
-    posterMat.backFaceCulling = false;
-    const posterMesh = BABYLON.MeshBuilder.CreatePlane("exhibition graphic", { width: 0.92, height: 1.48 }, scene);
-    posterMesh.position.set(1.306, 1.57, 2.95);
-    posterMesh.rotation.y = Math.PI / 2;
-    posterMesh.material = posterMat;
+    box("pillar", 0.8, 2.85, 0.8, 1.7, 1.425, 1.1, fixedMat);
+    box("cabinet-a", 1.5, 0.85, 0.6, 2.86, 0.425, 1.275, fixedMat);
+    box("cabinet-b", 2.45, 1.0, 0.6, 5.325, 0.5, 1.275, fixedMat);
+    box("cabinet-gap-barrier", 0.49, 0.012, 0.055, 3.855, 0.006, 1.605, material("cabinet-gap-barrier-material", "#292d33"));
+    const shelfMat = material("shelf", "#a8a39b");
+    const shelfRecessMat = material("shelf-recess", "#6f6b66");
+    const shelfInteriorMat = material("shelf-interior", "#918c85");
+    box("right-shelf-bottom", 0.45, 0.32, 5.8, 7.025, 0.16, 4.475, shelfMat);
+    box("right-shelf-fascia", 0.45, 0.20, 5.8, 7.025, 0.77, 4.475, shelfMat);
+    const shelfPier = 0.216;
+    for (let index = 0; index < 6; index += 1) {
+      const z = 1.575 + shelfPier / 2 + index * (0.9 + shelfPier);
+      box("right-shelf-pier-" + index, 0.45, 0.35, shelfPier, 7.025, 0.495, z, shelfMat);
+    }
+    for (let index = 0; index < 5; index += 1) {
+      const z = 1.575 + shelfPier + 0.45 + index * (0.9 + shelfPier);
+      box("right-shelf-back-" + index, 0.018, 0.31, 0.84, 7.22, 0.495, z, shelfRecessMat);
+      box("right-shelf-inside-" + index, 0.42, 0.025, 0.84, 7.01, 0.335, z, shelfInteriorMat);
+    }
 
-    const workMaterials = Object.fromEntries(works.map((work) => [work.id, material(work.id, work.color)]));
-    box("shelf upper", 0.45, 0.12, 1.933, 7.025, 0.87, 2.542, workMaterials["blue-by-jjok"], "blue-by-jjok");
-    box("shelf middle", 0.45, 0.12, 1.933, 7.025, 0.87, 4.475, workMaterials.eunsil, "eunsil");
-    box("shelf lower", 0.45, 0.12, 1.933, 7.025, 0.87, 6.408, workMaterials.sunok, "sunok");
-    box("candle surface", 0.9, 0.08, 0.6, 5.325, 1.04, 1.275, workMaterials.candle, "candle");
-    [[5.01, 1.07], [5.075, 1.28], [5.325, 1.28]].forEach(([x, z], index) => box(`candle ${index + 1}`, 0.09, 0.2 + index * 0.04, 0.09, x, 1.17 + index * 0.02, z, workMaterials.candle, "candle"));
-    box("candle tablet", 0.17, 0.13, 0.08, 5.625, 1.16, 1.42, material("tablet", "#22252b"), "candle");
-    box("bora surface", 1.1, 0.08, 0.56, 2.86, 0.89, 1.275, workMaterials.bora, "bora");
-    box("bora monitor", 0.379, 0.36, 0.08, 2.54, 1.11, 1.09, material("monitor", "#22252b"), "bora");
-    box("bora charging dock", 0.5, 0.14, 0.245, 3.06, 1.03, 1.17, workMaterials.bora, "bora");
-    box("bora tea bag", 0.22, 0.07, 0.13, 2.52, 1.0, 1.40, material("tea", "#d6b06b"), "bora");
-    workMaterials.halfchairs.alpha = 0.45;
-    box("chair seat", 0.33, 0.12, 0.425, 4.265, 0.47, 3.61, workMaterials.halfchairs, "halfchairs");
-    box("chair back", 0.33, 0.76, 0.11, 4.265, 0.88, 3.77, workMaterials.halfchairs, "halfchairs");
-    box("chair lower half", 0.33, 0.36, 0.16, 4.265, 0.2, 3.48, workMaterials.halfchairs, "halfchairs");
-
-    const visitorLabelTexture = new BABYLON.DynamicTexture("visitor label", { width: 512, height: 96 }, scene, true);
-    visitorLabelTexture.drawText("170cm", 164, 64, "700 42px Arial", "#272b31", "#ffffff", true, true);
-    visitorLabelTexture.hasAlpha = true;
-    const visitorLabelMat = new BABYLON.StandardMaterial("visitor label material", scene);
-    visitorLabelMat.diffuseTexture = visitorLabelTexture;
-    visitorLabelMat.emissiveColor = BABYLON.Color3.White();
-    visitorLabelMat.backFaceCulling = false;
-    const visitorLabel = BABYLON.MeshBuilder.CreatePlane("visitor label", { width: 0.72, height: 0.18 }, scene);
-    visitorLabel.position.set(4.38, 1.87, 7.45);
-    visitorLabel.billboardMode = BABYLON.Mesh.BILLBOARDMODE_ALL;
-    visitorLabel.material = visitorLabelMat;
-
-    BABYLON.SceneLoader.ImportMeshAsync("", `${import.meta.env.BASE_URL}assets/`, "person.glb", scene).then(({ meshes }) => {
-      if (scene.isDisposed) return;
-      const visitorRoot = new BABYLON.TransformNode("visitor 170cm", scene);
-      meshes.filter((mesh) => !mesh.parent).forEach((mesh) => { mesh.parent = visitorRoot; });
-      meshes.forEach((mesh) => { mesh.isPickable = false; });
-      visitorRoot.rotation.x = Math.PI / 2;
-      visitorRoot.computeWorldMatrix(true);
-      meshes.forEach((mesh) => mesh.computeWorldMatrix(true));
-      const bounds = meshes.filter((mesh) => mesh.getBoundingInfo).map((mesh) => mesh.getBoundingInfo().boundingBox);
-      const minY = Math.min(...bounds.map((boxInfo) => boxInfo.minimumWorld.y));
-      const maxY = Math.max(...bounds.map((boxInfo) => boxInfo.maximumWorld.y));
-      visitorRoot.scaling.setAll(1.7 / (maxY - minY));
-      visitorRoot.computeWorldMatrix(true);
-      meshes.forEach((mesh) => mesh.computeWorldMatrix(true));
-      const scaledBounds = meshes.filter((mesh) => mesh.getBoundingInfo).map((mesh) => mesh.getBoundingInfo().boundingBox);
-      const minimum = scaledBounds.map((boxInfo) => boxInfo.minimumWorld).reduce((left, right) => BABYLON.Vector3.Minimize(left, right));
-      const maximum = scaledBounds.map((boxInfo) => boxInfo.maximumWorld).reduce((left, right) => BABYLON.Vector3.Maximize(left, right));
-      const center = minimum.add(maximum).scale(0.5);
-      visitorRoot.position.addInPlace(new BABYLON.Vector3(4.38 - center.x, -minimum.y, 7.45 - center.z));
-    }).catch((error) => console.error("사람 3D 모델을 불러오지 못했습니다.", error));
-
-    if (workMaterials[selected]) workMaterials[selected].emissiveColor = BABYLON.Color3.FromHexString("#f5b700").scale(0.3);
-    selectableMeshes.filter((mesh) => mesh.metadata?.id === selected).forEach((mesh) => {
-      mesh.enableEdgesRendering();
-      mesh.edgesWidth = 5;
-      mesh.edgesColor = BABYLON.Color4.FromHexString("#f5b700ff");
+    const boraMat = material("mat-bora", works.find((work) => work.id === "bora").color, 0.9);
+    registerExhibitMesh("bora", box("bora", 1.1, 0.06, 0.56, 2.86, 0.88, 1.275, boraMat, true), true);
+    registerExhibitMesh("bora", box("bora-monitor", 0.379, 0.264, 0.02, 2.54, 1.02, 1.08, material("monitor", "#22252b")));
+    registerExhibitMesh("bora", box("bora-dock", 0.50, 0.04, 0.23, 2.92, 0.92, 1.405, whiteMat));
+    const hmd = BABYLON.MeshBuilder.CreateTorus("bora-hmd", { diameter: 0.2, thickness: 0.06 }, scene);
+    hmd.position.set(2.92, 0.98, 1.405);
+    hmd.rotation.x = Math.PI / 2;
+    hmd.material = material("hmd", "#424750");
+    registerExhibitMesh("bora", hmd);
+    [2.735, 3.105].forEach((x, index) => {
+      const controller = BABYLON.MeshBuilder.CreateCylinder("bora-controller-" + index, { diameter: 0.09, height: 0.10 }, scene);
+      controller.position.set(x, 0.98, 1.405);
+      controller.material = material("controller-" + index, "#68707b");
+      registerExhibitMesh("bora", controller);
     });
-    scene.onPointerPick = (_event, pickInfo) => {
-      const id = pickInfo?.pickedMesh?.metadata?.id;
-      if (id) onSelect(id);
-    };
+    registerExhibitMesh("bora", box("bora-teabag", 0.22, 0.03, 0.13, 2.90, 0.91, 1.105, material("teabag", "#d6b06b")));
+    const cup = BABYLON.MeshBuilder.CreateCylinder("bora-cup", { diameter: 0.14, height: 0.10 }, scene);
+    cup.position.set(3.23, 0.95, 1.105);
+    cup.material = whiteMat;
+    registerExhibitMesh("bora", cup);
+    registerExhibitMesh("bora", box("bora-power-strip", 0.35, 0.04, 0.06, 2.895, 0.91, 1.235, whiteMat));
 
+    const candleMat = material("mat-candle", works.find((work) => work.id === "candle").color, 0.9);
+    registerExhibitMesh("candle", box("candle", 0.9, 0.06, 0.6, 5.325, 1.03, 1.275, candleMat, true), true);
+    const smallCandle = BABYLON.MeshBuilder.CreateCylinder("candle-surface-small", { diameter: 0.14, height: 0.10 }, scene);
+    smallCandle.position.set(5.63, 1.11, 1.34);
+    smallCandle.material = candleMat;
+    registerExhibitMesh("candle", smallCandle);
+    const largeCandleBase = BABYLON.MeshBuilder.CreateCylinder("candle-surface-base", { diameter: 0.28, height: 0.035 }, scene);
+    largeCandleBase.position.set(5.33, 1.078, 1.34);
+    largeCandleBase.material = whiteMat;
+    registerExhibitMesh("candle", largeCandleBase);
+    const largeCandle = BABYLON.MeshBuilder.CreateCylinder("candle-surface-large", { diameter: 0.17, height: 0.10 }, scene);
+    largeCandle.position.set(5.33, 1.145, 1.34);
+    largeCandle.material = candleMat;
+    registerExhibitMesh("candle", largeCandle);
+    registerExhibitMesh("candle", box("candle-display-wall", 0.48, 0.38, 0.03, 5.52, 1.19, 0.995, whiteMat));
+    registerExhibitMesh("candle", box("candle-light-bar", 0.50, 0.06, 0.08, 5.52, 1.41, 1.02, whiteMat));
+    const wallPiece = BABYLON.MeshBuilder.CreateCylinder("candle-wall", { diameter: 0.15, height: 0.018 }, scene);
+    wallPiece.position.set(5.64, 1.28, 1.02);
+    wallPiece.rotation.x = Math.PI / 2;
+    wallPiece.material = candleMat;
+    registerExhibitMesh("candle", wallPiece);
+    registerExhibitMesh("candle", box("candle-tablet", 0.17, 0.16, 0.04, 5.025, 1.12, 1.36, material("tablet", "#22252b")));
+
+    shelfWorks.forEach((work) => {
+      const mesh = box(work.id, 0.37, 0.07, work.shelfHeight / 1000, 7.005, 0.905, (work.shelfY + work.shelfHeight / 2) / 1000, material("mat-" + work.id, work.color, 0.9), true);
+      registerExhibitMesh(work.id, mesh, true);
+    });
+    const chairMat = material("chair", works.find((work) => work.id === "halfchairs").color, 0.9);
+    registerExhibitMesh("halfchairs", box("halfchairs", 0.33, 0.07, 0.425, 4.265, 0.035, 3.6125, chairMat, true), true);
+    registerExhibitMesh("halfchairs", box("chair-seat", 0.33, 0.12, 0.425, 4.265, 0.45, 3.6125, chairMat));
+    registerExhibitMesh("halfchairs", box("chair-back", 0.33, 0.72, 0.09, 4.265, 0.82, 3.445, chairMat));
+
+    BABYLON.SceneLoader.ImportMeshAsync("", import.meta.env.BASE_URL + "assets/", "person.glb", scene).then((result) => {
+      if (scene.isDisposed) return;
+      const modelRoot = result.meshes[0];
+      if (!modelRoot) return;
+      const personPivot = new BABYLON.TransformNode("scale-person", scene);
+      modelRoot.parent = personPivot;
+      modelRoot.rotationQuaternion = null;
+      modelRoot.rotation.x = -Math.PI / 2;
+      result.meshes.forEach((mesh) => {
+        mesh.isPickable = false;
+        mesh.alwaysSelectAsActiveMesh = true;
+        mesh.computeWorldMatrix(true);
+        if (mirrorTexture.renderList) mirrorTexture.renderList.push(mesh);
+      });
+      personPivot.computeWorldMatrix(true);
+      const bounds = personPivot.getHierarchyBoundingVectors(true);
+      const height = bounds.max.y - bounds.min.y;
+      if (!Number.isFinite(height) || height <= 0) return;
+      const scale = 1.7 / height;
+      modelRoot.position.x -= (bounds.min.x + bounds.max.x) / 2;
+      modelRoot.position.y -= bounds.min.y;
+      modelRoot.position.z -= (bounds.min.z + bounds.max.z) / 2;
+      personPivot.scaling.setAll(scale);
+      personPivot.position.set(5.25, 0, 6.45);
+      personPivot.rotation.y = -0.38;
+      const idle = result.animationGroups.find((group) => /idle|stand/i.test(group.name)) || result.animationGroups[0];
+      if (idle) idle.start(true);
+    }).catch((error) => console.error("person.glb load failed", error));
+
+    const personLabelTexture = new BABYLON.DynamicTexture("person-height-label-texture", { width: 768, height: 180 }, scene, true);
+    const personLabelContext = personLabelTexture.getContext();
+    personLabelContext.fillStyle = "rgba(255,255,255,.94)";
+    personLabelContext.fillRect(0, 0, 768, 180);
+    personLabelContext.fillStyle = "#252a31";
+    personLabelContext.font = "700 58px Arial";
+    personLabelContext.textAlign = "center";
+    personLabelContext.textBaseline = "middle";
+    personLabelContext.fillText("170cm", 384, 92);
+    personLabelTexture.update();
+    const personLabelMat = new BABYLON.StandardMaterial("person-height-label-material", scene);
+    personLabelMat.diffuseTexture = personLabelTexture;
+    personLabelMat.opacityTexture = personLabelTexture;
+    personLabelMat.emissiveColor = BABYLON.Color3.White();
+    personLabelMat.disableLighting = true;
+    const personLabel = BABYLON.MeshBuilder.CreatePlane("person-height-label", { width: 0.85, height: 0.20, sideOrientation: BABYLON.Mesh.DOUBLESIDE }, scene);
+    personLabel.position.set(5.25, 1.84, 6.45);
+    personLabel.billboardMode = BABYLON.Mesh.BILLBOARDMODE_ALL;
+    personLabel.material = personLabelMat;
+    personLabel.isPickable = false;
+
+    const selectionBandMat = material("selection-band-material", "#f5b700", 0.95);
+    selectionBandMat.emissiveColor = BABYLON.Color3.FromHexString("#f5b700").scale(0.7);
+    selectionBandMat.disableLighting = true;
+    const selectionBand = box("selection-band", 1, 0.018, 1, 0, 0, 0, selectionBandMat);
+    selectionBand.isPickable = false;
+    selectionBand.isVisible = false;
+
+    const focusExhibit = (id) => {
+      [...exhibitMeshes.values()].flat().forEach((mesh) => {
+        mesh.renderOutline = false;
+        mesh.renderOverlay = false;
+        mesh.visibility = 0.34;
+      });
+      const activeMeshes = exhibitMeshes.get(id) || [];
+      activeMeshes.forEach((mesh) => {
+        mesh.visibility = 1;
+        mesh.overlayColor = BABYLON.Color3.FromHexString("#f5b700");
+        mesh.overlayAlpha = 0.22;
+        mesh.renderOverlay = true;
+      });
+      const anchor = anchors.get(id);
+      selectionBand.isVisible = false;
+      if (!anchor) return;
+      anchor.computeWorldMatrix(true);
+      const bounds = anchor.getBoundingInfo().boundingBox;
+      const width = bounds.maximumWorld.x - bounds.minimumWorld.x;
+      const depth = bounds.maximumWorld.z - bounds.minimumWorld.z;
+      selectionBand.scaling.set(width + 0.12, 1, depth + 0.12);
+      selectionBand.position.set(anchor.position.x, Math.max(0.012, bounds.minimumWorld.y - 0.006), anchor.position.z);
+      selectionBand.isVisible = true;
+      const target = new BABYLON.Vector3(anchor.position.x, Math.max(anchor.position.y, 0.65), anchor.position.z);
+      const isShelf = shelfWorks.some((work) => work.id === id);
+      const view = isShelf
+        ? { alpha: Math.PI, beta: 1.08, radius: 5.2 }
+        : id === "bora" || id === "candle"
+          ? { alpha: Math.PI / 2, beta: 1.02, radius: 4.8 }
+          : { alpha: -0.82, beta: 1.02, radius: 5.4 };
+      scene.stopAnimation(camera);
+      const easing = new BABYLON.CubicEase();
+      easing.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEINOUT);
+      const animateCamera = (name, property, from, to) => BABYLON.Animation.CreateAndStartAnimation(name, camera, property, 30, 24, from, to, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT, easing);
+      animateCamera("focus-target", "target", camera.target.clone(), target);
+      animateCamera("focus-alpha", "alpha", camera.alpha, view.alpha);
+      animateCamera("focus-beta", "beta", camera.beta, view.beta);
+      animateCamera("focus-radius", "radius", camera.radius, view.radius);
+    };
+    focusRef.current = focusExhibit;
+    focusExhibit(selected);
+
+    scene.onPointerObservable.add((info) => {
+      if (info.type !== BABYLON.PointerEventTypes.POINTERPICK) return;
+      const id = info.pickInfo?.pickedMesh?.metadata?.id;
+      if (id) onSelect(id);
+    });
+    mirrorTexture.renderList = scene.meshes.filter((mesh) => mesh !== entranceMirror && !mesh.name.startsWith("mirror-frame"));
     engine.runRenderLoop(() => scene.render());
     const resize = () => engine.resize();
     window.addEventListener("resize", resize);
     return () => {
+      focusRef.current = null;
+      canvas.removeEventListener("contextmenu", preventContextMenu);
       window.removeEventListener("resize", resize);
       scene.dispose();
       engine.dispose();
     };
-  }, [selected, onSelect]);
+  }, [onSelect]);
+
+  useEffect(() => {
+    focusRef.current?.(selected);
+  }, [selected]);
 
   return (
     <div className="three-view is-active no-print" id="threeView">
       <canvas ref={canvasRef} id="renderCanvas" aria-label="G09 전시 공간 3D 확인" style={{ touchAction: "none" }} />
-      <p>드래그 회전 · 휠 확대 · 작품 클릭</p>
+      <p>좌클릭 드래그 회전 · 우클릭/두 손가락 드래그 이동 · 휠/핀치 확대 · 작품 클릭</p>
     </div>
   );
 }
@@ -423,7 +576,7 @@ export function App() {
       </header>
       <main>
         <section className="sheet">
-          <div className="sheet-heading"><div><p className="drawing-no">EXHIBITION LAYOUT · G09 / B-111</p><h2>작품 배치 평면도</h2></div><div className="revision">REV. 26 · 2026.09.20</div></div>
+          <div className="sheet-heading"><div><p className="drawing-no">EXHIBITION LAYOUT · G09 / B-111</p><h2>작품 배치 평면도</h2></div><div className="revision">REV. 29 · 2026.09.20</div></div>
           <div className="sheet-body">
             {view === "plan" ? <Plan circulation={circulation} electrical={electrical} selected={selected} onSelect={setSelected} /> : <ThreeView selected={selected} onSelect={setSelected} />}
             <Legend selected={selected} onSelect={setSelected} />

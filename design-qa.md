@@ -2,35 +2,27 @@
 
 ## Comparison target
 
-- Source visual truth: https://hibiya-g09-floorplan.borapado.chatgpt.site/ at REV. 26 · 2026.09.20.
-- Implementation: http://127.0.0.1:4174/.
-- Source evidence: authenticated Chrome full-page captures of the 2D and default 3D states, plus the source inline SVG and stylesheet gathered from the rendered page.
-- Implementation evidence: in-app Browser full-page captures of the matching 2D and default 3D states.
-- Focused evidence: source and implementation captures were emitted together to compare the glass wall, entrance, missing wall, visitor model, and floor-plan door detail.
+- Source visual truth: `G09-floorplan-source-REV29.zip` supplied by the user, plus the live ChatGPT site at `REV. 29 · 2026.09.20`.
+- Source archive: `/Users/boracles/Downloads/G09-floorplan-source-REV29.zip`.
+- Implementation: `http://127.0.0.1:4174/`.
+- Desktop source and implementation captures were emitted together at a normalized 1591 × 1026 CSS-pixel viewport.
 
-## Capture normalization
+## REV.29 fidelity checks
 
-- Desktop source CSS viewport/page: 1591 × 1026; source sheet 1420 × 918.0.
-- Desktop implementation CSS viewport/page: 1591 × 1032; implementation sheet 1420 × 924.5.
-- Mobile implementation viewport: 390 × 844 CSS px; page 390 × 1476 in 2D and 390 × 1782 in 3D; sheet 374 × 1316; SVG 324 × 361.5.
-- Browser screenshots were compared at device scale 1 after matching the desktop CSS width. The six-pixel sheet-height difference is browser-surface rounding and does not change layout hierarchy or content.
-
-## REV.25 fidelity checks
-
-- Revision, date, title block, dimensions, fixtures, electrical notes, selection behavior, and artwork details match the latest source.
-- The floor-plan entrance now exactly follows the source SVG: 1200mm total opening, 250mm fixed glass, 950mm hinged glass door, three jamb marks, door leaf, and 950mm swing arc.
-- The exterior viewing glass is split into three equal bays with four vertical frame members and no incorrect mid-height transom.
-- The previously missing wall behind the wood cabinets is restored at full 2850mm height.
-- The 3D entrance is split into a narrow fixed-glass panel and a wider glass door, with separate jambs, head frame, and handle.
-- The supplied `Untitled.glb` is copied locally as `public/assets/person.glb`, loaded with Babylon's glTF loader, rotated upright, centered, and automatically scaled to 170cm.
-- Desktop and mobile 2D/3D layouts have no horizontal overflow.
+- The 3D camera, room shell, three-bay exterior glass, 250/950 entrance split, passage floor, and cabinet-side wall match the supplied source.
+- The entrance mirror uses the source's 1024px planar reflection texture, reflective material, double-sided plane, raised position, and frame geometry.
+- The exhibition intro banner matches the source position, dimensions, orientation, texture, and wall placement.
+- The supplied `person.glb` uses the source normalization, upright rotation, world position, facing angle, and 170cm label.
+- Bora Youn and Candle Janga artwork geometry, display angle, wall panel, tablet position, dimensions, and materials match REV.29.
+- The cabinet gap no-entry barrier is present in both the 2D plan and 3D floor.
+- 3D navigation supports left-drag orbit, right-drag or two-finger pan, wheel or pinch zoom, and artwork focus.
 
 ## Interaction and browser checks
 
 - 2D/3D switching: passed.
-- Circulation and electrical toggles: passed; both layers hide independently.
-- Legend and plan selection synchronization: passed; 윤보라 selection moved the overlay to x=2310.
-- 3D drag, wheel zoom, artwork selection, and GLB loading: passed.
+- Circulation and electrical toggles: passed.
+- Legend, plan, and 3D selection synchronization: passed.
+- 3D orbit, pan, zoom, artwork focus, mirror reflection, and GLB loading: passed.
 - Desktop and mobile responsive rendering: passed.
 - Browser console errors and warnings: none.
 - Production build: passed.
@@ -38,13 +30,18 @@
 
 ## Comparison history
 
-- [P1] Missing cabinet-side wall: the prior implementation omitted the full top wall. Fixed by restoring the 7250 × 2850 wall; post-fix 3D capture shows the same enclosing wall as the source.
-- [P1] Exterior glass and entrance anatomy: the prior implementation used four glass bays and one generic entrance pane. Fixed to three bays and the source's 250/950mm entrance split; post-fix plan and 3D captures show the corrected frames.
-- [P1] Placeholder visitor: the prior implementation used procedural body shapes and a 176cm label. Fixed with the user-provided GLB and source-matching 170cm label; post-fix capture shows the real model standing upright.
+- [P1] Mirror missing or visually incorrect: fixed with the exact REV.29 planar reflection texture, material parameters, raised plane, and frame assembly.
+- [P1] Intro banner reversed and mis-sized: fixed to the exact source transform and 1.7 × 2.2m plane.
+- [P1] Visitor position and orientation differed: fixed to source pivot `(5.25, 0, 6.45)`, yaw `-0.38`, and model rotation `-π/2`.
+- [P1] Candle display geometry and tablet side differed: fixed to the exact source layout.
+- [P1] Artwork view angles differed: restored the REV.29 selection-specific camera targets and angles.
+- [P2] Missing cabinet gap barrier, mirror height, and scene colors: fixed to the supplied source values.
+- [P2] 3D panning unavailable: enabled right-button mouse panning and two-finger touch panning, with context-menu suppression on the canvas.
 
 ## Findings
 
 - No actionable P0, P1, or P2 fidelity differences remain in the checked surfaces.
-- Typography, spacing, colors, image/model quality, and app-specific copy were checked against the source. No source image is hotlinked; the person GLB is bundled locally.
+- Typography, spacing, colors, geometry, model quality, materials, and copy were checked against the supplied REV.29 source.
+- The person model is bundled locally; no source image or model is hotlinked.
 
 final result: passed

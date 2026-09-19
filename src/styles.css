@@ -81,6 +81,8 @@ main { padding: 18px; }
 .shelf-segment .segment-depth { font-size: 98px; font-weight: 700; }
 .cabinet-sharing rect { fill: rgba(183,121,31,.07); stroke: #b7791f; stroke-width: 14; stroke-dasharray: 45 35; }
 .cabinet-sharing text { fill: #8a5a17; text-anchor: middle; font-size: 105px; font-weight: 800; }
+.gap-barrier line { stroke: #292d33; stroke-width: 34; stroke-dasharray: 55 28; }
+.gap-barrier text { fill: #292d33; text-anchor: middle; font-size: 82px; font-weight: 850; }
 .floor-work { cursor: pointer; outline: none; }
 .floor-work rect { fill: rgba(109,80,212,.16); stroke: var(--violet); stroke-width: 28; }
 .floor-work text { fill: #3d315f; font-size: 150px; font-weight: 800; }

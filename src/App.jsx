@@ -3,11 +3,11 @@ import * as BABYLON from "babylonjs";
 import "babylonjs-loaders";
 
 const works = [
+  { id: "sunok", index: "01", zone: "구획 1", color: "#b5477b", title: "홍선옥 · Code to Coil", detail: "우측 선반 · 구획 1", size: "가로 1933 × 세로 450mm", shelfY: 5441.666666666666, shelfHeight: 1933.3333333333333 },
+  { id: "eunsil", index: "02", zone: "구획 2", color: "#6b8f71", title: "지은실 · Hybrid Nature", detail: "우측 선반 · 구획 2", size: "가로 1933 × 세로 450mm", shelfY: 3508.333333333333, shelfHeight: 1933.3333333333333 },
+  { id: "blue-by-jjok", index: "03", zone: "구획 3", color: "#386a8c", title: "권정륜 · 신하진 · Blue by jjok", detail: "우측 선반 · 구획 3", size: "가로 1933 × 세로 450mm", shelfY: 1575, shelfHeight: 1933.3333333333333 },
   { id: "candle", index: "04", color: "#f26a21", title: "권정현 · Candle", detail: "목재장 B · 3점 + 태블릿 · 전원", prep: "개별 준비 · 멀티탭", size: "가로 900 × 세로 600mm" },
   { id: "bora", index: "05", color: "#258b85", title: "윤보라 · 잃어버린 방", detail: "LG 17MT70 · Quest 3 · 충전 독 · 티백 · 찻잔", prep: "개별 준비 · 멀티탭 · PD 충전기 · 충전 독 어댑터 · 전원·영상 케이블", size: "가로 1100 × 세로 600mm" },
-  { id: "blue-by-jjok", index: "03", zone: "구획 3", color: "#386a8c", title: "권정륜 · 신하진 · Blue by jjok", detail: "우측 선반 · 구획 3", size: "가로 1933 × 세로 450mm", shelfY: 1575, shelfHeight: 1933.3333333333333 },
-  { id: "eunsil", index: "02", zone: "구획 2", color: "#6b8f71", title: "지은실 · Hybrid Nature", detail: "우측 선반 · 구획 2", size: "가로 1933 × 세로 450mm", shelfY: 3508.333333333333, shelfHeight: 1933.3333333333333 },
-  { id: "sunok", index: "01", zone: "구획 1", color: "#b5477b", title: "홍선옥 · Code to Coil", detail: "우측 선반 · 구획 1", size: "가로 1933 × 세로 450mm", shelfY: 5441.666666666666, shelfHeight: 1933.3333333333333 },
   { id: "halfchairs", index: "06", color: "#6d50d4", title: "이지우 · Half Chairs", detail: "바닥 설치", size: "가로 330 × 세로 425 × 높이 885mm" },
 ];
 

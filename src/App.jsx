@@ -2,21 +2,17 @@ import { useEffect, useRef, useState } from "react";
 import * as BABYLON from "babylonjs";
 
 const works = [
-  { id: "candle", index: "A", color: "#f26a21", title: "권정현 · Candle 3점 + 태블릿", detail: "전기 제공 · 현장 통전 확인", size: "1200mm" },
-  { id: "bora", index: "B", color: "#258b85", title: "윤보라 · 내면기상관측소", detail: "목재장 A · 착석형 MR · 전원 + LAN", size: "1200×600" },
-  { id: "hajin", index: "C", color: "#317db7", title: "신하진 · 작품 정보 대기", detail: "우측 선반 · 전기 미확정", size: "1150mm" },
-  { id: "jungryun", index: "D", color: "#b05d89", title: "권정륜 · 작품 정보 대기", detail: "우측 선반 · 전기 미확정", size: "1150mm" },
-  { id: "eunsil", index: "E", color: "#b98424", title: "지은실 · 작품 정보 대기", detail: "우측 선반 · 전기 미확정", size: "1150mm" },
-  { id: "sunok", index: "F", color: "#617c6b", title: "홍선옥 · 작품 정보 대기", detail: "우측 선반 · 전기 미확정", size: "1150mm" },
-  { id: "halfchairs", index: "G", color: "#6d50d4", title: "이지우 · Half Chairs", detail: "바닥 설치 · 전기 불필요(가정)", size: "330×425" },
+  { id: "sunok", index: "01", color: "#a56b2a", title: "홍선옥 · Code to Coil", detail: "우측 선반 하단 · LED 전원", size: "1450mm", kind: "pending", shelfY: 5925, shelfHeight: 1450 },
+  { id: "eunsil", index: "02", color: "#6b8f71", title: "지은실 · Hybrid Nature", detail: "우측 선반 중단 · LED 전원", size: "1450mm", kind: "details", shelfY: 4475, shelfHeight: 1450 },
+  { id: "blue-by-jjok", index: "03", color: "#386a8c", title: "권정륜 · 신하진 · Blue by jjok", detail: "우측 선반 상단 2구획 · 공동 설치", size: "2900mm", kind: "details", shelfY: 1575, shelfHeight: 2900 },
+  { id: "candle", index: "04", color: "#f26a21", title: "권정현 · Candle", detail: "목재장 B · 3점 + 태블릿 · 전원", size: "900×600", kind: "details" },
+  { id: "bora", index: "05", color: "#258b85", title: "윤보라 · 잃어버린 방", detail: "목재장 A · LG 17MT70 · Quest 3 충전 독 · 티백 · 찻잔", size: "1100 × 600mm", kind: "details" },
+  { id: "halfchairs", index: "06", color: "#6d50d4", title: "이지우 · Half Chairs", detail: "바닥 설치 · 전기 사용 여부 확인 필요", size: "330×425", kind: "details" },
 ];
 
-const shelfWorks = works.filter((work) => ["candle", "hajin", "jungryun", "eunsil", "sunok"].includes(work.id));
+const shelfWorks = ["blue-by-jjok", "eunsil", "sunok"].map((id) => works.find((work) => work.id === id));
 
-function Plan({ electrical, selected, onSelect }) {
-  const segmentY = [1575, 2775, 3925, 5075, 6225];
-  const segmentHeight = [1200, 1150, 1150, 1150, 1150];
-
+function Plan({ circulation, electrical, selected, onSelect }) {
   return (
     <div className="drawing-wrap" id="planView">
       <svg id="floorSvg" viewBox="-1100 -700 9500 10600" role="img" aria-labelledby="planTitle planDesc">
@@ -31,6 +27,9 @@ function Plan({ electrical, selected, onSelect }) {
           </pattern>
           <marker id="dimArrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
             <path d="M10 5L0 0V10Z" fill="#515660" />
+          </marker>
+          <marker id="routeArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+            <path d="M0 0L10 5L0 10Z" fill="#2563eb" />
           </marker>
         </defs>
 
@@ -47,15 +46,13 @@ function Plan({ electrical, selected, onSelect }) {
           <text x="1700" y="1080">구조기둥</text>
           <text x="1700" y="1270">800 × 800</text>
           <rect x="2110" y="975" width="1500" height="600" />
-          <text x="2860" y="1235">기존 목재장 A</text>
-          <text x="2860" y="1430">1500 × 600 · H850</text>
+          <text x="2860" y="875">목재장 A · 1500 × 600 · H850</text>
           <rect x="4100" y="975" width="2450" height="600" />
-          <text x="5325" y="1235">기존 목재장 B</text>
-          <text x="5325" y="1430">2450 × 600 · H1000</text>
+          <text x="5325" y="875">목재장 B · 2450 × 600 · H1000</text>
           <rect x="6800" y="1575" width="450" height="5800" className="shelf-base" />
-          <text className="rotated-label" x="7040" y="4475">고정 벽면 선반 · 5800 × 450 · 상판 H870</text>
-          <rect x="2760" y="5050" width="90" height="1400" className="mirror" />
-          <text x="2640" y="5750" transform="rotate(-90 2640 5750)">고정 거울</text>
+          <text className="rotated-label" x="7040" y="4475">수납형 고정 선반 · 5800 × 450 · H870</text>
+          <rect x="2925" y="5300" width="45" height="1250" className="mirror" />
+          <text x="3130" y="5925" transform="rotate(-90 3130 5925)">고정 거울</text>
         </g>
 
         <g className="context-pillars" aria-label="외부 구조기둥">
@@ -71,8 +68,18 @@ function Plan({ electrical, selected, onSelect }) {
           <text x="3190" y="8140">출입구 W1200</text>
         </g>
 
+        <g className={`circulation-layer${circulation ? "" : " is-hidden"}`} id="circulationLayer" aria-label="출입구에서 시작하는 예상 관람 동선">
+          <path className="circulation-band" d="M2500 7380 C3350 7440 4550 7240 5550 6850 C6050 6660 6250 6200 6250 5650 L6250 3000 C6250 2650 6000 2470 5580 2450 C4750 2410 3970 2470 3260 2600 C2860 2720 2950 3050 3020 3400 C3110 3950 3230 4520 3520 4820 C3820 5060 4220 5070 4460 4900 C4170 5350 3740 5820 3370 6220 C3060 6620 2840 6930 2680 7160" />
+          <path className="circulation-line" d="M2500 7380 C3350 7440 4550 7240 5550 6850 C6050 6660 6250 6200 6250 5650 L6250 3000 C6250 2650 6000 2470 5580 2450 C4750 2410 3970 2470 3260 2600 C2860 2720 2950 3050 3020 3400 C3110 3950 3230 4520 3520 4820 C3820 5060 4220 5070 4460 4900 C4170 5350 3740 5820 3370 6220 C3060 6620 2840 6930 2680 7160" markerEnd="url(#routeArrow)" />
+          <path className="circulation-direction" d="M4300 7210C4750 7130 5200 6990 5550 6840" markerEnd="url(#routeArrow)" />
+          <path className="circulation-direction" d="M6250 5200L6250 4300" markerEnd="url(#routeArrow)" />
+          <path className="circulation-direction" d="M5000 2430C4500 2420 4050 2470 3650 2540" markerEnd="url(#routeArrow)" />
+          <path className="circulation-direction" d="M3540 4820C3840 5040 4160 5060 4430 4910" markerEnd="url(#routeArrow)" />
+          <g className="circulation-label" transform="translate(4400 7600)"><rect x="0" y="0" width="1220" height="310" rx="155" /><text x="610" y="205">예상 관람 동선</text></g>
+        </g>
+
         <g id="shelfAssignments" className="assignments" aria-label="우측 선반 작품 배정">
-          {shelfWorks.map((work, index) => (
+          {shelfWorks.map((work) => (
             <g
               key={work.id}
               className={`shelf-segment${selected === work.id ? " is-selected" : ""}`}
@@ -83,28 +90,43 @@ function Plan({ electrical, selected, onSelect }) {
               onClick={() => onSelect(work.id)}
               onKeyDown={(event) => (event.key === "Enter" || event.key === " ") && onSelect(work.id)}
             >
-              <rect x="6840" y={segmentY[index]} width="370" height={segmentHeight[index]} fill={work.color} />
-              <text x="7025" y={segmentY[index] + 545}>{work.index}</text>
-              <text className="segment-length" x="7025" y={segmentY[index] + 695}>{work.size.replace("mm", "")}</text>
+              <rect x="6840" y={work.shelfY} width="370" height={work.shelfHeight} fill={work.color} />
+              <text x="7025" y={work.shelfY + work.shelfHeight / 2 - 55}>{work.index}</text>
+              <text className="segment-length" x="7025" y={work.shelfY + work.shelfHeight / 2 + 95}>{work.shelfHeight}</text>
             </g>
           ))}
         </g>
 
-        <g className={`bora-work${selected === "bora" ? " is-selected" : ""}`} data-id="bora" tabIndex="0" role="button" aria-label="윤보라 내면기상관측소 기존 목재장 A 설치" onClick={() => onSelect("bora")} onKeyDown={(event) => (event.key === "Enter" || event.key === " ") && onSelect("bora")}>
-          <rect className="surface" x="2250" y="1000" width="1200" height="550" />
-          <rect className="monitor" x="2700" y="1050" width="360" height="90" />
-          <circle className="hmd" cx="2450" cy="1275" r="95" />
-          <rect className="seat" x="2600" y="1850" width="500" height="500" rx="70" />
-          <line x1="3100" y1="2100" x2="3900" y2="2250" /><circle cx="3900" cy="2250" r="50" />
-          <text x="4010" y="2200">B · 윤보라 · 내면기상관측소</text>
-          <text x="4010" y="2400">착석형 MR · 기존 목재장 A 활용</text>
-          <text x="4010" y="2590">1200 × 600 테이블 · 전원 + LAN 필요</text>
+        <g className="cabinet-sharing" aria-label="목재장 B 공유 가능 구간">
+          <rect x="4100" y="995" width="775" height="560" /><rect x="5775" y="995" width="775" height="560" />
+          <text x="4488" y="1320">공유 가능 · 775</text><text x="6163" y="1320">공유 가능 · 775</text>
+        </g>
+
+        <g className={`candle-work${selected === "candle" ? " is-selected" : ""}`} data-id="candle" tabIndex="0" role="button" aria-label="권정현 Candle 기존 목재장 B와 벽면 설치" onClick={() => onSelect("candle")} onKeyDown={(event) => (event.key === "Enter" || event.key === " ") && onSelect("candle")}>
+          <rect className="surface" x="4875" y="995" width="900" height="560" />
+          <circle cx="5075" cy="1280" r="82" /><circle cx="5325" cy="1280" r="82" /><circle className="wall-piece" cx="5525" cy="1080" r="82" />
+          <rect className="tablet" x="5540" y="1320" width="170" height="110" rx="16" />
+          <rect className="caption-bg" x="4460" y="1640" width="1730" height="450" rx="45" />
+          <text x="5325" y="1790" textAnchor="middle">04 · 권정현 · Candle</text>
+          <text x="5325" y="1990" textAnchor="middle">목재장 B 중앙 · 900 × 600mm · 전원 필요</text>
+        </g>
+
+        <g className={`bora-work${selected === "bora" ? " is-selected" : ""}`} data-id="bora" tabIndex="0" role="button" aria-label="윤보라 잃어버린 방 기존 목재장 A 설치" onClick={() => onSelect("bora")} onKeyDown={(event) => (event.key === "Enter" || event.key === " ") && onSelect("bora")}>
+          <rect className="surface" x="2310" y="995" width="1100" height="560" />
+          <rect className="monitor" x="2350" y="1035" width="379" height="165" rx="12" />
+          <line className="monitor-stand" x1="2539" y1="1200" x2="2585" y2="1280" />
+          <g className="charging-dock"><rect x="2810" y="1045" width="500" height="245" rx="45" /><path d="M2920 1170Q3060 1060 3200 1170Q3150 1260 3060 1260Q2970 1260 2920 1170Z" /><circle cx="2875" cy="1165" r="48" /><circle cx="3245" cy="1165" r="48" /></g>
+          <rect className="tea-bag" x="2410" y="1340" width="220" height="130" rx="20" /><circle className="tea-cup" cx="3210" cy="1400" r="72" /><circle className="cup-handle" cx="3290" cy="1400" r="34" />
+          <rect className="power-strip" x="2720" y="1450" width="350" height="58" rx="24" />
+          <rect className="caption-bg" x="2020" y="1640" width="1680" height="450" rx="45" />
+          <text x="2860" y="1790" textAnchor="middle">05 · 윤보라 · 잃어버린 방</text>
+          <text x="2860" y="1990" textAnchor="middle">가로 1100 × 세로 600mm · 전원 필요</text>
         </g>
 
         <g className={`floor-work${selected === "halfchairs" ? " is-selected" : ""}`} data-id="halfchairs" tabIndex="0" role="button" aria-label="이지우 Half Chairs 바닥 설치" onClick={() => onSelect("halfchairs")} onKeyDown={(event) => (event.key === "Enter" || event.key === " ") && onSelect("halfchairs")}>
-          <rect x="4660" y="8030" width="330" height="425" />
-          <line x1="4825" y1="8030" x2="5480" y2="7740" /><circle cx="5480" cy="7740" r="50" />
-          <text x="5590" y="7710">G · 이지우</text><text x="5590" y="7910">Half Chairs · 330 × 425 × H885</text>
+          <rect x="4100" y="3400" width="330" height="425" />
+          <line x1="4265" y1="3400" x2="4740" y2="3110" /><circle cx="4740" cy="3110" r="50" />
+          <text x="4850" y="3060">06 · 이지우</text><text x="4850" y="3260">Half Chairs · 330 × 425 × H885</text>
         </g>
 
         <g className={`electrical-layer${electrical ? "" : " is-hidden"}`} id="electricalLayer" aria-label="전기 및 통신 설비">
@@ -119,7 +141,7 @@ function Plan({ electrical, selected, onSelect }) {
             <g className="outlet" transform="translate(5880 1520)"><circle r="66" /><path d="M-32 0H32M0 0V50" /></g>
             <g className="tel" transform="translate(6200 1520)"><circle r="66" /><text y="30">T</text></g>
             <g className="lan" transform="translate(6480 1520)"><circle r="66" /><text y="30">L</text></g>
-            <text x="6030" y="1780">카운터 전원 · TEL · LAN</text>
+            <text x="6030" y="720">카운터 전원 · TEL · LAN</text>
           </g>
         </g>
 
@@ -147,7 +169,7 @@ function ThreeView({ selected, onSelect }) {
     const scene = new BABYLON.Scene(engine);
     scene.clearColor = BABYLON.Color4.FromHexString("#f2f3f5ff");
 
-    const camera = new BABYLON.ArcRotateCamera("camera", -Math.PI * 0.72, Math.PI * 0.34, 14.2, new BABYLON.Vector3(3.75, 0.8, 4.55), scene);
+    const camera = new BABYLON.ArcRotateCamera("camera", Math.PI * 0.72, Math.PI * 0.25, 14.2, new BABYLON.Vector3(3.75, 0.8, 4.55), scene);
     camera.attachControl(canvas, true);
     camera.lowerRadiusLimit = 7;
     camera.upperRadiusLimit = 19;
@@ -191,15 +213,22 @@ function ThreeView({ selected, onSelect }) {
     box("left wall", t, wallHeight, 5.3, 0, wallHeight / 2, 2.65, wallMat);
     box("counter", 1.3, 0.95, 2.1, 1.05, 0.475, 3.1, fixtureMat);
     box("pillar", 0.8, 0.95, 0.8, 1.7, 0.475, 1.8, fixtureMat);
-    box("cabinet A", 1.5, 0.85, 0.6, 2.6, 0.425, 2.15, fixtureMat);
-    box("cabinet B", 2.45, 1.0, 0.6, 4.55, 0.5, 1.85, fixtureMat);
+    box("cabinet A", 1.5, 0.85, 0.6, 2.86, 0.425, 1.275, fixtureMat);
+    box("cabinet B", 2.45, 1.0, 0.6, 5.325, 0.5, 1.275, fixtureMat);
 
     const workMaterials = Object.fromEntries(works.map((work) => [work.id, material(work.id, work.color)]));
-    [2.0, 2.18, 2.36].forEach((z, index) => box(`candle ${index + 1}`, 0.08, 0.25 + index * 0.04, 0.08, 6.88, 1.05 + index * 0.02, z, workMaterials.candle, "candle"));
-    box("bora table", 1.2, 0.12, 0.6, 2.85, 0.92, 1.3, workMaterials.bora, "bora");
-    box("bora monitor", 0.36, 0.36, 0.08, 2.85, 1.16, 1.17, workMaterials.bora, "bora");
-    box("chair seat", 0.33, 0.1, 0.425, 6.4, 0.46, 4.9, workMaterials.halfchairs, "halfchairs");
-    box("chair back", 0.33, 0.78, 0.1, 6.4, 0.88, 5.08, workMaterials.halfchairs, "halfchairs");
+    box("shelf upper", 0.45, 0.12, 2.9, 7.025, 0.87, 3.025, workMaterials["blue-by-jjok"], "blue-by-jjok");
+    box("shelf middle", 0.45, 0.12, 1.45, 7.025, 0.87, 5.2, workMaterials.eunsil, "eunsil");
+    box("shelf lower", 0.45, 0.12, 1.45, 7.025, 0.87, 6.65, workMaterials.sunok, "sunok");
+    box("candle surface", 0.9, 0.08, 0.56, 5.325, 1.04, 1.275, workMaterials.candle, "candle");
+    [[5.075, 1.20], [5.325, 1.28], [5.525, 1.08]].forEach(([x, z], index) => box(`candle ${index + 1}`, 0.09, 0.2 + index * 0.04, 0.09, x, 1.17 + index * 0.02, z, workMaterials.candle, "candle"));
+    box("candle tablet", 0.17, 0.13, 0.08, 5.625, 1.16, 1.42, material("tablet", "#22252b"), "candle");
+    box("bora surface", 1.1, 0.08, 0.56, 2.86, 0.89, 1.275, workMaterials.bora, "bora");
+    box("bora monitor", 0.379, 0.36, 0.08, 2.54, 1.11, 1.09, material("monitor", "#22252b"), "bora");
+    box("bora charging dock", 0.5, 0.14, 0.245, 3.06, 1.03, 1.17, workMaterials.bora, "bora");
+    box("bora tea bag", 0.22, 0.07, 0.13, 2.52, 1.0, 1.40, material("tea", "#d6b06b"), "bora");
+    box("chair seat", 0.33, 0.1, 0.425, 4.265, 0.46, 3.61, workMaterials.halfchairs, "halfchairs");
+    box("chair back", 0.33, 0.78, 0.1, 4.265, 0.88, 3.78, workMaterials.halfchairs, "halfchairs");
 
     if (workMaterials[selected]) workMaterials[selected].emissiveColor = BABYLON.Color3.FromHexString(works.find((work) => work.id === selected).color).scale(0.28);
     scene.onPointerPick = (_event, pickInfo) => {
@@ -228,38 +257,42 @@ function ThreeView({ selected, onSelect }) {
 function Legend({ selected, onSelect }) {
   return (
     <aside className="legend">
-      <section><h3>배치 기준</h3><p>이동식 단상 없음. 우측 고정 선반과 기존 목재장 상판을 전시 면으로 사용한다.</p></section>
       <section>
-        <h3>우측 선반 / 바닥 배정</h3>
+        <h3>배치 기준</h3>
+        <p>이동식 단상 없음. 우측 고정 선반과 기존 목재장 상판을 전시 면으로 사용한다.</p>
+        <div className="visual-key" aria-label="도면 색상 범례"><span className="known">설치 정보 있음</span><span className="pending">정보 대기</span><span className="route">예상 동선</span><span className="power">전기</span></div>
+      </section>
+      <section>
+        <h3>작품 배치 · 관람 순서</h3>
         <div className="legend-list" id="legendList">
           {works.map((work) => (
-            <button key={work.id} type="button" className={`legend-item${selected === work.id ? " is-selected" : ""}`} data-id={work.id} onClick={() => onSelect(work.id)}>
+            <button key={work.id} type="button" className={`legend-item ${work.kind === "pending" ? "is-pending" : "has-details"}${selected === work.id ? " is-selected" : ""}`} data-id={work.id} onClick={() => onSelect(work.id)}>
               <span className="legend-index" style={{ background: work.color }}>{work.index}</span>
               <span><strong>{work.title}</strong><small>{work.detail}</small></span>
               <em>{work.size}</em>
             </button>
           ))}
         </div>
-        <p className="small-note">가배정은 작품 치수 제출 후 교환·통합 가능.</p>
+        <p className="small-note">번호는 출입구 → 우측 선반 하단부터 상단 → 목재장 B → 목재장 A → 중앙 작품 → 출구 순서.</p>
       </section>
       <section className="power-key">
         <h3>전기 제공</h3><div className="status-row"><strong>공간 전원</strong><span className="yes">제공 있음</span></div>
-        <p>벽부 콘센트 2P 15A/125V, 카운터 전원, TEL, LAN이 도면에 표시됨.</p>
-        <p className="warning">권정현 태블릿: 상단 선반 구간 배정. 연장선 길이와 실제 통전은 현장 확인.</p>
+        <p><strong>전시장 제공</strong> · 벽부 콘센트 2P 15A/125V, 카운터 전원, TEL, LAN</p>
+        <p className="warning"><strong>개별 준비</strong> · 멀티탭, PD 충전기, Quest 3 충전 독 어댑터, 전원·영상 케이블</p>
       </section>
       <section className="fixture-key">
         <h3>고정물</h3>
-        <dl><div><dt>우측 선반</dt><dd>5800 × 450 · H870</dd></div><div><dt>목재장 A</dt><dd>1500 × 600 · H850</dd></div><div><dt>목재장 B</dt><dd>2450 × 600 · H1000</dd></div><div><dt>구조기둥</dt><dd>800 × 800 · 이동 불가</dd></div><div><dt>천장고</dt><dd>CH 2850 · 전기 도면 기준</dd></div></dl>
+        <dl><div><dt>우측 선반</dt><dd>5800 × 450 · H870</dd></div><div><dt>선반 구조</dt><dd>전면부 200 · 개구 900 × 350 · 하부 320</dd></div><div><dt>목재장 A</dt><dd>1500 × 600 · H850</dd></div><div><dt>목재장 B</dt><dd>2450 × 600 · H1000</dd></div><div><dt>구조기둥</dt><dd>800 × 800 · 이동 불가</dd></div><div><dt>천장고</dt><dd>CH 2850 · 전기 도면 기준</dd></div></dl>
       </section>
-      <section className="print-guide"><h3>PDF 출력</h3><p>A3 가로 · 배율 100% · 머리글/바닥글 끔</p><p className="warning">도면 축척 1:50. 출력 후 1m 막대가 20mm인지 확인.</p></section>
     </aside>
   );
 }
 
 export function App() {
   const [view, setView] = useState("plan");
+  const [circulation, setCirculation] = useState(true);
   const [electrical, setElectrical] = useState(true);
-  const [selected, setSelected] = useState("candle");
+  const [selected, setSelected] = useState("sunok");
 
   return (
     <>
@@ -268,18 +301,19 @@ export function App() {
         <div className="actions">
           <button className={`tab${view === "plan" ? " is-active" : ""}`} type="button" onClick={() => setView("plan")}>2D 도면</button>
           <button className={`tab${view === "three" ? " is-active" : ""}`} type="button" onClick={() => setView("three")}>3D 공간</button>
+          <label className="layer-toggle"><input aria-label="예상 동선" type="checkbox" checked={circulation} onChange={(event) => setCirculation(event.target.checked)} /> 예상 동선</label>
           <label className="layer-toggle"><input aria-label="전기" type="checkbox" checked={electrical} onChange={(event) => setElectrical(event.target.checked)} /> 전기</label>
           <button className="print-button" type="button" onClick={() => window.print()}>A3 PDF 출력</button>
         </div>
       </header>
       <main>
         <section className="sheet">
-          <div className="sheet-heading"><div><p className="drawing-no">EXHIBITION LAYOUT · G09 / B-111</p><h2>작품 배치 평면도</h2></div><div className="revision">REV. 02 · 2026.09.19</div></div>
+          <div className="sheet-heading"><div><p className="drawing-no">EXHIBITION LAYOUT · G09 / B-111</p><h2>작품 배치 평면도</h2></div><div className="revision">REV. 05 · 2026.09.19</div></div>
           <div className="sheet-body">
-            {view === "plan" ? <Plan electrical={electrical} selected={selected} onSelect={setSelected} /> : <ThreeView selected={selected} onSelect={setSelected} />}
+            {view === "plan" ? <Plan circulation={circulation} electrical={electrical} selected={selected} onSelect={setSelected} /> : <ThreeView selected={selected} onSelect={setSelected} />}
             <Legend selected={selected} onSelect={setSelected} />
           </div>
-          <footer className="title-block"><div><span>PROJECT</span><strong>DESIGNART TOKYO 2026</strong></div><div><span>SPACE</span><strong>HIBIYA OKUROJI G09 / B-111</strong></div><div><span>DRAWING</span><strong>작품 · 전기 배치 평면도</strong></div><div><span>SCALE</span><strong>1:50 @ A3</strong></div><div><span>AREA / CH</span><strong>55.15㎡ / 2850</strong></div><div><span>STATUS</span><strong>가배정 · 현장 실측 전</strong></div></footer>
+          <footer className="title-block"><div><span>PROJECT</span><strong>DESIGNART TOKYO 2026</strong></div><div><span>SPACE</span><strong>HIBIYA OKUROJI G09 / B-111</strong></div><div><span>DRAWING</span><strong>작품 · 전기 배치 평면도</strong></div><div><span>SCALE</span><strong>1:50 @ A3</strong></div><div><span>AREA / CH</span><strong>55.15㎡ / 2850</strong></div><div><span>STATUS</span><strong>배치 계획안 · 현장 실측 전</strong></div></footer>
         </section>
       </main>
     </>

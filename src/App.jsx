@@ -325,6 +325,24 @@ function ThreeView({ selected, onSelect, onOpen2D, onShowOverview }) {
       mesh.isPickable = pickable;
       return mesh;
     };
+    const heightLabels = [];
+    const addHeightLabel = (name, text, x, y, z) => {
+      const texture = new BABYLON.DynamicTexture(`${name}-texture`, { width: 640, height: 160 }, scene, true);
+      texture.drawText(text, null, 108, "700 52px Arial", "#ffffff", "#172033", true, true);
+      const labelMat = new BABYLON.StandardMaterial(`${name}-material`, scene);
+      labelMat.diffuseTexture = texture;
+      labelMat.emissiveTexture = texture;
+      labelMat.disableLighting = true;
+      labelMat.backFaceCulling = false;
+      const label = BABYLON.MeshBuilder.CreatePlane(name, { width: 0.72, height: 0.18 }, scene);
+      label.position.set(7.25 - x, y, z);
+      label.billboardMode = BABYLON.Mesh.BILLBOARDMODE_ALL;
+      label.material = labelMat;
+      label.renderingGroupId = 2;
+      label.isPickable = false;
+      heightLabels.push(label);
+      return label;
+    };
 
     box("floor-upper", 7.25, 0.08, 5.3, 3.625, -0.04, 2.65, floorMat);
     box("floor-lower", 4.4, 0.08, 3.8, 5.05, -0.04, 7.2, floorMat);
@@ -420,11 +438,14 @@ function ThreeView({ selected, onSelect, onOpen2D, onShowOverview }) {
     box("cabinet-b", 2.0, 1.0, 0.60, 5.575, 0.5, 1.275, fixedMat);
     box("right-shelf-return", 0.45, 1.0, 1.455, 7.025, 0.5, 0.8475, fixedMat);
     box("cabinet-b-connector", 0.225, 1.0, 0.60, 6.6875, 0.5, 1.275, fixedMat);
+    addHeightLabel("cabinet-a-height", "목재장 A · H850", 3.10, 1.02, 1.275);
+    addHeightLabel("cabinet-b-height", "목재장 B · H1000", 5.575, 1.17, 1.275);
     const shelfMat = material("shelf", "#a8a39b");
     const shelfRecessMat = material("shelf-recess", "#6f6b66");
     const shelfInteriorMat = material("shelf-interior", "#918c85");
     box("right-shelf-bottom", 0.45, 0.32, 5.81, 7.025, 0.16, 4.47, shelfMat);
     box("right-shelf-fascia", 0.45, 0.20, 5.81, 7.025, 0.77, 4.47, shelfMat);
+    addHeightLabel("right-shelf-height", "우측 선반 · H870", 6.82, 1.07, 4.47);
     const shelfStart = 1.575;
     const shelfPier = (5.8 - 4.5) / 6;
     for (let index = 0; index < 6; index += 1) {
@@ -535,6 +556,11 @@ function ThreeView({ selected, onSelect, onOpen2D, onShowOverview }) {
     };
     createBlueFrame("blue-frame-left", 5.30, 8.50, 0.42, 0.52, 0.72);
     createBlueFrame("blue-frame-low", 4.40, 8.50, 0.52, 0.52, 0.72);
+    addHeightLabel("blue-panel-a-height", "패널 · H2500", 5.30, 2.66, 8.78);
+    addHeightLabel("blue-panel-b-height", "패널 · H2500", 4.40, 2.66, 8.78);
+    addHeightLabel("blue-frame-a-height", "프레임 · H720", 5.30, 0.88, 8.42);
+    addHeightLabel("blue-frame-b-height", "프레임 · H720", 4.40, 0.88, 8.42);
+    addHeightLabel("blue-cubes-height", "적층 큐브 · H1000", 6.35, 1.16, 8.42);
 
     shelfWorks.forEach((work) => {
       const mesh = box(work.id, 0.41, 0.05, work.shelfHeight / 1000 - 0.02, 7.025, 0.895, (work.shelfY + work.shelfHeight / 2) / 1000, material("mat-" + work.id, work.color, 0.9), true);
@@ -548,6 +574,7 @@ function ThreeView({ selected, onSelect, onOpen2D, onShowOverview }) {
     registerExhibitMesh("halfchairs", box("halfchairs", 0.33, 0.07, 0.425, 4.90, 0.06, 4.70, chairMat, true));
     registerExhibitMesh("halfchairs", box("chair-seat", 0.33, 0.12, 0.425, 4.90, 0.475, 4.70, chairMat));
     registerExhibitMesh("halfchairs", box("chair-back", 0.33, 0.72, 0.09, 4.90, 0.845, 4.5325, chairMat));
+    addHeightLabel("halfchairs-height", "Half Chairs · H885", 4.90, 1.08, 4.70);
 
     const staffZoneMat = material("staff-zone-material", "#e8e0cf");
     const staffChairMat = material("staff-chair-material", "#8b7650");

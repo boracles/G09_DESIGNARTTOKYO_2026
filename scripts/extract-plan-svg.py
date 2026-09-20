@@ -59,6 +59,10 @@ def main():
         width, height = rect["x1"] - rect["x0"], rect["bottom"] - rect["top"]
         if not (220 < rect["x0"] < 605 and 80 < rect["top"] < 490):
             continue
+        # Filled, unstroked rectangles are PDF glyph masks rather than
+        # architectural geometry; extracted alone they become pale bars.
+        if rect.get("fill") and not rect.get("stroke"):
+            continue
         # Drop tiny filled glyph fragments while retaining construction bars.
         if rect.get("fill") and width < 5 and height < 12:
             continue

@@ -8,10 +8,10 @@
 
 ## Final layout checks
 
-- Blue by jjok uses two W700 × H2500 panels and two open modular frames (H1000 and H720) in front of the fixed partition.
+- Blue by jjok uses two W700 × H2500 panels, two open modular frames (H1000 and H720), and two offset white cubes stacked to approximately H1000.
 - The fixed partition now extends continuously from the 1500 line to the 5300 return wall; the former 700mm opening is removed in both 2D and 3D.
-- Blue by jjok is shifted to the far end of the extended partition, away from the Lost Room cabinet and its visitor approach.
-- The exhibition banner is separated from Hong Sunok's shelf allocation and centered on the 1725mm blank wall segment after the right shelf.
+- Blue by jjok is relocated from the fixed partition to the exterior-view glass wall, with both panel-and-frame assemblies facing into the gallery.
+- The exhibition banner is omitted from the current layout.
 - The 5800mm right shelf is split evenly: Ji Eunsil 2900mm and Hong Sunok 2900mm.
 - Half Chairs is moved farther inside from the entrance and receives a clearly marked 800 × 900mm floor zone.
 - The Lost Room has a 1500 × 1000mm VR movement zone aligned to the full width of cabinet A, beginning directly below the cabinet and ending above the Blue by jjok label.
@@ -23,8 +23,14 @@
 
 - The 2D architectural base is generated directly from `G09_PLAN.pdf` vector rectangles, lines, and curves, normalized to the stated 7250 × 9100 extents; the three source-only movable pedestals are excluded.
 - The fixed partition, internal/external columns, left storage shelving, cabinet return, right-wall shelf, and entrance swing now follow that extracted vector layer. The 3D equivalents use the same millimetre positions at 1/1000 scale.
-- Two attendant seats are separated: A at the mirror and B directly below the 726 cabinet gap.
-- The initial 3D camera is oriented so the right-wall shelf appears on screen-right and the left fixed partition appears on screen-left, matching G09_PLAN.pdf.
+- Two attendant seats are separated: A at the mirror and B behind the cabinet line inside the 726 cabinet gap.
+- Attendant A faces inward from the mirror and attendant B faces inward from the top wall.
+- Manual duplicate dimension labels are hidden; the visible dimensions come from the PDF-extracted vector layer only.
+- Filled, unstroked PDF glyph masks are filtered from the vector layer, removing pale floating annotation bars while retaining architectural strokes.
+- Wall junctions overlap slightly and exhibit surfaces are inset to avoid coplanar flicker and visible seam gaps.
+- Partition-side storage shelves terminate behind the partition face, and the partition overlaps the structural column by 25mm so neither z-fighting nor a column gap remains.
+- The entrance mirror uses a clean uniform light blue-gray surface, avoiding both black clipping and banded-gradient artifacts.
+- The 3D world is mirrored on its X axis and viewed from the entrance side so it matches the 2D plan in both axes: cabinets at top, glass entrance at bottom, fixed partition on left, and colored right-wall shelf on right.
 
 - 2D/3D switching, layer toggles, selection synchronization, orbit, pan, zoom, and artwork focus: passed.
 - Production build: passed.

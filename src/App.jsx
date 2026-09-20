@@ -7,16 +7,16 @@ const works = [
   { id: "eunsil", index: "02", zone: "상단 1/2", color: "#6b8f71", title: "지은실 · Hybrid Nature", detail: "우측 선반 · 상단 절반", size: "가로 2900 × 세로 450mm", shelfY: 1575, shelfHeight: 2900 },
   { id: "candle", index: "03", color: "#f26a21", title: "권정현 · Candle", detail: "목재장 B · 3점 + 태블릿 · 전원", prep: "개별 준비 · 멀티탭", size: "가로 900 × 세로 600mm" },
   { id: "bora", index: "04", color: "#258b85", title: "윤보라 · 잃어버린 방", detail: "LG 17MT70 · Quest 3 · 충전 독 · 티백 · 찻잔", prep: "개별 준비 · 멀티탭 · PD 충전기 · 충전 독 어댑터 · 전원·영상 케이블", size: "목재장 A 폭 기준 · VR 동작 구역 1500 × 1000mm" },
-  { id: "blue-by-jjok", index: "05", color: "#386a8c", title: "권정륜 · 신하진 · Blue by jjok", detail: "고정 파티션 전면 · 바닥 자립 2점", prep: "패널 H2500 · 구조체 H1000/H720", size: "패널 W700 · 바닥 모듈 420–520mm" },
+  { id: "blue-by-jjok", index: "05", color: "#386a8c", title: "권정륜 · 신하진 · Blue by jjok", detail: "외부 조망 유리벽 앞 · 바닥 자립 2점", prep: "패널 H2500 · 구조체 H1000/H720", size: "패널 W700 · 바닥 모듈 420–520mm" },
   { id: "halfchairs", index: "06", color: "#6d50d4", title: "이지우 · Half Chairs", detail: "중앙 우측 · 관람 동선 사이 바닥 설치", size: "가로 330 × 세로 425 × 높이 885mm" },
 ];
 
 const shelfWorks = ["eunsil", "sunok"].map((id) => works.find((work) => work.id === id));
 
 const selectionBounds = {
-  "blue-by-jjok": { x: 2240, y: 2980, width: 700, height: 1980 },
-  eunsil: { x: 6675, y: 1575, width: 370, height: 2900 },
-  sunok: { x: 6675, y: 4475, width: 370, height: 2900 },
+  "blue-by-jjok": { x: 3950, y: 8170, width: 2700, height: 680 },
+  eunsil: { x: 6800, y: 1575, width: 450, height: 2900 },
+  sunok: { x: 6800, y: 4475, width: 450, height: 2900 },
   candle: { x: 5125, y: 975, width: 900, height: 600 },
   bora: { x: 2350, y: 975, width: 1500, height: 1675 },
   halfchairs: { x: 4500, y: 4250, width: 800, height: 900 },
@@ -129,27 +129,29 @@ function Plan({ circulation, electrical, selected, onSelect }) {
               onClick={() => onSelect(work.id)}
               onKeyDown={(event) => (event.key === "Enter" || event.key === " ") && onSelect(work.id)}
             >
-              <rect x="6675" y={work.shelfY} width="370" height={work.shelfHeight} fill={work.color} />
-              <text className="segment-zone" x="6860" y={work.shelfY + 235}>{work.zone}</text>
-              <text className="segment-length" x="6860" y={work.shelfY + 430}>2900</text>
-              <text className="segment-depth" x="6860" y={work.shelfY + 595}>× 450</text>
-              <text className="segment-name" x="6485" y={work.shelfY + work.shelfHeight / 2}>{work.index} · {work.title}</text>
+              <rect x="6800" y={work.shelfY} width="450" height={work.shelfHeight} fill={work.color} />
+              <text className="segment-zone" x="7025" y={work.shelfY + 235}>{work.zone}</text>
+              <text className="segment-length" x="7025" y={work.shelfY + 430}>2900</text>
+              <text className="segment-depth" x="7025" y={work.shelfY + 595}>× 450</text>
+              <text className="segment-name" x="6600" y={work.shelfY + work.shelfHeight / 2}>{work.index} · {work.title}</text>
             </g>
           ))}
         </g>
 
-        <g className={`blue-work${selected === "blue-by-jjok" ? " is-selected" : ""}`} data-id="blue-by-jjok" tabIndex="0" role="button" aria-label="권정륜 신하진 Blue by jjok, 고정 파티션 전면 바닥 자립형 2점" onClick={() => onSelect("blue-by-jjok")} onKeyDown={(event) => (event.key === "Enter" || event.key === " ") && onSelect("blue-by-jjok")}>
-          <text className="work-label" x="3050" y="3800">05 · 권정륜 · 신하진</text>
-          <text className="work-detail" x="3050" y="3970">고정 파티션 전면 · 바닥 자립 2점</text>
-          <rect className="installation-envelope" x="2240" y="2980" width="700" height="1980" rx="32" />
-          <rect className="panel" x="2245" y="3050" width="70" height="700" />
-          <rect className="panel" x="2245" y="4250" width="70" height="700" />
-          <rect className="module module-a" x="2320" y="3140" width="420" height="520" />
-          <rect className="module module-b" x="2320" y="4340" width="520" height="520" />
-          <line x1="2320" y1="3140" x2="2740" y2="3660" />
-          <line x1="2740" y1="3140" x2="2320" y2="3660" />
-          <line x1="2320" y1="4340" x2="2840" y2="4860" />
-          <line x1="2840" y1="4340" x2="2320" y2="4860" />
+        <g className={`blue-work${selected === "blue-by-jjok" ? " is-selected" : ""}`} data-id="blue-by-jjok" tabIndex="0" role="button" aria-label="권정륜 신하진 Blue by jjok, 외부 조망 유리벽 앞 바닥 자립형 2점" onClick={() => onSelect("blue-by-jjok")} onKeyDown={(event) => (event.key === "Enter" || event.key === " ") && onSelect("blue-by-jjok")}>
+          <text className="work-label" x="5550" y="7870" textAnchor="middle">05 · 권정륜 · 신하진</text>
+          <text className="work-detail" x="5550" y="8040" textAnchor="middle">외부 조망 유리벽 앞 · 바닥 자립 2점</text>
+          <rect className="installation-envelope" x="3950" y="8170" width="2700" height="680" rx="32" />
+          <rect className="stacked-cube" x="4040" y="8330" width="460" height="460" />
+          <rect className="stacked-cube stacked-cube-top" x="4140" y="8250" width="460" height="460" />
+          <rect className="panel" x="4550" y="8780" width="700" height="70" />
+          <rect className="panel" x="5750" y="8780" width="700" height="70" />
+          <rect className="module module-a" x="4640" y="8290" width="520" height="420" />
+          <rect className="module module-b" x="5840" y="8240" width="520" height="520" />
+          <line x1="4640" y1="8290" x2="5160" y2="8710" />
+          <line x1="5160" y1="8290" x2="4640" y2="8710" />
+          <line x1="5840" y1="8240" x2="6360" y2="8760" />
+          <line x1="6360" y1="8240" x2="5840" y2="8760" />
         </g>
 
         <g className="cabinet-sharing" aria-label="목재장 B 공유 가능 구간">
@@ -195,9 +197,8 @@ function Plan({ circulation, electrical, selected, onSelect }) {
             <text x="3450" y="5740" textAnchor="middle">전시 지킴이 A</text>
           </g>
           <g aria-label="목재장 사이 전시 지킴이 자리">
-            <rect className="staff-zone" x="3888" y="1600" width="650" height="650" rx="34" />
-            <rect className="staff-seat" x="4038" y="1830" width="350" height="350" rx="28" /><line x1="4038" y1="1830" x2="4388" y2="2180" /><line x1="4388" y1="1830" x2="4038" y2="2180" />
-            <text x="4213" y="1740" textAnchor="middle">전시 지킴이 B</text>
+            <rect className="staff-zone" x="3888" y="280" width="650" height="650" rx="34" />
+            <rect className="staff-seat" x="4038" y="430" width="350" height="350" rx="28" /><line x1="4038" y1="430" x2="4388" y2="780" /><line x1="4388" y1="430" x2="4038" y2="780" />
           </g>
         </g>
 
@@ -234,8 +235,6 @@ function Plan({ circulation, electrical, selected, onSelect }) {
           <line x1="3970" y1="0" x2="3970" y2="975" /><line x1="3925" y1="0" x2="4015" y2="0" /><line x1="3925" y1="975" x2="4015" y2="975" /><text x="3900" y="488" transform="rotate(-90 3900 488)">975</text>
         </g>
         <g className="source-plan-labels" aria-label="원도면 주요 치수와 고정물 명칭">
-          <text x="3625" y="-500">7,250</text><text x="-520" y="4550" transform="rotate(-90 -520 4550)">9,100</text><text x="-850" y="2650" transform="rotate(-90 -850 2650)">5,300</text>
-          <text x="1200" y="1760">1300</text><text x="1350" y="2778" transform="rotate(-90 1350 2778)">5045</text><text x="1590" y="1850" transform="rotate(-90 1590 1850)">3100</text><text x="1590" y="4350" transform="rotate(-90 1590 4350)">1900</text>
           <text x="3100" y="850">목재장 A · 1500 × 600 · H850</text><text x="5575" y="850">목재장 B · 2000 + 반환 450 · H1000</text>
         </g>
         <g className="north-mark" aria-label="도면 방향"><path d="M430 8300L650 8750L430 8650L210 8750Z" /><text x="430" y="8180">N</text></g>
@@ -256,7 +255,7 @@ function ThreeView({ selected, onSelect }) {
     const engine = new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true });
     const scene = new BABYLON.Scene(engine);
     scene.clearColor = new BABYLON.Color4(0.93, 0.94, 0.95, 1);
-    const camera = new BABYLON.ArcRotateCamera("camera", -Math.PI / 2, 0.62, 17.5, new BABYLON.Vector3(4.2, 0.25, 4.6), scene);
+    const camera = new BABYLON.ArcRotateCamera("camera", Math.PI / 2, 0.62, 17.5, new BABYLON.Vector3(3.625, 0.25, 4.6), scene);
     camera.attachControl(true, true, 2);
     camera.lowerRadiusLimit = 7;
     camera.upperRadiusLimit = 24;
@@ -291,6 +290,9 @@ function ThreeView({ selected, onSelect }) {
     const glassFrameMat = material("glass-frame", "#343a40");
     const anchors = new Map();
     const exhibitMeshes = new Map();
+    const orientationRoot = new BABYLON.TransformNode("plan-orientation-root", scene);
+    orientationRoot.scaling.x = -1;
+    orientationRoot.position.x = 7.25;
 
     const registerExhibitMesh = (id, mesh, isAnchor = false) => {
       if (!exhibitMeshes.has(id)) exhibitMeshes.set(id, []);
@@ -303,6 +305,7 @@ function ThreeView({ selected, onSelect }) {
     const box = (name, width, height, depth, x, y, z, mat, pickable = false) => {
       const mesh = BABYLON.MeshBuilder.CreateBox(name, { width, height, depth }, scene);
       mesh.position.set(x, y, z);
+      mesh.parent = orientationRoot;
       mesh.material = mat;
       mesh.isPickable = pickable;
       return mesh;
@@ -310,30 +313,28 @@ function ThreeView({ selected, onSelect }) {
 
     box("floor-upper", 7.25, 0.08, 5.3, 3.625, -0.04, 2.65, floorMat);
     box("floor-lower", 4.4, 0.08, 3.8, 5.05, -0.04, 7.2, floorMat);
-    box("wall-top", 7.25, 2.85, 0.10, 3.625, 1.425, 0, wallMat);
-    box("wall-right", 0.10, 2.85, 9.1, 7.25, 1.425, 4.55, wallMat);
+    box("wall-top", 7.34, 2.85, 0.14, 3.625, 1.425, 0.02, wallMat);
+    box("wall-right", 0.14, 2.85, 9.18, 7.23, 1.425, 4.55, wallMat);
     box("exterior-glass-wall", 4.35, 2.08, 0.026, 5.025, 1.08, 9.065, glassMat);
     [2.85, 4.30, 5.75, 7.20].forEach((x, index) => box("glass-mullion-" + index, 0.065, 2.18, 0.045, x, 1.09, 9.035, glassFrameMat));
     box("glass-frame-top", 4.35, 0.07, 0.045, 5.025, 2.18, 9.035, glassFrameMat);
     box("glass-frame-bottom", 4.35, 0.07, 0.045, 5.025, 0.035, 9.035, glassFrameMat);
-    box("glass-wall-header", 4.35, 0.67, 0.10, 5.025, 2.515, 9.1, wallMat);
+    box("glass-wall-header", 4.45, 0.67, 0.14, 5.00, 2.515, 9.06, wallMat);
     box("outside-sidewalk", 4.35, 0.08, 1.45, 5.025, -0.04, 9.825, material("outside-sidewalk-material", "#686c70"));
-    box("wall-left-upper", 0.10, 2.85, 5.3, 0, 1.425, 2.65, wallMat);
-    box("wall-notch", 2.75, 2.85, 0.10, 1.425, 1.425, 5.3, wallMat);
-    box("wall-entry-a", 0.10, 2.85, 1.42, 2.85, 1.425, 6.01, wallMat);
-    box("wall-entry-b", 0.10, 2.85, 1.145, 2.85, 1.425, 8.4925, wallMat);
+    box("wall-left-upper", 0.14, 2.85, 5.38, 0.02, 1.425, 2.65, wallMat);
+    box("wall-notch", 2.90, 2.85, 0.14, 1.45, 1.425, 5.28, wallMat);
+    box("wall-entry-a", 0.14, 2.85, 1.50, 2.83, 1.425, 6.00, wallMat);
+    box("wall-entry-b", 0.14, 2.85, 1.22, 2.83, 1.425, 8.475, wallMat);
 
-    const mirrorTexture = new BABYLON.MirrorTexture("entrance-mirror-reflection", 1024, scene, true);
-    mirrorTexture.mirrorPlane = new BABYLON.Plane(-1, 0, 0, 2.915);
-    mirrorTexture.level = 0.88;
     const mirrorMat = new BABYLON.StandardMaterial("entrance-mirror-material", scene);
-    mirrorMat.diffuseColor = new BABYLON.Color3(0.08, 0.10, 0.12);
+    mirrorMat.diffuseColor = BABYLON.Color3.FromHexString("#b9c3ca");
+    mirrorMat.emissiveColor = BABYLON.Color3.FromHexString("#8f9ba4").scale(0.18);
     mirrorMat.specularColor = BABYLON.Color3.White();
-    mirrorMat.reflectionTexture = mirrorTexture;
+    mirrorMat.specularPower = 256;
     mirrorMat.backFaceCulling = false;
     const entranceMirror = BABYLON.MeshBuilder.CreatePlane("entrance-mirror", { width: 1.25, height: 1.95, sideOrientation: BABYLON.Mesh.DOUBLESIDE }, scene);
-    entranceMirror.position.set(2.915, 1.155, 5.925);
-    entranceMirror.rotation.y = Math.PI / 2;
+    entranceMirror.position.set(4.335, 1.155, 5.925);
+    entranceMirror.rotation.y = -Math.PI / 2;
     entranceMirror.material = mirrorMat;
     entranceMirror.isPickable = false;
     const mirrorFrameMat = material("entrance-mirror-frame", "#30353b");
@@ -341,34 +342,6 @@ function ThreeView({ selected, onSelect }) {
     box("mirror-frame-bottom", 0.035, 0.035, 1.32, 2.925, 0.163, 5.925, mirrorFrameMat);
     box("mirror-frame-side-a", 0.035, 2.02, 0.035, 2.925, 1.155, 5.285, mirrorFrameMat);
     box("mirror-frame-side-b", 0.035, 2.02, 0.035, 2.925, 1.155, 6.565, mirrorFrameMat);
-
-    const introPanelMat = new BABYLON.StandardMaterial("intro-panel-material", scene);
-    const introTexture = new BABYLON.DynamicTexture("intro-panel-texture", { width: 1024, height: 1536 }, scene, true);
-    const introContext = introTexture.getContext();
-    introContext.fillStyle = "#f3efe5";
-    introContext.fillRect(0, 0, 1024, 1536);
-    introContext.fillStyle = "#155eef";
-    introContext.fillRect(0, 0, 1024, 190);
-    introContext.fillStyle = "#ffffff";
-    introContext.font = "700 58px Arial";
-    introContext.fillText("DESIGNART TOKYO 2026", 70, 118);
-    introContext.fillStyle = "#111318";
-    introContext.font = "700 92px Arial";
-    introContext.fillText("EXHIBITION", 70, 380);
-    introContext.fillText("INTRODUCTION", 70, 490);
-    introContext.fillStyle = "#526072";
-    introContext.font = "500 38px Arial";
-    introContext.fillText("MATERIAL · MEMORY", 70, 660);
-    introContext.fillText("NATURE · TECHNOLOGY", 70, 720);
-    introContext.fillStyle = "#9aa3af";
-    for (let y = 850; y <= 1280; y += 72) introContext.fillRect(70, y, 830 - (y % 144 ? 90 : 0), 10);
-    introTexture.update();
-    introPanelMat.diffuseTexture = introTexture;
-    introPanelMat.specularColor = BABYLON.Color3.Black();
-    const introPanel = BABYLON.MeshBuilder.CreatePlane("exhibition-intro-panel", { width: 1.25, height: 1.75, sideOrientation: BABYLON.Mesh.DOUBLESIDE }, scene);
-    introPanel.position.set(7.19, 1.45, 8.235);
-    introPanel.rotation.y = -Math.PI / 2;
-    introPanel.material = introPanelMat;
 
     box("entry-glass", 0.026, 2.08, 1.12, 2.875, 1.08, 7.32, glassMat);
     box("entry-frame-a", 0.045, 2.18, 0.075, 2.91, 1.09, 6.72, glassFrameMat);
@@ -379,10 +352,10 @@ function ThreeView({ selected, onSelect }) {
     box("entry-handle", 0.045, 0.34, 0.05, 2.95, 1.03, 7.70, glassFrameMat);
     box("entry-lintel", 0.10, 0.67, 1.20, 2.845, 2.515, 7.32, wallMat);
     box("entry-passage-floor", 1.70, 0.08, 1.20, 2.00, -0.04, 7.32, material("passage-floor", "#aeb0b2"));
-    box("fixed-partition", 0.06, 2.85, 3.525, 2.27, 1.425, 3.5375, wallMat);
+    box("fixed-partition", 0.08, 2.85, 3.65, 2.27, 1.425, 3.475, wallMat);
     const storageShelfMat = material("storage-shelf-material", "#bbb8b0");
     [1.975, 2.925, 3.875, 4.825].forEach((z, index) => box(`left-storage-shelf-${index}`, 0.45, 0.82, 0.90, 0.325, 0.41, z, storageShelfMat));
-    [2.925, 3.875, 4.825].forEach((z, index) => box(`partition-storage-shelf-${index}`, 0.45, 0.82, 0.90, 2.075, 0.41, z, storageShelfMat));
+    [2.925, 3.875, 4.825].forEach((z, index) => box(`partition-storage-shelf-${index}`, 0.38, 0.82, 0.88, 2.01, 0.41, z, storageShelfMat));
 
     box("pillar", 0.8, 2.85, 0.8, 1.95, 1.425, 1.275, fixedMat);
     box("external-pillar-notch", 0.8, 2.85, 0.8, 1.95, 1.425, 5.925, fixedMat);
@@ -390,24 +363,23 @@ function ThreeView({ selected, onSelect }) {
     box("external-pillar-right-lower", 0.8, 2.85, 0.8, 7.88, 1.425, 5.925, fixedMat);
     box("cabinet-a", 1.5, 0.85, 0.6, 3.10, 0.425, 1.275, fixedMat);
     box("cabinet-b", 2.0, 1.0, 0.6, 5.575, 0.5, 1.275, fixedMat);
-    box("right-shelf-return", 0.461, 1.0, 1.455, 6.8695, 0.5, 0.8475, fixedMat);
-    const cornerJoin = box("cabinet-b-corner", 0.45, 1.0, 0.60, 6.80, 0.5, 1.275, fixedMat);
-    cornerJoin.rotation.y = -Math.PI / 8;
+    box("right-shelf-return", 0.45, 1.0, 1.455, 7.025, 0.5, 0.8475, fixedMat);
+    box("cabinet-b-corner", 0.225, 1.0, 0.60, 6.6875, 0.5, 1.275, fixedMat);
     box("cabinet-gap-barrier", 0.675, 0.012, 0.055, 4.2125, 0.006, 1.605, material("cabinet-gap-barrier-material", "#292d33"));
     const shelfMat = material("shelf", "#a8a39b");
     const shelfRecessMat = material("shelf-recess", "#6f6b66");
     const shelfInteriorMat = material("shelf-interior", "#918c85");
-    box("right-shelf-bottom", 0.461, 0.32, 5.8, 6.8695, 0.16, 4.475, shelfMat);
-    box("right-shelf-fascia", 0.461, 0.20, 5.8, 6.8695, 0.77, 4.475, shelfMat);
+    box("right-shelf-bottom", 0.45, 0.32, 5.8, 7.025, 0.16, 4.475, shelfMat);
+    box("right-shelf-fascia", 0.45, 0.20, 5.8, 7.025, 0.77, 4.475, shelfMat);
     const shelfPier = 0.216;
     for (let index = 0; index < 6; index += 1) {
       const z = 1.575 + shelfPier / 2 + index * (0.9 + shelfPier);
-      box("right-shelf-pier-" + index, 0.461, 0.35, shelfPier, 6.8695, 0.495, z, shelfMat);
+      box("right-shelf-pier-" + index, 0.45, 0.35, shelfPier, 7.025, 0.495, z, shelfMat);
     }
     for (let index = 0; index < 5; index += 1) {
       const z = 1.575 + shelfPier + 0.45 + index * (0.9 + shelfPier);
-      box("right-shelf-back-" + index, 0.018, 0.31, 0.84, 7.091, 0.495, z, shelfRecessMat);
-      box("right-shelf-inside-" + index, 0.43, 0.025, 0.84, 6.865, 0.335, z, shelfInteriorMat);
+      box("right-shelf-back-" + index, 0.018, 0.31, 0.84, 7.235, 0.495, z, shelfRecessMat);
+      box("right-shelf-inside-" + index, 0.40, 0.025, 0.84, 7.01, 0.345, z, shelfInteriorMat);
     }
 
     const boraMat = material("mat-bora", works.find((work) => work.id === "bora").color, 0.9);
@@ -418,18 +390,21 @@ function ThreeView({ selected, onSelect }) {
     registerExhibitMesh("bora", box("bora-dock", 0.50, 0.04, 0.23, 3.16, 0.92, 1.405, whiteMat));
     const hmd = BABYLON.MeshBuilder.CreateTorus("bora-hmd", { diameter: 0.2, thickness: 0.06 }, scene);
     hmd.position.set(3.16, 0.98, 1.405);
+    hmd.parent = orientationRoot;
     hmd.rotation.x = Math.PI / 2;
     hmd.material = material("hmd", "#424750");
     registerExhibitMesh("bora", hmd);
     [2.975, 3.345].forEach((x, index) => {
       const controller = BABYLON.MeshBuilder.CreateCylinder("bora-controller-" + index, { diameter: 0.09, height: 0.10 }, scene);
       controller.position.set(x, 0.98, 1.405);
+      controller.parent = orientationRoot;
       controller.material = material("controller-" + index, "#68707b");
       registerExhibitMesh("bora", controller);
     });
     registerExhibitMesh("bora", box("bora-teabag", 0.22, 0.03, 0.13, 3.14, 0.91, 1.105, material("teabag", "#d6b06b")));
     const cup = BABYLON.MeshBuilder.CreateCylinder("bora-cup", { diameter: 0.14, height: 0.10 }, scene);
     cup.position.set(3.47, 0.95, 1.105);
+    cup.parent = orientationRoot;
     cup.material = whiteMat;
     registerExhibitMesh("bora", cup);
     registerExhibitMesh("bora", box("bora-power-strip", 0.35, 0.04, 0.06, 3.135, 0.91, 1.235, whiteMat));
@@ -438,20 +413,24 @@ function ThreeView({ selected, onSelect }) {
     registerExhibitMesh("candle", box("candle", 0.9, 0.06, 0.6, 5.575, 1.03, 1.275, candleMat, true), true);
     const smallCandle = BABYLON.MeshBuilder.CreateCylinder("candle-surface-small", { diameter: 0.14, height: 0.10 }, scene);
     smallCandle.position.set(5.88, 1.11, 1.34);
+    smallCandle.parent = orientationRoot;
     smallCandle.material = candleMat;
     registerExhibitMesh("candle", smallCandle);
     const largeCandleBase = BABYLON.MeshBuilder.CreateCylinder("candle-surface-base", { diameter: 0.28, height: 0.035 }, scene);
     largeCandleBase.position.set(5.58, 1.078, 1.34);
+    largeCandleBase.parent = orientationRoot;
     largeCandleBase.material = whiteMat;
     registerExhibitMesh("candle", largeCandleBase);
     const largeCandle = BABYLON.MeshBuilder.CreateCylinder("candle-surface-large", { diameter: 0.17, height: 0.10 }, scene);
     largeCandle.position.set(5.58, 1.145, 1.34);
+    largeCandle.parent = orientationRoot;
     largeCandle.material = candleMat;
     registerExhibitMesh("candle", largeCandle);
     registerExhibitMesh("candle", box("candle-display-wall", 0.48, 0.38, 0.03, 5.77, 1.19, 0.995, whiteMat));
     registerExhibitMesh("candle", box("candle-light-bar", 0.50, 0.06, 0.08, 5.77, 1.41, 1.02, whiteMat));
     const wallPiece = BABYLON.MeshBuilder.CreateCylinder("candle-wall", { diameter: 0.15, height: 0.018 }, scene);
     wallPiece.position.set(5.89, 1.28, 1.02);
+    wallPiece.parent = orientationRoot;
     wallPiece.rotation.x = Math.PI / 2;
     wallPiece.material = candleMat;
     registerExhibitMesh("candle", wallPiece);
@@ -459,10 +438,14 @@ function ThreeView({ selected, onSelect }) {
 
     const blueWork = works.find((work) => work.id === "blue-by-jjok");
     const bluePanelMat = material("blue-panel-material", "#ececee");
+    const blueCubeLowerMat = material("blue-cube-lower-material", "#d8d5ca");
+    const blueCubeUpperMat = material("blue-cube-upper-material", "#f3efe2");
     const blueAnchorMat = material("blue-installation-envelope", blueWork.color, 0.08);
-    registerExhibitMesh("blue-by-jjok", box("blue-installation-anchor", 0.72, 0.025, 1.78, 2.60, 0.0125, 3.95, blueAnchorMat, true), true);
-    registerExhibitMesh("blue-by-jjok", box("blue-panel-a", 0.06, 2.50, 0.70, 2.27, 1.25, 3.35, bluePanelMat, true));
-    registerExhibitMesh("blue-by-jjok", box("blue-panel-b", 0.06, 2.50, 0.70, 2.27, 1.25, 4.55, bluePanelMat, true));
+    registerExhibitMesh("blue-by-jjok", box("blue-installation-anchor", 2.70, 0.025, 0.68, 5.30, 0.0125, 8.51, blueAnchorMat, true), true);
+    registerExhibitMesh("blue-by-jjok", box("blue-panel-a", 0.70, 2.50, 0.06, 4.90, 1.25, 8.81, bluePanelMat, true));
+    registerExhibitMesh("blue-by-jjok", box("blue-panel-b", 0.70, 2.50, 0.06, 6.10, 1.25, 8.81, bluePanelMat, true));
+    registerExhibitMesh("blue-by-jjok", box("blue-stacked-cube-lower", 0.46, 0.50, 0.46, 4.24, 0.25, 8.50, blueCubeLowerMat, true));
+    registerExhibitMesh("blue-by-jjok", box("blue-stacked-cube-upper", 0.46, 0.50, 0.46, 4.34, 0.75, 8.42, blueCubeUpperMat, true));
     const blueFrameMats = [
       material("blue-frame-blue", "#0755c9"),
       material("blue-frame-purple", "#7130bd"),
@@ -477,30 +460,29 @@ function ThreeView({ selected, onSelect }) {
       blueBeamIndex += 1;
       return registerExhibitMesh("blue-by-jjok", mesh);
     };
-    const createBlueFrame = (prefix, z, frameWidth, frameDepth, frameHeight) => {
+    const createBlueFrame = (prefix, x, z, frameWidth, frameDepth, frameHeight) => {
       const beam = 0.055;
       const innerWidth = frameWidth - beam * 2;
       const innerDepth = frameDepth - beam * 2;
-      const x = 2.30 + frameDepth / 2;
-      const xNear = x - frameDepth / 2 + beam / 2;
-      const xFar = x + frameDepth / 2 - beam / 2;
-      const zLeft = z - frameWidth / 2 + beam / 2;
-      const zRight = z + frameWidth / 2 - beam / 2;
-      [[xNear, zLeft], [xNear, zRight], [xFar, zLeft], [xFar, zRight]].forEach(([postX, postZ], index) => {
+      const xLeft = x - frameWidth / 2 + beam / 2;
+      const xRight = x + frameWidth / 2 - beam / 2;
+      const zNear = z - frameDepth / 2 + beam / 2;
+      const zFar = z + frameDepth / 2 - beam / 2;
+      [[xLeft, zNear], [xRight, zNear], [xLeft, zFar], [xRight, zFar]].forEach(([postX, postZ], index) => {
         blueBeam(`${prefix}-post-${index}`, beam, frameHeight, beam, postX, frameHeight / 2, postZ);
       });
       [beam / 2, frameHeight - beam / 2].forEach((y, level) => {
-        blueBeam(`${prefix}-rail-z-near-${level}`, beam, beam, innerWidth, xNear, y, z);
-        blueBeam(`${prefix}-rail-z-far-${level}`, beam, beam, innerWidth, xFar, y, z);
-        blueBeam(`${prefix}-rail-x-left-${level}`, innerDepth, beam, beam, x, y, zLeft);
-        blueBeam(`${prefix}-rail-x-right-${level}`, innerDepth, beam, beam, x, y, zRight);
+        blueBeam(`${prefix}-rail-x-near-${level}`, innerWidth, beam, beam, x, y, zNear);
+        blueBeam(`${prefix}-rail-x-far-${level}`, innerWidth, beam, beam, x, y, zFar);
+        blueBeam(`${prefix}-rail-z-left-${level}`, beam, beam, innerDepth, xLeft, y, z);
+        blueBeam(`${prefix}-rail-z-right-${level}`, beam, beam, innerDepth, xRight, y, z);
       });
     };
-    createBlueFrame("blue-frame-tall", 3.35, 0.52, 0.42, 1.00);
-    createBlueFrame("blue-frame-low", 4.55, 0.52, 0.52, 0.72);
+    createBlueFrame("blue-frame-tall", 4.90, 8.50, 0.52, 0.42, 1.00);
+    createBlueFrame("blue-frame-low", 6.10, 8.50, 0.52, 0.52, 0.72);
 
     shelfWorks.forEach((work) => {
-      const mesh = box(work.id, 0.37, 0.07, work.shelfHeight / 1000, 6.85, 0.905, (work.shelfY + work.shelfHeight / 2) / 1000, material("mat-" + work.id, work.color, 0.9), true);
+      const mesh = box(work.id, 0.41, 0.05, work.shelfHeight / 1000 - 0.02, 7.015, 0.895, (work.shelfY + work.shelfHeight / 2) / 1000, material("mat-" + work.id, work.color, 0.9), true);
       registerExhibitMesh(work.id, mesh, true);
     });
     const chairMat = material("chair", works.find((work) => work.id === "halfchairs").color, 0.9);
@@ -514,22 +496,27 @@ function ThreeView({ selected, onSelect }) {
 
     const staffZoneMat = material("staff-zone-material", "#e8e0cf");
     const staffChairMat = material("staff-chair-material", "#8b7650");
-    const createStaffStation = (prefix, x, z, zoneWidth, zoneDepth) => {
+    const createStaffStation = (prefix, x, z, zoneWidth, zoneDepth, facing = "x") => {
       box(`${prefix}-zone`, zoneWidth, 0.025, zoneDepth, x, 0.0125, z, staffZoneMat);
       box(`${prefix}-seat`, 0.35, 0.07, 0.35, x, 0.47, z, staffChairMat);
-      box(`${prefix}-back`, 0.06, 0.58, 0.35, x - 0.17, 0.78, z, staffChairMat);
+      if (facing === "z") {
+        box(`${prefix}-back`, 0.35, 0.58, 0.06, x, 0.78, z - 0.17, staffChairMat);
+      } else {
+        box(`${prefix}-back`, 0.06, 0.58, 0.35, x - 0.17, 0.78, z, staffChairMat);
+      }
       [[-0.15, -0.145], [0.15, -0.145], [-0.15, 0.145], [0.15, 0.145]].forEach(([dx, dz], legIndex) => {
         box(`${prefix}-leg-${legIndex}`, 0.04, 0.44, 0.04, x + dx, 0.22, z + dz, staffChairMat);
       });
     };
     createStaffStation("staff-mirror", 3.45, 5.925, 0.70, 0.65);
-    createStaffStation("staff-cabinet-gap", 4.213, 1.925, 0.65, 0.65);
+    createStaffStation("staff-cabinet-gap", 4.213, 0.605, 0.65, 0.65, "z");
 
     BABYLON.SceneLoader.ImportMeshAsync("", import.meta.env.BASE_URL + "assets/", "person.glb", scene).then((result) => {
       if (scene.isDisposed) return;
       const modelRoot = result.meshes[0];
       if (!modelRoot) return;
       const personPivot = new BABYLON.TransformNode("scale-person", scene);
+      personPivot.parent = orientationRoot;
       modelRoot.parent = personPivot;
       modelRoot.rotationQuaternion = null;
       modelRoot.rotation.x = -Math.PI / 2;
@@ -537,7 +524,6 @@ function ThreeView({ selected, onSelect }) {
         mesh.isPickable = false;
         mesh.alwaysSelectAsActiveMesh = true;
         mesh.computeWorldMatrix(true);
-        if (mirrorTexture.renderList) mirrorTexture.renderList.push(mesh);
       });
       personPivot.computeWorldMatrix(true);
       const bounds = personPivot.getHierarchyBoundingVectors(true);
@@ -571,6 +557,7 @@ function ThreeView({ selected, onSelect }) {
     personLabelMat.disableLighting = true;
     const personLabel = BABYLON.MeshBuilder.CreatePlane("person-height-label", { width: 0.85, height: 0.20, sideOrientation: BABYLON.Mesh.DOUBLESIDE }, scene);
     personLabel.position.set(5.25, 1.84, 6.45);
+    personLabel.parent = orientationRoot;
     personLabel.billboardMode = BABYLON.Mesh.BILLBOARDMODE_ALL;
     personLabel.material = personLabelMat;
     personLabel.isPickable = false;
@@ -605,12 +592,13 @@ function ThreeView({ selected, onSelect }) {
       selectionBand.scaling.set(width + 0.12, 1, depth + 0.12);
       selectionBand.position.set(anchor.position.x, Math.max(0.012, bounds.minimumWorld.y - 0.006), anchor.position.z);
       selectionBand.isVisible = true;
-      const target = new BABYLON.Vector3(anchor.position.x, id === "blue-by-jjok" ? 1.20 : Math.max(anchor.position.y, 0.65), anchor.position.z);
+      const worldAnchor = anchor.getAbsolutePosition();
+      const target = new BABYLON.Vector3(worldAnchor.x, id === "blue-by-jjok" ? 1.20 : Math.max(worldAnchor.y, 0.65), worldAnchor.z);
       const isShelf = shelfWorks.some((work) => work.id === id);
       const view = isShelf
         ? { alpha: Math.PI, beta: 1.08, radius: 5.2 }
         : id === "blue-by-jjok"
-          ? { alpha: 0, beta: 1.08, radius: 4.4 }
+          ? { alpha: -1.30, beta: 1.12, radius: 3.2 }
         : id === "bora" || id === "candle"
           ? { alpha: Math.PI / 2, beta: 1.02, radius: 4.8 }
           : { alpha: -0.82, beta: 1.02, radius: 5.4 };
@@ -630,7 +618,6 @@ function ThreeView({ selected, onSelect }) {
       const id = info.pickInfo?.pickedMesh?.metadata?.id;
       if (id) onSelect(id);
     });
-    mirrorTexture.renderList = scene.meshes.filter((mesh) => mesh !== entranceMirror && !mesh.name.startsWith("mirror-frame"));
     engine.runRenderLoop(() => scene.render());
     const resize = () => engine.resize();
     window.addEventListener("resize", resize);
@@ -685,7 +672,7 @@ function Legend({ selected, onSelect }) {
       </section>
       <section className="fixture-key">
         <h3>고정물</h3>
-        <dl><div><dt>우측 선반</dt><dd>상단 ㄱ자 연결 + 직선부 5800 × 450 · H870</dd></div><div><dt>선반 배정</dt><dd>지은실 상단 2900 · 홍선옥 하단 2900</dd></div><div><dt>선반 구조</dt><dd>전면부 200 · 개구 900 × 350 · 하부 320</dd></div><div><dt>목재장 A</dt><dd>1500 × 600 · H850</dd></div><div><dt>목재장 B</dt><dd>직선 2000 + 우측 450 반환 · H1000</dd></div><div><dt>고정 파티션</dt><dd>Blue by jjok 주 전시 설치면 · 뒤 1300 통로와 양측 선반</dd></div><div><dt>설명 현수막</dt><dd>우측 선반 끝 1725 빈 벽 구간</dd></div><div><dt>Half Chairs</dt><dd>연보라 바닥 구획 800 × 900 · 입구에서 안쪽 이동</dd></div><div><dt>전시 지킴이</dt><dd>A 거울 전면 · B 목재장 사이 726 간격 아래</dd></div><div><dt>구조기둥</dt><dd>800 × 800 · 이동 불가</dd></div><div><dt>천장고</dt><dd>CH 2850 · 전기 도면 기준</dd></div></dl>
+        <dl><div><dt>우측 선반</dt><dd>상단 ㄱ자 연결 + 직선부 5800 × 450 · H870</dd></div><div><dt>선반 배정</dt><dd>지은실 상단 2900 · 홍선옥 하단 2900</dd></div><div><dt>선반 구조</dt><dd>전면부 200 · 개구 900 × 350 · 하부 320</dd></div><div><dt>목재장 A</dt><dd>1500 × 600 · H850</dd></div><div><dt>목재장 B</dt><dd>직선 2000 + 우측 450 반환 · H1000</dd></div><div><dt>고정 파티션</dt><dd>뒤 1300 통로와 양측 기존 선반 · 작품 미설치</dd></div><div><dt>Blue by jjok</dt><dd>외부 조망 유리벽 앞 · 바닥 자립 2점</dd></div><div><dt>Half Chairs</dt><dd>연보라 바닥 구획 800 × 900 · 입구에서 안쪽 이동</dd></div><div><dt>전시 지킴이</dt><dd>A 거울 전면 · B 목재장 사이 726 간격 뒤쪽</dd></div><div><dt>구조기둥</dt><dd>800 × 800 · 이동 불가</dd></div><div><dt>천장고</dt><dd>CH 2850 · 전기 도면 기준</dd></div></dl>
       </section>
     </aside>
   );

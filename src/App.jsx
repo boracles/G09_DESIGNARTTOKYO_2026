@@ -323,13 +323,14 @@ function ThreeView({ selected, onSelect }) {
     box("floor-upper", 7.25, 0.08, 5.3, 3.625, -0.04, 2.65, floorMat);
     box("floor-lower", 4.4, 0.08, 3.8, 5.05, -0.04, 7.2, floorMat);
     box("wall-top", 7.34, 2.85, 0.14, 3.625, 1.425, 0.02, wallMat);
-    box("wall-right", 0.14, 2.85, 9.18, 7.23, 1.425, 4.55, wallMat);
+    const rightWall = box("wall-right", 0.14, 2.85, 9.18, 7.23, 1.425, 4.55, wallMat);
     box("exterior-glass-wall", 4.35, 2.08, 0.026, 5.025, 1.08, 9.065, glassMat);
     [2.85, 4.30, 5.75, 7.20].forEach((x, index) => box("glass-mullion-" + index, 0.065, 2.18, 0.045, x, 1.09, 9.035, glassFrameMat));
     box("glass-frame-top", 4.35, 0.07, 0.045, 5.025, 2.18, 9.035, glassFrameMat);
     box("glass-frame-bottom", 4.35, 0.07, 0.045, 5.025, 0.035, 9.035, glassFrameMat);
     box("glass-wall-header", 4.45, 0.67, 0.14, 5.00, 2.515, 9.06, wallMat);
     box("outside-sidewalk", 4.35, 0.08, 1.45, 5.025, -0.04, 9.825, material("outside-sidewalk-material", "#686c70"));
+    box("exterior-glass-center-pillar", 1.50, 2.85, 1.20, 5.05, 1.425, 10.45, fixedMat);
     box("wall-left-upper", 0.14, 2.85, 5.38, 0.02, 1.425, 2.65, wallMat);
     box("wall-notch", 2.90, 2.85, 0.14, 1.45, 1.425, 5.28, wallMat);
     box("wall-entry-a", 0.14, 2.85, 1.50, 2.83, 1.425, 6.00, wallMat);
@@ -364,7 +365,7 @@ function ThreeView({ selected, onSelect }) {
     box("entry-handle", 0.045, 0.34, 0.05, 2.95, 1.03, 7.70, glassFrameMat);
     box("entry-lintel", 0.10, 0.67, 1.20, 2.845, 2.515, 7.32, wallMat);
     box("entry-passage-floor", 1.70, 0.08, 1.20, 2.00, -0.04, 7.32, material("passage-floor", "#aeb0b2"));
-    box("fixed-partition", 0.055, 2.85, 3.322, 2.2135, 1.425, 3.5204, wallMat);
+    const fixedPartition = box("fixed-partition", 0.055, 2.85, 3.70, 2.2135, 1.425, 3.48, wallMat);
     const storageShelfMat = material("storage-shelf-material", "#bbb8b0");
     [1.975, 2.925, 3.875, 4.825].forEach((z, index) => box(`left-storage-shelf-${index}`, 0.45, 0.82, 0.90, 0.325, 0.41, z, storageShelfMat));
     [2.925, 3.875, 4.825].forEach((z, index) => box(`partition-storage-shelf-${index}`, 0.38, 0.82, 0.88, 2.01, 0.41, z, storageShelfMat));
@@ -375,22 +376,22 @@ function ThreeView({ selected, onSelect }) {
     box("external-pillar-right-lower", 0.8, 2.85, 0.8, 7.88, 1.425, 5.925, fixedMat);
     box("cabinet-a", 1.51, 0.85, 0.60, 3.10, 0.425, 1.275, fixedMat);
     box("cabinet-b", 2.0, 1.0, 0.60, 5.575, 0.5, 1.275, fixedMat);
-    box("right-shelf-return", 0.455, 1.0, 1.59, 6.8675, 0.5, 0.916, fixedMat);
-    box("cabinet-b-corner", 0.264, 1.0, 0.606, 6.735, 0.5, 1.408, fixedMat);
+    box("right-shelf-return", 0.45, 1.0, 1.455, 7.025, 0.5, 0.8475, fixedMat);
+    box("cabinet-b-connector", 0.225, 1.0, 0.60, 6.6875, 0.5, 1.275, fixedMat);
     const shelfMat = material("shelf", "#a8a39b");
     const shelfRecessMat = material("shelf-recess", "#6f6b66");
     const shelfInteriorMat = material("shelf-interior", "#918c85");
-    box("right-shelf-bottom", 0.455, 0.32, 5.866, 6.8675, 0.16, 4.644, shelfMat);
-    box("right-shelf-fascia", 0.455, 0.20, 5.866, 6.8675, 0.77, 4.644, shelfMat);
+    box("right-shelf-bottom", 0.45, 0.32, 5.866, 7.025, 0.16, 4.644, shelfMat);
+    box("right-shelf-fascia", 0.45, 0.20, 5.866, 7.025, 0.77, 4.644, shelfMat);
     const shelfPier = 0.2277;
     for (let index = 0; index < 6; index += 1) {
       const z = 1.711 + shelfPier / 2 + index * (0.9 + shelfPier);
-      box("right-shelf-pier-" + index, 0.455, 0.35, shelfPier, 6.8675, 0.495, z, shelfMat);
+      box("right-shelf-pier-" + index, 0.45, 0.35, shelfPier, 7.025, 0.495, z, shelfMat);
     }
     for (let index = 0; index < 5; index += 1) {
       const z = 1.711 + shelfPier + 0.45 + index * (0.9 + shelfPier);
-      box("right-shelf-back-" + index, 0.018, 0.31, 0.84, 7.085, 0.495, z, shelfRecessMat);
-      box("right-shelf-inside-" + index, 0.405, 0.025, 0.84, 6.8675, 0.345, z, shelfInteriorMat);
+      box("right-shelf-back-" + index, 0.018, 0.31, 0.84, 7.24, 0.495, z, shelfRecessMat);
+      box("right-shelf-inside-" + index, 0.40, 0.025, 0.84, 7.025, 0.345, z, shelfInteriorMat);
     }
 
     const boraMat = material("mat-bora", works.find((work) => work.id === "bora").color, 0.9);
@@ -493,7 +494,7 @@ function ThreeView({ selected, onSelect }) {
     createBlueFrame("blue-frame-low", 4.40, 8.20, 0.52, 0.52, 0.72);
 
     shelfWorks.forEach((work) => {
-      const mesh = box(work.id, 0.415, 0.05, work.shelfHeight / 1000 - 0.02, 6.8675, 0.895, (work.shelfY + work.shelfHeight / 2) / 1000, material("mat-" + work.id, work.color, 0.9), true);
+      const mesh = box(work.id, 0.41, 0.05, work.shelfHeight / 1000 - 0.02, 7.025, 0.895, (work.shelfY + work.shelfHeight / 2) / 1000, material("mat-" + work.id, work.color, 0.9), true);
       registerExhibitMesh(work.id, mesh, true);
     });
     const chairMat = material("chair", works.find((work) => work.id === "halfchairs").color, 0.9);
@@ -588,13 +589,17 @@ function ThreeView({ selected, onSelect }) {
       const worldAnchor = anchor.getAbsolutePosition();
       const target = new BABYLON.Vector3(worldAnchor.x, id === "blue-by-jjok" ? 1.20 : Math.max(worldAnchor.y, 0.65), worldAnchor.z);
       const isShelf = shelfWorks.some((work) => work.id === id);
+      fixedPartition.isVisible = true;
+      rightWall.isVisible = true;
       const view = isShelf
-        ? { alpha: 0, beta: 1.08, radius: 4.6 }
+        ? { alpha: 0, beta: 0.82, radius: 3.2 }
         : id === "blue-by-jjok"
           ? { alpha: -1.30, beta: 1.12, radius: 3.2 }
         : id === "halfchairs"
-          ? { alpha: Math.PI / 2, beta: 1.08, radius: 4.2 }
-        : id === "bora" || id === "candle"
+          ? { alpha: -Math.PI / 2, beta: 1.05, radius: 2.8 }
+        : id === "bora"
+          ? { alpha: Math.PI / 2, beta: 1.05, radius: 2.7 }
+        : id === "candle"
           ? { alpha: Math.PI / 2, beta: 1.02, radius: 4.8 }
           : { alpha: -0.82, beta: 1.02, radius: 5.4 };
       scene.stopAnimation(camera);

@@ -6,7 +6,7 @@ const works = [
   { id: "sunok", index: "01", zone: "하단 1/2", color: "#b5477b", title: "홍선옥 · Code to Coil", detail: "우측 선반 · 하단 절반", size: "가로 2900 × 세로 450mm", shelfY: 4475, shelfHeight: 2900 },
   { id: "eunsil", index: "02", zone: "상단 1/2", color: "#6b8f71", title: "지은실 · Hybrid Nature", detail: "우측 선반 · 상단 절반", size: "가로 2900 × 세로 450mm", shelfY: 1575, shelfHeight: 2900 },
   { id: "candle", index: "03", color: "#f26a21", title: "권정현 · Candle", detail: "목재장 B · 3점 + 태블릿 · 전원", prep: "개별 준비 · 멀티탭", size: "가로 900 × 세로 600mm" },
-  { id: "bora", index: "04", color: "#258b85", title: "윤보라 · 잃어버린 방", detail: "LG 17MT70 · Quest 3 · 충전 독 · 티백 · 찻잔", prep: "개별 준비 · 멀티탭 · PD 충전기 · 충전 독 어댑터 · 전원·영상 케이블", size: "목재장 A 폭 기준 · VR 동작 구역 1500 × 1000mm" },
+  { id: "bora", index: "04", color: "#258b85", title: "윤보라 · 잃어버린 방", detail: "LG 17MT70 · Quest 3 · 충전 독 · 티백 · 찻잔", prep: "개별 준비 · 멀티탭 · PD 충전기 · 충전 독 어댑터 · 전원·영상 케이블", size: "목재장 A 폭 기준 · VR 동작 구역 1500 × 1500mm" },
   { id: "blue-by-jjok", index: "05", color: "#386a8c", title: "권정륜 · 신하진 · Blue by jjok", detail: "외부 조망 유리벽 앞 · 바닥 자립 2점", prep: "패널 H2500 · 프레임 H720 2점 · 적층 큐브 H1000", size: "패널 W700 · 프레임 W420/W520mm" },
   { id: "halfchairs", index: "06", color: "#6d50d4", title: "이지우 · Half Chairs", detail: "중앙 우측 · 관람 동선 사이 바닥 설치", size: "가로 330 × 세로 425 × 높이 885mm" },
 ];
@@ -15,10 +15,10 @@ const shelfWorks = ["eunsil", "sunok"].map((id) => works.find((work) => work.id 
 
 const selectionBounds = {
   "blue-by-jjok": { x: 4050, y: 7850, width: 2530, height: 900 },
-  eunsil: { x: 6824, y: 1599, width: 402, height: 2852 },
-  sunok: { x: 6824, y: 4499, width: 402, height: 2852 },
+  eunsil: { x: 6664, y: 1599, width: 407, height: 2852 },
+  sunok: { x: 6664, y: 4499, width: 407, height: 2852 },
   candle: { x: 5153, y: 1128, width: 900, height: 560 },
-  bora: { x: 2353, y: 1105, width: 1524, height: 1606 },
+  bora: { x: 2353, y: 1105, width: 1524, height: 2130 },
   halfchairs: { x: 4500, y: 4250, width: 800, height: 900 },
 };
 
@@ -137,11 +137,11 @@ function Plan({ circulation, electrical, selected, onSelect, onOpen3D }) {
               onClick={() => onSelect(work.id)}
               onKeyDown={(event) => (event.key === "Enter" || event.key === " ") && onSelect(work.id)}
             >
-              <rect x="6800" y={work.shelfY} width="450" height={work.shelfHeight} fill={work.color} />
-              <text className="segment-zone" x="7025" y={work.shelfY + 235}>{work.zone}</text>
-              <text className="segment-length" x="7025" y={work.shelfY + 430}>2900</text>
-              <text className="segment-depth" x="7025" y={work.shelfY + 595}>× 450</text>
-              <text className="segment-name" x="7025" y={work.shelfY + work.shelfHeight / 2} transform={`rotate(-90 7025 ${work.shelfY + work.shelfHeight / 2})`}>{work.index} · {work.title}</text>
+              <rect x="6640" y={work.shelfY} width="455" height={work.shelfHeight} fill={work.color} />
+              <text className="segment-zone" x="6867" y={work.shelfY + 235}>{work.zone}</text>
+              <text className="segment-length" x="6867" y={work.shelfY + 430}>2900</text>
+              <text className="segment-depth" x="6867" y={work.shelfY + 595}>× 450</text>
+              <text className="segment-name" x="6867" y={work.shelfY + work.shelfHeight / 2} transform={`rotate(-90 6867 ${work.shelfY + work.shelfHeight / 2})`}>{work.index} · {work.title}</text>
             </g>
           ))}
         </g>
@@ -178,8 +178,8 @@ function Plan({ circulation, electrical, selected, onSelect, onOpen3D }) {
         </g>
 
         <g className={`bora-work${selected === "bora" ? " is-selected" : ""}`} data-id="bora" tabIndex="0" role="button" aria-label="윤보라 잃어버린 방 기존 목재장 A 설치" onClick={() => onSelect("bora")} onKeyDown={(event) => (event.key === "Enter" || event.key === " ") && onSelect("bora")}>
-          <rect className="roomscale-zone" x="2365" y="1735" width="1500" height="1000" rx="50" />
-          <text className="roomscale-label" x="3115" y="2555" textAnchor="middle">VR 동작 구역 1500 × 1000</text>
+          <rect className="roomscale-zone" x="2365" y="1735" width="1500" height="1500" rx="50" />
+          <text className="roomscale-label" x="3115" y="3055" textAnchor="middle">VR 동작 구역 1500 × 1500</text>
           <rect className="surface" x="2565" y="1128" width="1100" height="560" />
           <rect className="monitor" x="2605" y="1168" width="379" height="165" rx="12" />
           <line className="monitor-stand" x1="2794" y1="1333" x2="2840" y2="1413" />
@@ -215,9 +215,9 @@ function Plan({ circulation, electrical, selected, onSelect, onOpen3D }) {
           <path className="wiring" d="M220 420H6800V8770" />
           <g className="db" transform="translate(420 310)"><path d="M0 0L330 0L0 150Z" /><text x="170" y="-45">분전반 / 전력 인입</text></g>
           <g className="outlet" transform="translate(210 500)"><circle r="72" /><path d="M-36 0H36M0 0V55" /><text x="110" y="45">2P 15A/125V</text></g>
-          <g className="outlet" transform="translate(2100 420)"><circle r="72" /><path d="M-36 0H36M0 0V55" /></g>
+          <g className="outlet" transform="translate(2100 420)"><circle r="72" /><path d="M-36 0H36M0 0V55" /><text className="outlet-caption" y="-115" textAnchor="middle">콘센트</text></g>
           <g className="outlet" transform="translate(3010 5100)"><circle r="72" /><path d="M-36 0H36M0 0V55" /><text x="-120" y="-105" textAnchor="end">2P 15A/125V</text></g>
-          <g className="outlet" transform="translate(6880 8720)"><circle r="72" /><path d="M-36 0H36M0 0V55" /><text x="-120" y="-90" textAnchor="end">2P 15A/125V</text></g>
+          <g className="outlet" transform="translate(6880 8720)"><circle r="72" /><path d="M-36 0H36M0 0V55" /><text x="-120" y="-90" textAnchor="end">2P 15A/125V</text><text className="outlet-caption" x="-120" y="65" textAnchor="end">콘센트</text></g>
           <g className="counter-ports">
             <g className="outlet emphasized" transform="translate(5325 1775)"><circle className="outlet-halo" r="104" /><circle r="66" /><path d="M-32 0H32M0 0V50" /><text className="port-caption" y="175">콘센트</text></g>
             <g className="outlet emphasized" transform="translate(5675 1775)"><circle className="outlet-halo" r="104" /><circle r="66" /><path d="M-32 0H32M0 0V50" /><text className="port-caption" y="175">콘센트</text></g>
@@ -396,7 +396,7 @@ function ThreeView({ selected, onSelect, onOpen2D }) {
 
     const boraMat = material("mat-bora", works.find((work) => work.id === "bora").color, 0.9);
     const boraRoomscaleMat = material("bora-roomscale-zone-material", "#73d8d1", 0.32);
-    registerExhibitMesh("bora", box("bora-roomscale-zone", 1.5, 0.025, 1.0, 3.115, 0.0125, 2.235, boraRoomscaleMat, true));
+    registerExhibitMesh("bora", box("bora-roomscale-zone", 1.5, 0.025, 1.5, 3.115, 0.0125, 2.485, boraRoomscaleMat, true));
     registerExhibitMesh("bora", box("bora", 1.1, 0.06, 0.56, 3.10, 0.88, 1.275, boraMat, true), true);
     registerExhibitMesh("bora", box("bora-monitor", 0.379, 0.264, 0.02, 2.78, 1.02, 1.08, material("monitor", "#22252b")));
     registerExhibitMesh("bora", box("bora-dock", 0.50, 0.04, 0.23, 3.16, 0.92, 1.405, whiteMat));
@@ -587,7 +587,9 @@ function ThreeView({ selected, onSelect, onOpen2D }) {
       selectionBand.position.set(anchor.position.x, Math.max(0.012, bounds.minimumWorld.y - 0.006), anchor.position.z);
       selectionBand.isVisible = true;
       const worldAnchor = anchor.getAbsolutePosition();
-      const target = new BABYLON.Vector3(worldAnchor.x, id === "blue-by-jjok" ? 1.20 : Math.max(worldAnchor.y, 0.65), worldAnchor.z);
+      const target = id === "bora"
+        ? new BABYLON.Vector3(worldAnchor.x, 0.55, worldAnchor.z + 0.75)
+        : new BABYLON.Vector3(worldAnchor.x, id === "blue-by-jjok" ? 1.20 : Math.max(worldAnchor.y, 0.65), worldAnchor.z);
       const isShelf = shelfWorks.some((work) => work.id === id);
       fixedPartition.isVisible = true;
       rightWall.isVisible = true;

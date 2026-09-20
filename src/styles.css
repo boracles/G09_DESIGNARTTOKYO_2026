@@ -116,7 +116,7 @@ main { padding: 18px; }
 .shelf-segment .segment-zone { font-size: 100px; letter-spacing: -4px; }
 .shelf-segment .segment-length { font-size: 112px; font-weight: 700; }
 .shelf-segment .segment-depth { font-size: 98px; font-weight: 700; }
-.shelf-segment .segment-name { fill: #111318; text-anchor: end; font-size: 108px; font-weight: 900; letter-spacing: 1px; }
+.shelf-segment .segment-name { fill: #fff; text-anchor: middle; font-size: 94px; font-weight: 900; letter-spacing: 1px; paint-order: stroke; stroke: rgba(0,0,0,.28); stroke-width: 7px; }
 .blue-work { cursor: pointer; outline: none; }
 .blue-work .installation-envelope { fill: rgba(56,106,140,.08); stroke: #386a8c; stroke-width: 20; stroke-dasharray: 72 36; }
 .blue-work .panel { fill: #f4f4f5; stroke: #7e8791; stroke-width: 18; }
@@ -194,8 +194,8 @@ main { padding: 18px; }
 .fixture-dimensions text, .storage-dimensions text { fill: #16191e; stroke: #fff; stroke-width: 20; paint-order: stroke; text-anchor: middle; font-size: 105px; font-weight: 850; }
 .source-plan-labels text { fill: #272b31; stroke: #fff; stroke-width: 22; paint-order: stroke; text-anchor: middle; font-size: 115px; font-weight: 850; }
 .selection-overlay { pointer-events: none; }
-.selection-overlay .selection-halo { fill: none; stroke: #fff; stroke-width: 92; opacity: .96; stroke-linejoin: round; }
-.selection-overlay .selection-outline { fill: none; stroke: var(--selection); stroke-width: 48; stroke-linejoin: round; filter: drop-shadow(0 0 28px rgba(245,183,0,.72)); }
+.selection-overlay .selection-halo { fill: none; stroke: #fff; stroke-width: 44; opacity: .96; stroke-linejoin: round; }
+.selection-overlay .selection-outline { fill: none; stroke: var(--selection); stroke-width: 20; stroke-linejoin: round; filter: drop-shadow(0 0 18px rgba(245,183,0,.64)); }
 .north-mark path { fill: #111318; }
 .north-mark text { fill: #111318; text-anchor: middle; font-size: 180px; font-weight: 900; }
 .scale-bar rect { fill: #111318; stroke: #111318; stroke-width: 12; }
@@ -205,6 +205,15 @@ main { padding: 18px; }
 .three-view { display: none; position: relative; min-height: 680px; }
 .three-view.is-active { display: block; }
 #renderCanvas { width: 100%; height: 680px; display: block; touch-action: none; outline: none; background: #f2f3f5; }
+.canvas-2d-cta {
+  position: absolute; z-index: 4; top: 14px; right: 16px; display: grid; gap: 1px;
+  min-width: 166px; padding: 9px 12px; text-align: left; color: #111318; cursor: pointer;
+  border: 1px solid #c8ccd4; border-radius: 9px; background: rgba(255,255,255,.96);
+  box-shadow: 0 8px 24px rgba(31,36,47,.18);
+}
+.canvas-2d-cta:hover { border-color: #155eef; box-shadow: 0 8px 24px rgba(21,94,239,.22); transform: translateY(-1px); }
+.canvas-2d-cta span { color: #626873; font-size: .64rem; }
+.canvas-2d-cta strong { font-size: .86rem; }
 .three-view p { position: absolute; right: 12px; bottom: 8px; margin: 0; padding: 7px 9px; border-radius: 5px; color: #fff; background: rgba(17,19,24,.82); font-size: .74rem; }
 .drawing-wrap.is-hidden { display: none; }
 .legend { border-left: 1px solid var(--line); padding: 12px 0 8px 16px; display: flex; flex-direction: column; gap: 12px; }
@@ -249,6 +258,7 @@ main { padding: 18px; }
   .actions { flex-wrap: wrap; justify-content: flex-end; }
   .view-switch { order: -1; width: 100%; justify-content: flex-end; }
   .canvas-3d-cta { top: 10px; right: 10px; min-width: 148px; }
+  .canvas-2d-cta { top: 10px; right: 10px; min-width: 148px; }
   main { padding: 8px; }
   .sheet { padding: 12px; }
   .sheet-body { grid-template-columns: 1fr; }

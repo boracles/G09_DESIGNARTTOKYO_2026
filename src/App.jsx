@@ -15,8 +15,8 @@ const shelfWorks = ["eunsil", "sunok"].map((id) => works.find((work) => work.id 
 
 const selectionBounds = {
   "blue-by-jjok": { x: 4050, y: 7850, width: 2530, height: 900 },
-  eunsil: { x: 6800, y: 1575, width: 450, height: 2900 },
-  sunok: { x: 6800, y: 4475, width: 450, height: 2900 },
+  eunsil: { x: 6824, y: 1599, width: 402, height: 2852 },
+  sunok: { x: 6824, y: 4499, width: 402, height: 2852 },
   candle: { x: 5153, y: 1128, width: 900, height: 560 },
   bora: { x: 2353, y: 1105, width: 1524, height: 1606 },
   halfchairs: { x: 4500, y: 4250, width: 800, height: 900 },
@@ -137,11 +137,11 @@ function Plan({ circulation, electrical, selected, onSelect, onOpen3D }) {
               onClick={() => onSelect(work.id)}
               onKeyDown={(event) => (event.key === "Enter" || event.key === " ") && onSelect(work.id)}
             >
-              <rect x="6640" y={work.shelfY} width="455" height={work.shelfHeight} fill={work.color} />
-              <text className="segment-zone" x="6867" y={work.shelfY + 235}>{work.zone}</text>
-              <text className="segment-length" x="6867" y={work.shelfY + 430}>2900</text>
-              <text className="segment-depth" x="6867" y={work.shelfY + 595}>× 450</text>
-              <text className="segment-name" x="6500" y={work.shelfY + work.shelfHeight / 2}>{work.index} · {work.title}</text>
+              <rect x="6800" y={work.shelfY} width="450" height={work.shelfHeight} fill={work.color} />
+              <text className="segment-zone" x="7025" y={work.shelfY + 235}>{work.zone}</text>
+              <text className="segment-length" x="7025" y={work.shelfY + 430}>2900</text>
+              <text className="segment-depth" x="7025" y={work.shelfY + 595}>× 450</text>
+              <text className="segment-name" x="7025" y={work.shelfY + work.shelfHeight / 2} transform={`rotate(-90 7025 ${work.shelfY + work.shelfHeight / 2})`}>{work.index} · {work.title}</text>
             </g>
           ))}
         </g>
@@ -254,10 +254,9 @@ function Plan({ circulation, electrical, selected, onSelect, onOpen3D }) {
   );
 }
 
-function ThreeView({ selected, onSelect }) {
+function ThreeView({ selected, onSelect, onOpen2D }) {
   const canvasRef = useRef(null);
   const focusRef = useRef(null);
-  const skipInitialFocusRef = useRef(true);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -266,7 +265,7 @@ function ThreeView({ selected, onSelect }) {
     scene.clearColor = new BABYLON.Color4(0.93, 0.94, 0.95, 1);
     const camera = new BABYLON.ArcRotateCamera("camera", Math.PI / 2, 0.62, 17.5, new BABYLON.Vector3(3.625, 0.25, 4.6), scene);
     camera.attachControl(true, true, 2);
-    camera.lowerRadiusLimit = 7;
+    camera.lowerRadiusLimit = 2.2;
     camera.upperRadiusLimit = 24;
     camera.wheelPrecision = 42;
     camera.panningSensibility = 900;
@@ -595,11 +594,11 @@ function ThreeView({ selected, onSelect }) {
       const view = isShelf
         ? { alpha: 0, beta: 0.82, radius: 3.2 }
         : id === "blue-by-jjok"
-          ? { alpha: -1.30, beta: 1.12, radius: 3.2 }
+          ? { alpha: -1.30, beta: 1.02, radius: 5.4 }
         : id === "halfchairs"
-          ? { alpha: -Math.PI / 2, beta: 1.05, radius: 2.8 }
+          ? { alpha: Math.PI / 2, beta: 0.90, radius: 4.2 }
         : id === "bora"
-          ? { alpha: Math.PI / 2, beta: 1.05, radius: 2.7 }
+          ? { alpha: 1.82, beta: 0.82, radius: 4.2 }
         : id === "candle"
           ? { alpha: Math.PI / 2, beta: 1.02, radius: 4.8 }
           : { alpha: -0.82, beta: 1.02, radius: 5.4 };
@@ -632,15 +631,15 @@ function ThreeView({ selected, onSelect }) {
   }, [onSelect]);
 
   useEffect(() => {
-    if (skipInitialFocusRef.current) {
-      skipInitialFocusRef.current = false;
-      return;
-    }
     focusRef.current?.(selected);
   }, [selected]);
 
   return (
     <div className="three-view is-active no-print" id="threeView">
+      <button className="canvas-2d-cta" type="button" onClick={onOpen2D}>
+        <span>배치와 치수를 확인하세요</span>
+        <strong>2D 도면 보기</strong>
+      </button>
       <canvas ref={canvasRef} id="renderCanvas" aria-label="G09 전시 공간 3D 확인" style={{ touchAction: "none" }} />
       <p>좌클릭 드래그 회전 · 우클릭/두 손가락 드래그 이동 · 휠/핀치 확대 · 작품 클릭</p>
     </div>
@@ -704,7 +703,7 @@ export function App() {
         <section className="sheet">
           <div className="sheet-heading"><div><p className="drawing-no">EXHIBITION LAYOUT · G09 / B-111</p><h2>작품 배치 평면도</h2></div><div className="revision">REV. 30 · 2026.09.20</div></div>
           <div className="sheet-body">
-            {view === "plan" ? <Plan circulation={circulation} electrical={electrical} selected={selected} onSelect={setSelected} onOpen3D={() => setView("three")} /> : <ThreeView selected={selected} onSelect={setSelected} />}
+            {view === "plan" ? <Plan circulation={circulation} electrical={electrical} selected={selected} onSelect={setSelected} onOpen3D={() => setView("three")} /> : <ThreeView selected={selected} onSelect={setSelected} onOpen2D={() => setView("plan")} />}
             <Legend selected={selected} onSelect={setSelected} />
           </div>
           <footer className="title-block"><div><span>PROJECT</span><strong>DESIGNART TOKYO 2026</strong></div><div><span>SPACE</span><strong>HIBIYA OKUROJI G09 / B-111</strong></div><div><span>DRAWING</span><strong>작품 · 전기 배치 평면도</strong></div><div><span>SCALE</span><strong>1:50 @ A3</strong></div><div><span>AREA / CH</span><strong>55.15㎡ / 2850</strong></div><div><span>STATUS</span><strong>배치 계획안 · 현장 실측 전</strong></div></footer>

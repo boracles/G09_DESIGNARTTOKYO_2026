@@ -3,23 +3,23 @@ import * as BABYLON from "babylonjs";
 import "babylonjs-loaders";
 
 const works = [
-  { id: "sunok", index: "01", zone: "구획 1", color: "#b5477b", title: "홍선옥 · Code to Coil", detail: "우측 선반 · 구획 1", size: "가로 1933 × 세로 450mm", shelfY: 5441.666666666666, shelfHeight: 1933.3333333333333 },
-  { id: "eunsil", index: "02", zone: "구획 2", color: "#6b8f71", title: "지은실 · Hybrid Nature", detail: "우측 선반 · 구획 2", size: "가로 1933 × 세로 450mm", shelfY: 3508.333333333333, shelfHeight: 1933.3333333333333 },
-  { id: "blue-by-jjok", index: "03", zone: "구획 3", color: "#386a8c", title: "권정륜 · 신하진 · Blue by jjok", detail: "우측 선반 · 구획 3", size: "가로 1933 × 세로 450mm", shelfY: 1575, shelfHeight: 1933.3333333333333 },
-  { id: "candle", index: "04", color: "#f26a21", title: "권정현 · Candle", detail: "목재장 B · 3점 + 태블릿 · 전원", prep: "개별 준비 · 멀티탭", size: "가로 900 × 세로 600mm" },
-  { id: "bora", index: "05", color: "#258b85", title: "윤보라 · 잃어버린 방", detail: "LG 17MT70 · Quest 3 · 충전 독 · 티백 · 찻잔", prep: "개별 준비 · 멀티탭 · PD 충전기 · 충전 독 어댑터 · 전원·영상 케이블", size: "가로 1100 × 세로 600mm" },
-  { id: "halfchairs", index: "06", color: "#6d50d4", title: "이지우 · Half Chairs", detail: "바닥 설치", size: "가로 330 × 세로 425 × 높이 885mm" },
+  { id: "sunok", index: "01", zone: "하단 1/2", color: "#b5477b", title: "홍선옥 · Code to Coil", detail: "우측 선반 · 하단 절반", size: "가로 2900 × 세로 450mm", shelfY: 4475, shelfHeight: 2900 },
+  { id: "eunsil", index: "02", zone: "상단 1/2", color: "#6b8f71", title: "지은실 · Hybrid Nature", detail: "우측 선반 · 상단 절반", size: "가로 2900 × 세로 450mm", shelfY: 1575, shelfHeight: 2900 },
+  { id: "candle", index: "03", color: "#f26a21", title: "권정현 · Candle", detail: "목재장 B · 3점 + 태블릿 · 전원", prep: "개별 준비 · 멀티탭", size: "가로 900 × 세로 600mm" },
+  { id: "bora", index: "04", color: "#258b85", title: "윤보라 · 잃어버린 방", detail: "LG 17MT70 · Quest 3 · 충전 독 · 티백 · 찻잔", prep: "개별 준비 · 멀티탭 · PD 충전기 · 충전 독 어댑터 · 전원·영상 케이블", size: "가로 1100 × 세로 600mm" },
+  { id: "blue-by-jjok", index: "05", color: "#386a8c", title: "권정륜 · 신하진 · Blue by jjok", detail: "고정 파티션 전면 · 바닥 자립 2점", prep: "패널 H2500 · 구조체 H1000/H720", size: "패널 W700 · 바닥 모듈 420–520mm" },
+  { id: "halfchairs", index: "06", color: "#6d50d4", title: "이지우 · Half Chairs", detail: "중앙 우측 · 관람 동선 사이 바닥 설치", size: "가로 330 × 세로 425 × 높이 885mm" },
 ];
 
-const shelfWorks = ["blue-by-jjok", "eunsil", "sunok"].map((id) => works.find((work) => work.id === id));
+const shelfWorks = ["eunsil", "sunok"].map((id) => works.find((work) => work.id === id));
 
 const selectionBounds = {
-  "blue-by-jjok": { x: 6840, y: 1575, width: 370, height: 1933.3333333333333 },
-  eunsil: { x: 6840, y: 3508.333333333333, width: 370, height: 1933.3333333333333 },
-  sunok: { x: 6840, y: 5441.666666666666, width: 370, height: 1933.3333333333333 },
+  "blue-by-jjok": { x: 1300, y: 3280, width: 650, height: 1690 },
+  eunsil: { x: 6840, y: 1575, width: 370, height: 2900 },
+  sunok: { x: 6840, y: 4475, width: 370, height: 2900 },
   candle: { x: 4875, y: 975, width: 900, height: 600 },
   bora: { x: 2310, y: 995, width: 1100, height: 560 },
-  halfchairs: { x: 4100, y: 3400, width: 330, height: 425 },
+  halfchairs: { x: 4500, y: 4250, width: 800, height: 900 },
 };
 
 function Plan({ circulation, electrical, selected, onSelect }) {
@@ -53,10 +53,10 @@ function Plan({ circulation, electrical, selected, onSelect }) {
         <path className="inner-wall" d="M120 120H7130V8980H2970V5180H120Z" />
 
         <g className="fixed" aria-label="움직일 수 없는 기존 집기">
-          <rect x="0" y="1500" width="1300" height="3100" />
+          <rect x="0" y="1500" width="1300" height="3800" />
           <text className="partition-label" x="650" y="2640">고정 파티션</text>
-          <text className="partition-label" x="650" y="2880">전시 설명 그래픽</text>
-          <text className="partition-label" x="650" y="3120">W1300 · L3100</text>
+          <text className="partition-label" x="650" y="2880">05 · Blue by jjok</text>
+          <text className="partition-label" x="650" y="3120">주 전시 설치면</text>
           <text className="partition-label" x="650" y="3360">H2850</text>
           <rect x="1300" y="700" width="800" height="800" className="pillar" />
           <text x="1700" y="1080">구조기둥</text>
@@ -74,6 +74,8 @@ function Plan({ circulation, electrical, selected, onSelect }) {
           <text className="rotated-label" x="7040" y="4475">수납형 고정 선반 · 5800 × 450 · H870</text>
           <rect x="2925" y="5300" width="45" height="1250" className="mirror" />
           <text x="3130" y="5925" transform="rotate(-90 3130 5925)">고정 거울</text>
+          <rect x="7168" y="7610" width="70" height="1250" className="intro-graphic-plan" />
+          <text className="intro-graphic-label" x="6960" y="8235" transform="rotate(-90 6960 8235)">전시 설명 현수막 · 선반 끝 빈 벽</text>
         </g>
 
         <g className="context-pillars" aria-label="외부 구조기둥">
@@ -117,10 +119,24 @@ function Plan({ circulation, electrical, selected, onSelect }) {
             >
               <rect x="6840" y={work.shelfY} width="370" height={work.shelfHeight} fill={work.color} />
               <text className="segment-zone" x="7025" y={work.shelfY + work.shelfHeight / 2 - 120}>{work.zone}</text>
-              <text className="segment-length" x="7025" y={work.shelfY + work.shelfHeight / 2 + 40}>1933</text>
+              <text className="segment-length" x="7025" y={work.shelfY + work.shelfHeight / 2 + 40}>2900</text>
               <text className="segment-depth" x="7025" y={work.shelfY + work.shelfHeight / 2 + 185}>× 450</text>
             </g>
           ))}
+        </g>
+
+        <g className={`blue-work${selected === "blue-by-jjok" ? " is-selected" : ""}`} data-id="blue-by-jjok" tabIndex="0" role="button" aria-label="권정륜 신하진 Blue by jjok, 고정 파티션 전면 바닥 자립형 2점" onClick={() => onSelect("blue-by-jjok")} onKeyDown={(event) => (event.key === "Enter" || event.key === " ") && onSelect("blue-by-jjok")}>
+          <text className="work-label" x="2160" y="1950">05 · 권정륜 · 신하진</text>
+          <text className="work-detail" x="2160" y="2100">고정 파티션 전면 · 바닥 자립 2점</text>
+          <rect className="installation-envelope" x="1300" y="3280" width="650" height="1690" rx="32" />
+          <rect className="panel" x="1315" y="3350" width="70" height="700" />
+          <rect className="panel" x="1315" y="4550" width="70" height="700" />
+          <rect className="module module-a" x="1390" y="3440" width="420" height="520" />
+          <rect className="module module-b" x="1390" y="4640" width="520" height="520" />
+          <line x1="1390" y1="3440" x2="1810" y2="3960" />
+          <line x1="1810" y1="3440" x2="1390" y2="3960" />
+          <line x1="1390" y1="4640" x2="1910" y2="5160" />
+          <line x1="1910" y1="4640" x2="1390" y2="5160" />
         </g>
 
         <g className="cabinet-sharing" aria-label="목재장 B 공유 가능 구간">
@@ -134,7 +150,7 @@ function Plan({ circulation, electrical, selected, onSelect }) {
           <circle className="wall-piece" cx="5010" cy="1070" r="82" />
           <circle cx="5075" cy="1280" r="82" /><circle cx="5325" cy="1280" r="82" />
           <rect className="tablet" x="5540" y="1320" width="170" height="110" rx="16" />
-          <text className="work-label" x="5325" y="1780" textAnchor="middle">04 · 권정현 · Candle</text>
+          <text className="work-label" x="5325" y="1780" textAnchor="middle">03 · 권정현 · Candle</text>
           <text className="work-detail" x="5325" y="1970" textAnchor="middle">목재장 B 중앙 · 900 × 600mm · 전원</text>
         </g>
 
@@ -145,15 +161,16 @@ function Plan({ circulation, electrical, selected, onSelect }) {
           <g className="charging-dock"><rect x="2670" y="1290" width="500" height="230" rx="45" /><path d="M2780 1410Q2920 1300 3060 1410Q3010 1500 2920 1500Q2830 1500 2780 1410Z" /><circle cx="2735" cy="1405" r="48" /><circle cx="3105" cy="1405" r="48" /></g>
           <rect className="tea-bag" x="2790" y="1040" width="220" height="130" rx="20" /><circle className="tea-cup" cx="3230" cy="1105" r="72" /><circle className="cup-handle" cx="3310" cy="1105" r="34" />
           <rect className="power-strip" x="2720" y="1205" width="350" height="58" rx="24" />
-          <text className="work-label" x="2860" y="1780" textAnchor="middle">05 · 윤보라 · 잃어버린 방</text>
+          <text className="work-label" x="2860" y="1780" textAnchor="middle">04 · 윤보라 · 잃어버린 방</text>
           <text className="work-detail" x="2860" y="1970" textAnchor="middle">가로 1100 × 세로 600mm · 전원</text>
         </g>
 
         <g className={`floor-work${selected === "halfchairs" ? " is-selected" : ""}`} data-id="halfchairs" tabIndex="0" role="button" aria-label="이지우 Half Chairs 바닥 설치" onClick={() => onSelect("halfchairs")} onKeyDown={(event) => (event.key === "Enter" || event.key === " ") && onSelect("halfchairs")}>
-          <rect x="4100" y="3400" width="330" height="425" />
-          <text className="work-label" x="4265" y="4050" textAnchor="middle">06 · 이지우</text>
-          <text className="work-title" x="4265" y="4225" textAnchor="middle">Half Chairs</text>
-          <text className="work-detail" x="4265" y="4390" textAnchor="middle">330 × 425 × H885</text>
+          <rect className="floor-zone" x="4500" y="4250" width="800" height="900" rx="34" />
+          <rect className="chair-footprint" x="4735" y="4488" width="330" height="425" />
+          <text className="work-label" x="4900" y="5375" textAnchor="middle">06 · 이지우</text>
+          <text className="work-title" x="4900" y="5550" textAnchor="middle">Half Chairs</text>
+          <text className="work-detail" x="4900" y="5715" textAnchor="middle">바닥 구획 800 × 900</text>
         </g>
 
         <g className={`electrical-layer${electrical ? "" : " is-hidden"}`} id="electricalLayer" aria-label="전기 및 통신 설비">
@@ -261,7 +278,7 @@ function ThreeView({ selected, onSelect }) {
     box("outside-sidewalk", 4.35, 0.08, 1.45, 5.025, -0.04, 9.825, material("outside-sidewalk-material", "#686c70"));
     box("wall-left-upper", 0.10, 2.85, 5.3, 0, 1.425, 2.65, wallMat);
     box("wall-notch", 2.75, 2.85, 0.10, 1.425, 1.425, 5.3, wallMat);
-    box("wall-entry-a", 0.10, 2.85, 1.37, 2.85, 1.425, 6.035, wallMat);
+    box("wall-entry-a", 0.10, 2.85, 1.42, 2.85, 1.425, 6.01, wallMat);
     box("wall-entry-b", 0.10, 2.85, 1.145, 2.85, 1.425, 8.4925, wallMat);
 
     const mirrorTexture = new BABYLON.MirrorTexture("entrance-mirror-reflection", 1024, scene, true);
@@ -282,16 +299,6 @@ function ThreeView({ selected, onSelect }) {
     box("mirror-frame-bottom", 0.035, 0.035, 1.32, 2.925, 0.163, 5.925, mirrorFrameMat);
     box("mirror-frame-side-a", 0.035, 2.02, 0.035, 2.925, 1.155, 5.285, mirrorFrameMat);
     box("mirror-frame-side-b", 0.035, 2.02, 0.035, 2.925, 1.155, 6.565, mirrorFrameMat);
-    box("entry-glass", 0.026, 2.08, 1.12, 2.875, 1.08, 7.32, glassMat);
-    box("entry-frame-a", 0.045, 2.18, 0.075, 2.91, 1.09, 6.72, glassFrameMat);
-    box("entry-frame-b", 0.045, 2.18, 0.075, 2.91, 1.09, 7.92, glassFrameMat);
-    box("entry-frame-top", 0.045, 0.075, 1.29, 2.91, 2.18, 7.32, glassFrameMat);
-    box("entry-frame-bottom", 0.045, 0.075, 1.29, 2.91, 0.04, 7.32, glassFrameMat);
-    box("entry-side-divider", 0.045, 2.14, 0.055, 2.91, 1.08, 6.98, glassFrameMat);
-    box("entry-handle", 0.045, 0.34, 0.05, 2.95, 1.03, 7.70, glassFrameMat);
-    box("entry-lintel", 0.10, 0.67, 1.20, 2.845, 2.515, 7.32, wallMat);
-    box("entry-passage-floor", 1.70, 0.08, 1.20, 2.00, -0.04, 7.32, material("passage-floor", "#aeb0b2"));
-    box("fixed-partition", 1.3, 2.85, 3.1, 0.65, 1.425, 3.05, wallMat);
 
     const introPanelMat = new BABYLON.StandardMaterial("intro-panel-material", scene);
     const introTexture = new BABYLON.DynamicTexture("intro-panel-texture", { width: 1024, height: 1536 }, scene, true);
@@ -316,10 +323,21 @@ function ThreeView({ selected, onSelect }) {
     introTexture.update();
     introPanelMat.diffuseTexture = introTexture;
     introPanelMat.specularColor = BABYLON.Color3.Black();
-    const introPanel = BABYLON.MeshBuilder.CreatePlane("exhibition-intro-panel", { width: 1.7, height: 2.2, sideOrientation: BABYLON.Mesh.DOUBLESIDE }, scene);
-    introPanel.position.set(1.306, 1.45, 3.05);
+    const introPanel = BABYLON.MeshBuilder.CreatePlane("exhibition-intro-panel", { width: 1.25, height: 1.75, sideOrientation: BABYLON.Mesh.DOUBLESIDE }, scene);
+    introPanel.position.set(7.19, 1.45, 8.235);
     introPanel.rotation.y = -Math.PI / 2;
     introPanel.material = introPanelMat;
+
+    box("entry-glass", 0.026, 2.08, 1.12, 2.875, 1.08, 7.32, glassMat);
+    box("entry-frame-a", 0.045, 2.18, 0.075, 2.91, 1.09, 6.72, glassFrameMat);
+    box("entry-frame-b", 0.045, 2.18, 0.075, 2.91, 1.09, 7.92, glassFrameMat);
+    box("entry-frame-top", 0.045, 0.075, 1.29, 2.91, 2.18, 7.32, glassFrameMat);
+    box("entry-frame-bottom", 0.045, 0.075, 1.29, 2.91, 0.04, 7.32, glassFrameMat);
+    box("entry-side-divider", 0.045, 2.14, 0.055, 2.91, 1.08, 6.98, glassFrameMat);
+    box("entry-handle", 0.045, 0.34, 0.05, 2.95, 1.03, 7.70, glassFrameMat);
+    box("entry-lintel", 0.10, 0.67, 1.20, 2.845, 2.515, 7.32, wallMat);
+    box("entry-passage-floor", 1.70, 0.08, 1.20, 2.00, -0.04, 7.32, material("passage-floor", "#aeb0b2"));
+    box("fixed-partition", 1.3, 2.85, 3.8, 0.65, 1.425, 3.40, wallMat);
 
     box("pillar", 0.8, 2.85, 0.8, 1.7, 1.425, 1.1, fixedMat);
     box("cabinet-a", 1.5, 0.85, 0.6, 2.86, 0.425, 1.275, fixedMat);
@@ -386,14 +404,56 @@ function ThreeView({ selected, onSelect }) {
     registerExhibitMesh("candle", wallPiece);
     registerExhibitMesh("candle", box("candle-tablet", 0.17, 0.16, 0.04, 5.025, 1.12, 1.36, material("tablet", "#22252b")));
 
+    const blueWork = works.find((work) => work.id === "blue-by-jjok");
+    const bluePanelMat = material("blue-panel-material", "#ececee");
+    const blueAnchorMat = material("blue-installation-envelope", blueWork.color, 0.08);
+    registerExhibitMesh("blue-by-jjok", box("blue-installation-anchor", 0.72, 0.025, 1.78, 1.66, 0.0125, 4.25, blueAnchorMat, true), true);
+    registerExhibitMesh("blue-by-jjok", box("blue-panel-a", 0.06, 2.50, 0.70, 1.33, 1.25, 3.65, bluePanelMat, true));
+    registerExhibitMesh("blue-by-jjok", box("blue-panel-b", 0.06, 2.50, 0.70, 1.33, 1.25, 4.85, bluePanelMat, true));
+    const blueFrameMats = [
+      material("blue-frame-blue", "#0755c9"),
+      material("blue-frame-purple", "#7130bd"),
+      material("blue-frame-cyan", "#42afbd"),
+      material("blue-frame-orange", "#c9501d"),
+      material("blue-frame-green", "#00a455"),
+      material("blue-frame-red", "#e12924"),
+    ];
+    let blueBeamIndex = 0;
+    const blueBeam = (name, width, height, depth, x, y, z) => {
+      const mesh = box(name, width, height, depth, x, y, z, blueFrameMats[blueBeamIndex % blueFrameMats.length], true);
+      blueBeamIndex += 1;
+      return registerExhibitMesh("blue-by-jjok", mesh);
+    };
+    const createBlueFrame = (prefix, z, frameWidth, frameDepth, frameHeight) => {
+      const beam = 0.055;
+      const x = 1.36 + frameDepth / 2;
+      const xNear = x - frameDepth / 2 + beam / 2;
+      const xFar = x + frameDepth / 2 - beam / 2;
+      const zLeft = z - frameWidth / 2 + beam / 2;
+      const zRight = z + frameWidth / 2 - beam / 2;
+      [[xNear, zLeft], [xNear, zRight], [xFar, zLeft], [xFar, zRight]].forEach(([postX, postZ], index) => {
+        blueBeam(`${prefix}-post-${index}`, beam, frameHeight, beam, postX, frameHeight / 2, postZ);
+      });
+      [beam / 2, frameHeight - beam / 2].forEach((y, level) => {
+        blueBeam(`${prefix}-rail-z-near-${level}`, beam, beam, frameWidth, xNear, y, z);
+        blueBeam(`${prefix}-rail-z-far-${level}`, beam, beam, frameWidth, xFar, y, z);
+        blueBeam(`${prefix}-rail-x-left-${level}`, frameDepth, beam, beam, x, y, zLeft);
+        blueBeam(`${prefix}-rail-x-right-${level}`, frameDepth, beam, beam, x, y, zRight);
+      });
+    };
+    createBlueFrame("blue-frame-tall", 3.65, 0.52, 0.42, 1.00);
+    createBlueFrame("blue-frame-low", 4.85, 0.52, 0.52, 0.72);
+
     shelfWorks.forEach((work) => {
       const mesh = box(work.id, 0.37, 0.07, work.shelfHeight / 1000, 7.005, 0.905, (work.shelfY + work.shelfHeight / 2) / 1000, material("mat-" + work.id, work.color, 0.9), true);
       registerExhibitMesh(work.id, mesh, true);
     });
     const chairMat = material("chair", works.find((work) => work.id === "halfchairs").color, 0.9);
-    registerExhibitMesh("halfchairs", box("halfchairs", 0.33, 0.07, 0.425, 4.265, 0.035, 3.6125, chairMat, true), true);
-    registerExhibitMesh("halfchairs", box("chair-seat", 0.33, 0.12, 0.425, 4.265, 0.45, 3.6125, chairMat));
-    registerExhibitMesh("halfchairs", box("chair-back", 0.33, 0.72, 0.09, 4.265, 0.82, 3.445, chairMat));
+    const chairZoneMat = material("halfchairs-floor-zone-material", "#d9d0ff", 0.72);
+    registerExhibitMesh("halfchairs", box("halfchairs-floor-zone", 0.80, 0.025, 0.90, 4.90, 0.0125, 4.70, chairZoneMat, true), true);
+    registerExhibitMesh("halfchairs", box("halfchairs", 0.33, 0.07, 0.425, 4.90, 0.06, 4.70, chairMat, true));
+    registerExhibitMesh("halfchairs", box("chair-seat", 0.33, 0.12, 0.425, 4.90, 0.475, 4.70, chairMat));
+    registerExhibitMesh("halfchairs", box("chair-back", 0.33, 0.72, 0.09, 4.90, 0.845, 4.5325, chairMat));
 
     BABYLON.SceneLoader.ImportMeshAsync("", import.meta.env.BASE_URL + "assets/", "person.glb", scene).then((result) => {
       if (scene.isDisposed) return;
@@ -475,10 +535,12 @@ function ThreeView({ selected, onSelect }) {
       selectionBand.scaling.set(width + 0.12, 1, depth + 0.12);
       selectionBand.position.set(anchor.position.x, Math.max(0.012, bounds.minimumWorld.y - 0.006), anchor.position.z);
       selectionBand.isVisible = true;
-      const target = new BABYLON.Vector3(anchor.position.x, Math.max(anchor.position.y, 0.65), anchor.position.z);
+      const target = new BABYLON.Vector3(anchor.position.x, id === "blue-by-jjok" ? 1.20 : Math.max(anchor.position.y, 0.65), anchor.position.z);
       const isShelf = shelfWorks.some((work) => work.id === id);
       const view = isShelf
         ? { alpha: Math.PI, beta: 1.08, radius: 5.2 }
+        : id === "blue-by-jjok"
+          ? { alpha: 0, beta: 1.08, radius: 4.4 }
         : id === "bora" || id === "candle"
           ? { alpha: Math.PI / 2, beta: 1.02, radius: 4.8 }
           : { alpha: -0.82, beta: 1.02, radius: 5.4 };
@@ -550,7 +612,7 @@ function Legend({ selected, onSelect }) {
       </section>
       <section className="fixture-key">
         <h3>고정물</h3>
-        <dl><div><dt>우측 선반</dt><dd>5800 × 450 · H870</dd></div><div><dt>선반 구조</dt><dd>전면부 200 · 개구 900 × 350 · 하부 320</dd></div><div><dt>목재장 A</dt><dd>1500 × 600 · H850</dd></div><div><dt>목재장 B</dt><dd>2450 × 600 · H1000</dd></div><div><dt>고정 파티션</dt><dd>전시 전체 설명 그래픽 설치면</dd></div><div><dt>구조기둥</dt><dd>800 × 800 · 이동 불가</dd></div><div><dt>천장고</dt><dd>CH 2850 · 전기 도면 기준</dd></div></dl>
+        <dl><div><dt>우측 선반</dt><dd>5800 × 450 · H870 · 2인 균등 분할</dd></div><div><dt>선반 배정</dt><dd>지은실 상단 2900 · 홍선옥 하단 2900</dd></div><div><dt>선반 구조</dt><dd>전면부 200 · 개구 900 × 350 · 하부 320</dd></div><div><dt>목재장 A</dt><dd>1500 × 600 · H850</dd></div><div><dt>목재장 B</dt><dd>2450 × 600 · H1000</dd></div><div><dt>고정 파티션</dt><dd>Blue by jjok 주 전시 설치면 · 끝 쪽 배치</dd></div><div><dt>설명 현수막</dt><dd>우측 선반 끝 1725 빈 벽 구간</dd></div><div><dt>Half Chairs</dt><dd>바닥 구획 800 × 900 · 입구에서 안쪽 이동</dd></div><div><dt>구조기둥</dt><dd>800 × 800 · 이동 불가</dd></div><div><dt>천장고</dt><dd>CH 2850 · 전기 도면 기준</dd></div></dl>
       </section>
     </aside>
   );

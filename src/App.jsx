@@ -106,9 +106,9 @@ function Plan({ circulation, electrical, selected, onSelect, onOpen3D }) {
         </g>
 
         <g className="glass-wall-plan manual-plan-geometry" aria-label="외부 조망 유리벽">
-          <line x1="2850" y1="9040" x2="7250" y2="9040" />
-          <line x1="2850" y1="9090" x2="7250" y2="9090" />
-          <text x="5050" y="8920">외부 조망 유리벽</text>
+          <line x1="3142" y1="9040" x2="7250" y2="9040" />
+          <line x1="3142" y1="9090" x2="7250" y2="9090" />
+          <text x="5196" y="8920">외부 조망 유리벽 · 3면 균등</text>
         </g>
 
         <g className="door manual-plan-geometry" aria-label="고정 유리와 여닫이 유리문으로 구성된 폭 1200밀리미터 출입구">
@@ -325,11 +325,19 @@ function ThreeView({ selected, onSelect, onOpen2D, onShowOverview }) {
     box("floor-lower", 4.4, 0.08, 3.8, 5.05, -0.04, 7.2, floorMat);
     box("wall-top", 7.34, 2.85, 0.14, 3.625, 1.425, 0.02, wallMat);
     const rightWall = box("wall-right", 0.14, 2.85, 9.18, 7.23, 1.425, 4.55, wallMat);
-    box("exterior-glass-wall", 4.40, 2.08, 0.026, 5.05, 1.08, 9.065, glassMat);
-    [2.85, 4.30, 5.75, 7.20].forEach((x, index) => box("glass-mullion-" + index, 0.065, 2.18, 0.045, x, 1.09, 9.035, glassFrameMat));
-    box("glass-frame-top", 4.40, 0.07, 0.045, 5.05, 2.18, 9.035, glassFrameMat);
-    box("glass-frame-bottom", 4.40, 0.07, 0.045, 5.05, 0.035, 9.035, glassFrameMat);
-    box("glass-wall-header", 4.40, 0.67, 0.14, 5.05, 2.515, 9.06, wallMat);
+    const exteriorGlassStart = 3.142;
+    const exteriorGlassEnd = 7.25;
+    const exteriorGlassWidth = exteriorGlassEnd - exteriorGlassStart;
+    const exteriorGlassCenter = (exteriorGlassStart + exteriorGlassEnd) / 2;
+    const exteriorGlassPanelWidth = exteriorGlassWidth / 3;
+    box("exterior-glass-wall", exteriorGlassWidth, 2.08, 0.026, exteriorGlassCenter, 1.08, 9.065, glassMat);
+    [0, 1, 2, 3].forEach((index) => {
+      const x = exteriorGlassStart + exteriorGlassPanelWidth * index;
+      box("glass-mullion-" + index, 0.065, 2.18, 0.045, x, 1.09, 9.035, glassFrameMat);
+    });
+    box("glass-frame-top", exteriorGlassWidth, 0.07, 0.045, exteriorGlassCenter, 2.18, 9.035, glassFrameMat);
+    box("glass-frame-bottom", exteriorGlassWidth, 0.07, 0.045, exteriorGlassCenter, 0.035, 9.035, glassFrameMat);
+    box("glass-wall-header", exteriorGlassWidth, 0.67, 0.14, exteriorGlassCenter, 2.515, 9.06, wallMat);
     box("outside-sidewalk", 4.35, 0.08, 1.45, 5.025, -0.04, 9.825, material("outside-sidewalk-material", "#686c70"));
     box("exterior-glass-center-pillar", 1.50, 2.85, 1.20, 5.05, 1.425, 10.45, fixedMat);
     box("wall-left-upper", 0.14, 2.85, 5.38, 0.02, 1.425, 2.65, wallMat);

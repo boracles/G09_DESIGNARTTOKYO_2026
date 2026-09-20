@@ -17,6 +17,7 @@
 - The Lost Room has a 1500 × 1000mm VR movement zone aligned to the full width of cabinet A, beginning directly below the cabinet and ending above the Blue by jjok label.
 - The entrance/mirror wall seam is closed and the mirror remains unobstructed.
 - The Blue by jjok display wall is modeled as a thin fixed partition, leaving the 1300mm-deep area behind it open and labeled for storage.
+- A 700 × 650mm attendant seat is placed in front of the entrance mirror with its back toward the mirror, clear of the door swing.
 
 ## Interaction and browser checks
 

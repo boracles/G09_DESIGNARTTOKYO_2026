@@ -176,6 +176,14 @@ function Plan({ circulation, electrical, selected, onSelect }) {
           <text className="work-detail" x="4900" y="5715" textAnchor="middle">바닥 구획 800 × 900</text>
         </g>
 
+        <g className="staff-station" aria-label="거울 앞 전시 지킴이 자리 700 × 650밀리미터">
+          <rect className="staff-zone" x="3100" y="5600" width="700" height="650" rx="34" />
+          <rect className="staff-seat" x="3275" y="5830" width="350" height="350" rx="28" />
+          <line x1="3275" y1="5830" x2="3625" y2="6180" />
+          <line x1="3625" y1="5830" x2="3275" y2="6180" />
+          <text x="3450" y="5740" textAnchor="middle">전시 지킴이 자리</text>
+        </g>
+
         <g className={`electrical-layer${electrical ? "" : " is-hidden"}`} id="electricalLayer" aria-label="전기 및 통신 설비">
           <path className="wiring" d="M220 420H6800V8770" />
           <g className="db" transform="translate(420 310)"><path d="M0 0L330 0L0 150Z" /><text x="170" y="-45">분전반 / 전력 인입</text></g>
@@ -456,12 +464,22 @@ function ThreeView({ selected, onSelect }) {
       registerExhibitMesh(work.id, mesh, true);
     });
     const chairMat = material("chair", works.find((work) => work.id === "halfchairs").color, 0.9);
-    const chairZoneMat = material("halfchairs-floor-zone-material", "#d2c4ff");
-    chairZoneMat.emissiveColor = BABYLON.Color3.FromHexString("#6d50d4").scale(0.18);
+    const chairZoneMat = material("halfchairs-floor-zone-material", "#c7b5ff");
+    chairZoneMat.emissiveColor = BABYLON.Color3.FromHexString("#c7b5ff");
+    chairZoneMat.disableLighting = true;
     registerExhibitMesh("halfchairs", box("halfchairs-floor-zone", 0.80, 0.035, 0.90, 4.90, 0.0175, 4.70, chairZoneMat, true), true);
     registerExhibitMesh("halfchairs", box("halfchairs", 0.33, 0.07, 0.425, 4.90, 0.06, 4.70, chairMat, true));
     registerExhibitMesh("halfchairs", box("chair-seat", 0.33, 0.12, 0.425, 4.90, 0.475, 4.70, chairMat));
     registerExhibitMesh("halfchairs", box("chair-back", 0.33, 0.72, 0.09, 4.90, 0.845, 4.5325, chairMat));
+
+    const staffZoneMat = material("staff-zone-material", "#e8e0cf");
+    const staffChairMat = material("staff-chair-material", "#8b7650");
+    box("staff-zone", 0.70, 0.025, 0.65, 3.45, 0.0125, 5.925, staffZoneMat);
+    box("staff-chair-seat", 0.35, 0.07, 0.35, 3.45, 0.47, 5.925, staffChairMat);
+    box("staff-chair-back", 0.06, 0.58, 0.35, 3.28, 0.78, 5.925, staffChairMat);
+    [[3.30, 5.78], [3.60, 5.78], [3.30, 6.07], [3.60, 6.07]].forEach(([x, z], index) => {
+      box(`staff-chair-leg-${index}`, 0.04, 0.44, 0.04, x, 0.22, z, staffChairMat);
+    });
 
     BABYLON.SceneLoader.ImportMeshAsync("", import.meta.env.BASE_URL + "assets/", "person.glb", scene).then((result) => {
       if (scene.isDisposed) return;
@@ -524,7 +542,7 @@ function ThreeView({ selected, onSelect }) {
       [...exhibitMeshes.values()].flat().forEach((mesh) => {
         mesh.renderOutline = false;
         mesh.renderOverlay = false;
-        mesh.visibility = 0.34;
+        mesh.visibility = mesh.name === "halfchairs-floor-zone" ? 1 : 0.34;
       });
       const activeMeshes = exhibitMeshes.get(id) || [];
       activeMeshes.forEach((mesh) => {
@@ -620,7 +638,7 @@ function Legend({ selected, onSelect }) {
       </section>
       <section className="fixture-key">
         <h3>고정물</h3>
-        <dl><div><dt>우측 선반</dt><dd>5800 × 450 · H870 · 2인 균등 분할</dd></div><div><dt>선반 배정</dt><dd>지은실 상단 2900 · 홍선옥 하단 2900</dd></div><div><dt>선반 구조</dt><dd>전면부 200 · 개구 900 × 350 · 하부 320</dd></div><div><dt>목재장 A</dt><dd>1500 × 600 · H850</dd></div><div><dt>목재장 B</dt><dd>2450 × 600 · H1000</dd></div><div><dt>고정 파티션</dt><dd>Blue by jjok 주 전시 설치면 · 뒤 1300 깊이 짐 보관 가능</dd></div><div><dt>설명 현수막</dt><dd>우측 선반 끝 1725 빈 벽 구간</dd></div><div><dt>Half Chairs</dt><dd>연보라 바닥 구획 800 × 900 · 입구에서 안쪽 이동</dd></div><div><dt>구조기둥</dt><dd>800 × 800 · 이동 불가</dd></div><div><dt>천장고</dt><dd>CH 2850 · 전기 도면 기준</dd></div></dl>
+        <dl><div><dt>우측 선반</dt><dd>5800 × 450 · H870 · 2인 균등 분할</dd></div><div><dt>선반 배정</dt><dd>지은실 상단 2900 · 홍선옥 하단 2900</dd></div><div><dt>선반 구조</dt><dd>전면부 200 · 개구 900 × 350 · 하부 320</dd></div><div><dt>목재장 A</dt><dd>1500 × 600 · H850</dd></div><div><dt>목재장 B</dt><dd>2450 × 600 · H1000</dd></div><div><dt>고정 파티션</dt><dd>Blue by jjok 주 전시 설치면 · 뒤 1300 깊이 짐 보관 가능</dd></div><div><dt>설명 현수막</dt><dd>우측 선반 끝 1725 빈 벽 구간</dd></div><div><dt>Half Chairs</dt><dd>연보라 바닥 구획 800 × 900 · 입구에서 안쪽 이동</dd></div><div><dt>전시 지킴이</dt><dd>거울 전면 · 700 × 650 좌석 구획</dd></div><div><dt>구조기둥</dt><dd>800 × 800 · 이동 불가</dd></div><div><dt>천장고</dt><dd>CH 2850 · 전기 도면 기준</dd></div></dl>
       </section>
     </aside>
   );

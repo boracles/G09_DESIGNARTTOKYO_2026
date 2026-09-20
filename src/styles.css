@@ -102,7 +102,7 @@ main { padding: 18px; }
 .gap-barrier line { stroke: #292d33; stroke-width: 34; stroke-dasharray: 55 28; }
 .gap-barrier text { fill: #292d33; text-anchor: middle; font-size: 82px; font-weight: 850; }
 .floor-work { cursor: pointer; outline: none; }
-.floor-work .floor-zone { fill: rgba(109,80,212,.08); stroke: var(--violet); stroke-width: 20; stroke-dasharray: 48 30; }
+.floor-work .floor-zone { fill: #e2d9ff; stroke: var(--violet); stroke-width: 20; stroke-dasharray: 48 30; }
 .floor-work .chair-footprint { fill: rgba(109,80,212,.26); stroke: var(--violet); stroke-width: 28; }
 .floor-work text { fill: #3d315f; font-size: 150px; font-weight: 800; }
 .floor-work .work-label { font-size: 138px; font-weight: 850; }
@@ -110,6 +110,10 @@ main { padding: 18px; }
 .floor-work .work-detail { font-size: 108px; font-weight: 750; }
 .floor-work:hover .floor-zone { stroke-width: 38; }
 .floor-work.is-selected .floor-zone { stroke: var(--selection); stroke-width: 50; filter: drop-shadow(0 0 34px rgba(245,183,0,.68)); }
+.staff-station .staff-zone { fill: #efe7d7; stroke: #8b7650; stroke-width: 18; stroke-dasharray: 42 28; }
+.staff-station .staff-seat { fill: #c7b38d; stroke: #6f5b39; stroke-width: 18; }
+.staff-station line { stroke: #6f5b39; stroke-width: 16; }
+.staff-station text { fill: #5b4a2f; font-size: 96px; font-weight: 900; }
 .candle-work { cursor: pointer; outline: none; }
 .candle-work .surface { fill: rgba(242,106,33,.16); stroke: #f26a21; stroke-width: 24; }
 .candle-work .display-wall { fill: #f7f7f7; stroke: #6f747c; stroke-width: 16; }

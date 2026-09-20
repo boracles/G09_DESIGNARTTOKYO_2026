@@ -585,8 +585,10 @@ function ThreeView({ selected, onSelect, onOpen2D, onShowOverview }) {
     createBlueFrame("blue-frame-left", 5.30, 8.50, 0.42, 0.52, 0.72);
     createBlueFrame("blue-frame-low", 4.40, 8.50, 0.52, 0.52, 0.72);
 
-    shelfWorks.forEach((work) => {
-      const mesh = box(work.id, 0.41, 0.05, work.shelfHeight / 1000 - 0.02, 7.025, 0.895, (work.shelfY + work.shelfHeight / 2) / 1000, material("mat-" + work.id, work.color, 0.9), true);
+    shelfWorks.forEach((work, index) => {
+      const zoneDepth = 2.90;
+      const zoneCenter = shelfStart + zoneDepth / 2 + index * zoneDepth;
+      const mesh = box(work.id, 0.45, 0.05, zoneDepth, 7.025, 0.895, zoneCenter, material("mat-" + work.id, work.color, 0.9), true);
       registerExhibitMesh(work.id, mesh, true);
     });
     const chairMat = material("chair", works.find((work) => work.id === "halfchairs").color, 0.9);
@@ -697,18 +699,19 @@ function ThreeView({ selected, onSelect, onOpen2D, onShowOverview }) {
       const anchor = anchors.get(id);
       selectionBand.isVisible = false;
       if (!anchor) return;
+      const isShelf = shelfWorks.some((work) => work.id === id);
       anchor.computeWorldMatrix(true);
       const bounds = anchor.getBoundingInfo().boundingBox;
       const width = bounds.maximumWorld.x - bounds.minimumWorld.x;
       const depth = bounds.maximumWorld.z - bounds.minimumWorld.z;
-      selectionBand.scaling.set(width + 0.12, 1, depth + 0.12);
+      const selectionPadding = isShelf ? 0 : 0.12;
+      selectionBand.scaling.set(width + selectionPadding, 1, depth + selectionPadding);
       selectionBand.position.set(anchor.position.x, Math.max(0.012, bounds.minimumWorld.y - 0.006), anchor.position.z);
       selectionBand.isVisible = true;
       const worldAnchor = anchor.getAbsolutePosition();
       const target = id === "bora"
         ? new BABYLON.Vector3(worldAnchor.x, 0.55, worldAnchor.z + 0.75)
         : new BABYLON.Vector3(worldAnchor.x, id === "blue-by-jjok" ? 1.20 : Math.max(worldAnchor.y, 0.65), worldAnchor.z);
-      const isShelf = shelfWorks.some((work) => work.id === id);
       fixedPartition.isVisible = true;
       rightWall.isVisible = true;
       const view = isShelf

@@ -29,10 +29,14 @@
 - Filled, unstroked PDF glyph masks are filtered from the vector layer, removing pale floating annotation bars while retaining architectural strokes.
 - Wall junctions overlap slightly and exhibit surfaces are inset to avoid coplanar flicker and visible seam gaps.
 - Partition-side storage shelves terminate behind the partition face, and the partition overlaps the structural column by 25mm so neither z-fighting nor a column gap remains.
-- The entrance mirror uses a clean uniform light blue-gray surface, avoiding both black clipping and banded-gradient artifacts.
+- The entrance mirror uses the original planar-reflection material with its clipping plane aligned to the mirrored wall coordinate.
+- The two supplied seated-woman models sit forward of their chair backs, face the gallery center, and replace the former standing scale figure.
+- Blue by jjok is detached from the glass, kept outside the entrance-door swing, and ends before the right fixed shelf; the cubes and two frame/panel assemblies have visible gaps.
+- Cabinet A, cabinet B, and both right-shelf artwork zones use the extracted PDF vector coordinates rather than approximate overlay positions.
+- Source dimensions remain visible while long oblique annotation leaders are omitted.
 - The 3D world is mirrored on its X axis and viewed from the entrance side so it matches the 2D plan in both axes: cabinets at top, glass entrance at bottom, fixed partition on left, and colored right-wall shelf on right.
 
-- 2D/3D switching, layer toggles, selection synchronization, orbit, pan, zoom, and artwork focus: passed.
+- 2D/3D switching, layer toggles, selection synchronization, orbit, pan, zoom, and all six artwork focus angles: passed.
 - Production build: passed.
 - Sites-compatible worker tests: 4/4 passed.
 - Git diff whitespace check: passed.

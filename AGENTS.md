@@ -1,17 +1,24 @@
 # Prototype decisions
 
 - Treat `public/assets/g09-plan-vector.svg`, extracted from `G09_PLAN.pdf`, as the architectural source of truth for 2D geometry and dimensions.
+- Fit every artwork overlay directly to the vector structure coordinates: cabinet A x2353/y1105/1524x606, cabinet B begins x4603/y1105, and the right shelf is x6640/y1711/455x5866 in plan millimetres.
 - Keep the 3D model in the same visible left/right orientation as the 2D plan: fixed partition on the left, right-wall shelf on the right, cabinets at the top, and glass entrance wall at the bottom.
 - Show source-PDF dimension labels only; do not overlay duplicate hand-authored dimension text.
 - Exclude filled, unstroked PDF glyph-mask rectangles from the extracted SVG so pale annotation fragments never appear as plan geometry.
 - Place the two Blue by jjok freestanding panel-and-frame assemblies in front of the exterior-view glass wall, not against the fixed partition.
-- Keep the Blue by jjok group roughly 700mm farther from the entrance, toward the left wall/inner end of the glass wall.
+- Keep the Blue by jjok group outside the entrance-door swing: stacked cubes first, then the two panel/frame assemblies with even spacing, and keep the entire group visibly detached from the glass.
 - Blue by jjok also includes two offset white cubes stacked to a total height of about 1000mm; never omit them when moving the installation.
 - Blue by jjok proportions follow the supplied front elevation: two W700 × H2500 panels, two H720 frames with approximate widths 420mm and 520mm, and stacked cubes totaling H1000.
+- Keep roughly 350–400mm clear space between the stacked cubes and the nearest Blue by jjok frame.
 - When Blue by jjok is selected in 3D, view it from inside the gallery toward the glass wall; never position the focus camera behind the exterior wall.
+- Every 3D legend focus must remain inside the gallery: shelf works are viewed from the center toward the right shelf, and Half Chairs is viewed from the glass side toward the center.
 - Place attendant A at the entrance mirror and attendant B behind the cabinet line, inside the 726 mm gap between cabinets A and B.
 - Orient both attendant chairs toward the gallery center: A has its back to the mirror, and B has its back to the top wall.
+- Use `attendant-woman.glb` for both seated attendants; do not retain a standing scale figure or height label in the gallery center.
 - Do not show an exhibition-introduction banner in the current layout.
 - Avoid coplanar faces in the 3D model; inset exhibit surfaces and overlap wall junctions slightly so seams do not flicker or open.
 - Keep storage shelves fully behind the fixed partition surface, and extend the partition into the structural column so no gap is visible between them.
-- Keep the entrance mirror outside the mirrored scene root and use a clean uniform light blue-gray mirror surface; avoid both dynamic planar reflection and decorative gradients.
+- Keep the entrance mirror outside the mirrored scene root and use the original Babylon planar-reflection material; keep its clipping plane aligned to the final mirrored wall coordinate.
+- In the final 3D view, the Blue by jjok stacked cubes belong to the left of both colored frames, with roughly 350–400mm clearance to the nearest frame.
+- Preserve the source-plan entrance projection at the left end of the glass facade in 3D, aligned with the entrance jamb.
+- In the 2D plan, keep source dimensions visible while removing only long oblique annotation leaders.

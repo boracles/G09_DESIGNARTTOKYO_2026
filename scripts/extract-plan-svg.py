@@ -12,7 +12,7 @@ from xml.sax.saxutils import escape
 import pdfplumber
 
 
-SOURCE = Path("/Users/boracles/Downloads/G09_PLAN.pdf")
+SOURCE = Path("/Users/boracles/Downloads/16.09.2026/G09 PLAN.pdf")
 OUTPUT = Path("public/assets/g09-plan-vector.svg")
 
 # PDF coordinates of the original plan's outer construction lines.
@@ -75,6 +75,13 @@ def main():
 
     for line in page.lines:
         if omitted(line) or not (200 < line["x0"] < 610 and 70 < line["top"] < 500):
+            continue
+        # Long oblique strokes in the source are annotation leaders, not
+        # architectural edges. Keep orthogonal dimensions/geometry and small
+        # symbol strokes, but omit the visually noisy callout diagonals.
+        dx = abs(x(line["x1"]) - x(line["x0"]))
+        dy = abs(y(line["bottom"]) - y(line["top"]))
+        if dx > 180 and dy > 180:
             continue
         stroke = color(line.get("stroking_color"), "rgb(45,48,52)")
         stroke_width = max(float(line.get("linewidth") or 0.36) * 25.25, 3)

@@ -46,6 +46,7 @@ main { padding: 18px; }
 #floorSvg { width: min(82vh, 100%); max-height: 700px; display: block; }
 .source-plan-vector { pointer-events: none; }
 .manual-plan-geometry { display: none; }
+.structural-walls { fill: none; stroke: #0d0f12; stroke-width: 58; stroke-linecap: square; stroke-linejoin: miter; pointer-events: none; }
 
 .floor { fill: #fff; }
 .grid { opacity: .72; }
@@ -162,8 +163,6 @@ main { padding: 18px; }
 .dimensions text { fill: #393e46; stroke: #fff; stroke-width: 28; paint-order: stroke; stroke-linejoin: round; text-anchor: middle; font-size: 155px; font-weight: 750; }
 .fixture-dimensions line, .storage-dimensions line { stroke: #353a42; stroke-width: 10; }
 .fixture-dimensions text, .storage-dimensions text { fill: #16191e; stroke: #fff; stroke-width: 20; paint-order: stroke; text-anchor: middle; font-size: 105px; font-weight: 850; }
-.source-plan-vector ~ .fixture-dimensions,
-.source-plan-vector ~ .dimensions { display: none; }
 .source-plan-labels text { fill: #272b31; stroke: #fff; stroke-width: 22; paint-order: stroke; text-anchor: middle; font-size: 115px; font-weight: 850; }
 .selection-overlay { pointer-events: none; }
 .selection-overlay .selection-halo { fill: none; stroke: #fff; stroke-width: 92; opacity: .96; stroke-linejoin: round; }

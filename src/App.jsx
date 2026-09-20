@@ -3,8 +3,8 @@ import * as BABYLON from "babylonjs";
 import "babylonjs-loaders";
 
 const works = [
-  { id: "sunok", index: "01", zone: "하단 1/2", color: "#b5477b", title: "홍선옥 · Code to Coil", detail: "우측 선반 · 하단 절반", size: "가로 2900 × 세로 450mm", shelfY: 4475, shelfHeight: 2900 },
-  { id: "eunsil", index: "02", zone: "상단 1/2", color: "#6b8f71", title: "지은실 · Hybrid Nature", detail: "우측 선반 · 상단 절반", size: "가로 2900 × 세로 450mm", shelfY: 1575, shelfHeight: 2900 },
+  { id: "sunok", index: "01", zone: "하단 1/2", color: "#b5477b", title: "홍선옥 · Code to Coil", detail: "우측 선반 · 하단 절반", size: "가로 2900 × 세로 450mm", shelfY: 4644, shelfHeight: 2933 },
+  { id: "eunsil", index: "02", zone: "상단 1/2", color: "#6b8f71", title: "지은실 · Hybrid Nature", detail: "우측 선반 · 상단 절반", size: "가로 2900 × 세로 450mm", shelfY: 1711, shelfHeight: 2933 },
   { id: "candle", index: "03", color: "#f26a21", title: "권정현 · Candle", detail: "목재장 B · 3점 + 태블릿 · 전원", prep: "개별 준비 · 멀티탭", size: "가로 900 × 세로 600mm" },
   { id: "bora", index: "04", color: "#258b85", title: "윤보라 · 잃어버린 방", detail: "LG 17MT70 · Quest 3 · 충전 독 · 티백 · 찻잔", prep: "개별 준비 · 멀티탭 · PD 충전기 · 충전 독 어댑터 · 전원·영상 케이블", size: "목재장 A 폭 기준 · VR 동작 구역 1500 × 1000mm" },
   { id: "blue-by-jjok", index: "05", color: "#386a8c", title: "권정륜 · 신하진 · Blue by jjok", detail: "외부 조망 유리벽 앞 · 바닥 자립 2점", prep: "패널 H2500 · 프레임 H720 2점 · 적층 큐브 H1000", size: "패널 W700 · 프레임 W420/W520mm" },
@@ -14,11 +14,11 @@ const works = [
 const shelfWorks = ["eunsil", "sunok"].map((id) => works.find((work) => work.id === id));
 
 const selectionBounds = {
-  "blue-by-jjok": { x: 3950, y: 8170, width: 2700, height: 680 },
-  eunsil: { x: 6800, y: 1575, width: 450, height: 2900 },
-  sunok: { x: 6800, y: 4475, width: 450, height: 2900 },
-  candle: { x: 5125, y: 975, width: 900, height: 600 },
-  bora: { x: 2350, y: 975, width: 1500, height: 1675 },
+  "blue-by-jjok": { x: 4050, y: 7850, width: 2530, height: 900 },
+  eunsil: { x: 6640, y: 1711, width: 455, height: 2933 },
+  sunok: { x: 6640, y: 4644, width: 455, height: 2933 },
+  candle: { x: 5153, y: 1128, width: 900, height: 560 },
+  bora: { x: 2353, y: 1105, width: 1524, height: 1606 },
   halfchairs: { x: 4500, y: 4250, width: 800, height: 900 },
 };
 
@@ -48,6 +48,13 @@ function Plan({ circulation, electrical, selected, onSelect }) {
         </defs>
 
         <image className="source-plan-vector" href={import.meta.env.BASE_URL + "assets/g09-plan-vector.svg"} x="-1100" y="-700" width="9500" height="10600" preserveAspectRatio="xMidYMid meet" />
+
+        <g className="structural-walls" aria-label="검정 실선 구조 벽체">
+          <path d="M0 5300V0H7250V9100" />
+          <line x1="0" y1="5300" x2="2850" y2="5300" />
+          <line x1="2850" y1="5300" x2="2850" y2="6720" />
+          <line x1="2850" y1="7920" x2="2850" y2="8870" />
+        </g>
 
         <path className="floor manual-plan-geometry" d="M0 0H7250V9100H2850V5300H0Z" />
         <path className="grid manual-plan-geometry" d="M0 0H7250V9100H2850V5300H0Z" fill="url(#grid500)" />
@@ -129,57 +136,57 @@ function Plan({ circulation, electrical, selected, onSelect }) {
               onClick={() => onSelect(work.id)}
               onKeyDown={(event) => (event.key === "Enter" || event.key === " ") && onSelect(work.id)}
             >
-              <rect x="6800" y={work.shelfY} width="450" height={work.shelfHeight} fill={work.color} />
-              <text className="segment-zone" x="7025" y={work.shelfY + 235}>{work.zone}</text>
-              <text className="segment-length" x="7025" y={work.shelfY + 430}>2900</text>
-              <text className="segment-depth" x="7025" y={work.shelfY + 595}>× 450</text>
-              <text className="segment-name" x="6600" y={work.shelfY + work.shelfHeight / 2}>{work.index} · {work.title}</text>
+              <rect x="6640" y={work.shelfY} width="455" height={work.shelfHeight} fill={work.color} />
+              <text className="segment-zone" x="6867" y={work.shelfY + 235}>{work.zone}</text>
+              <text className="segment-length" x="6867" y={work.shelfY + 430}>2900</text>
+              <text className="segment-depth" x="6867" y={work.shelfY + 595}>× 450</text>
+              <text className="segment-name" x="6500" y={work.shelfY + work.shelfHeight / 2}>{work.index} · {work.title}</text>
             </g>
           ))}
         </g>
 
         <g className={`blue-work${selected === "blue-by-jjok" ? " is-selected" : ""}`} data-id="blue-by-jjok" tabIndex="0" role="button" aria-label="권정륜 신하진 Blue by jjok, 외부 조망 유리벽 앞 바닥 자립형 2점" onClick={() => onSelect("blue-by-jjok")} onKeyDown={(event) => (event.key === "Enter" || event.key === " ") && onSelect("blue-by-jjok")}>
-          <text className="work-label" x="5550" y="7870" textAnchor="middle">05 · 권정륜 · 신하진</text>
-          <text className="work-detail" x="5550" y="8040" textAnchor="middle">외부 조망 유리벽 앞 · 바닥 자립 2점</text>
-          <rect className="installation-envelope" x="3950" y="8170" width="2700" height="680" rx="32" />
-          <rect className="stacked-cube" x="4040" y="8330" width="460" height="460" />
-          <rect className="stacked-cube stacked-cube-top" x="4140" y="8250" width="460" height="460" />
-          <rect className="panel" x="4550" y="8780" width="700" height="70" />
-          <rect className="panel" x="5750" y="8780" width="700" height="70" />
-          <rect className="module module-a" x="4690" y="8240" width="420" height="520" />
-          <rect className="module module-b" x="5840" y="8240" width="520" height="520" />
-          <line x1="4690" y1="8240" x2="5110" y2="8760" />
-          <line x1="5110" y1="8240" x2="4690" y2="8760" />
-          <line x1="5840" y1="8240" x2="6360" y2="8760" />
-          <line x1="6360" y1="8240" x2="5840" y2="8760" />
+          <text className="work-label" x="4070" y="7550">05 · 권정륜 · 신하진</text>
+          <text className="work-detail" x="4070" y="7720">문 회전 반경 밖 · 벽에서 이격 · 3점 균등 배치</text>
+          <rect className="installation-envelope" x="4050" y="7850" width="2530" height="900" rx="32" />
+          <rect className="stacked-cube" x="4120" y="8010" width="460" height="460" />
+          <rect className="stacked-cube stacked-cube-top" x="4220" y="7930" width="460" height="460" />
+          <rect className="panel" x="4950" y="8580" width="700" height="70" />
+          <rect className="panel" x="5850" y="8580" width="700" height="70" />
+          <rect className="module module-a" x="5090" y="7950" width="420" height="520" />
+          <rect className="module module-b" x="5940" y="7950" width="520" height="520" />
+          <line x1="5090" y1="7950" x2="5510" y2="8470" />
+          <line x1="5510" y1="7950" x2="5090" y2="8470" />
+          <line x1="5940" y1="7950" x2="6460" y2="8470" />
+          <line x1="6460" y1="7950" x2="5940" y2="8470" />
         </g>
 
         <g className="cabinet-sharing" aria-label="목재장 B 공유 가능 구간">
-          <rect x="4575" y="995" width="550" height="560" /><rect x="6025" y="995" width="550" height="560" />
-          <text x="4850" y="1320">공유 가능 · 550</text><text x="6300" y="1320">공유 가능 · 550</text>
+          <rect x="4603" y="1128" width="550" height="560" /><rect x="6053" y="1128" width="550" height="560" />
+          <text x="4878" y="1453">공유 가능 · 550</text><text x="6328" y="1453">공유 가능 · 550</text>
         </g>
 
         <g className={`candle-work${selected === "candle" ? " is-selected" : ""}`} data-id="candle" tabIndex="0" role="button" aria-label="권정현 Candle 기존 목재장 B와 벽면 설치" onClick={() => onSelect("candle")} onKeyDown={(event) => (event.key === "Enter" || event.key === " ") && onSelect("candle")}>
-          <rect className="surface" x="5125" y="975" width="900" height="600" />
-          <rect className="display-wall" x="5140" y="990" width="480" height="42" />
-          <circle className="wall-piece" cx="5260" cy="1070" r="82" />
-          <circle cx="5325" cy="1280" r="82" /><circle cx="5575" cy="1280" r="82" />
-          <rect className="tablet" x="5790" y="1320" width="170" height="110" rx="16" />
-          <text className="work-label" x="5575" y="1780" textAnchor="middle">03 · 권정현 · Candle</text>
-          <text className="work-detail" x="5575" y="1970" textAnchor="middle">목재장 B 직선부 중앙 · 900 × 600mm · 전원</text>
+          <rect className="surface" x="5153" y="1128" width="900" height="560" />
+          <rect className="display-wall" x="5168" y="1143" width="480" height="42" />
+          <circle className="wall-piece" cx="5288" cy="1223" r="82" />
+          <circle cx="5353" cy="1413" r="82" /><circle cx="5603" cy="1413" r="82" />
+          <rect className="tablet" x="5818" y="1453" width="170" height="110" rx="16" />
+          <text className="work-label" x="5603" y="1913" textAnchor="middle">03 · 권정현 · Candle</text>
+          <text className="work-detail" x="5603" y="2103" textAnchor="middle">목재장 B 직선부 중앙 · 900 × 600mm · 전원</text>
         </g>
 
         <g className={`bora-work${selected === "bora" ? " is-selected" : ""}`} data-id="bora" tabIndex="0" role="button" aria-label="윤보라 잃어버린 방 기존 목재장 A 설치" onClick={() => onSelect("bora")} onKeyDown={(event) => (event.key === "Enter" || event.key === " ") && onSelect("bora")}>
-          <rect className="roomscale-zone" x="2350" y="1650" width="1500" height="1000" rx="50" />
-          <text className="roomscale-label" x="3100" y="2470" textAnchor="middle">VR 동작 구역 1500 × 1000</text>
-          <rect className="surface" x="2550" y="995" width="1100" height="560" />
-          <rect className="monitor" x="2590" y="1035" width="379" height="165" rx="12" />
-          <line className="monitor-stand" x1="2779" y1="1200" x2="2825" y2="1280" />
-          <g className="charging-dock"><rect x="2910" y="1290" width="500" height="230" rx="45" /><path d="M3020 1410Q3160 1300 3300 1410Q3250 1500 3160 1500Q3070 1500 3020 1410Z" /><circle cx="2975" cy="1405" r="48" /><circle cx="3345" cy="1405" r="48" /></g>
-          <rect className="tea-bag" x="3030" y="1040" width="220" height="130" rx="20" /><circle className="tea-cup" cx="3470" cy="1105" r="72" /><circle className="cup-handle" cx="3550" cy="1105" r="34" />
-          <rect className="power-strip" x="2960" y="1205" width="350" height="58" rx="24" />
-          <text className="work-label" x="3100" y="1780" textAnchor="middle">04 · 윤보라 · 잃어버린 방</text>
-          <text className="work-detail" x="3100" y="1970" textAnchor="middle">가로 1100 × 세로 600mm · 전원</text>
+          <rect className="roomscale-zone" x="2365" y="1735" width="1500" height="1000" rx="50" />
+          <text className="roomscale-label" x="3115" y="2555" textAnchor="middle">VR 동작 구역 1500 × 1000</text>
+          <rect className="surface" x="2565" y="1128" width="1100" height="560" />
+          <rect className="monitor" x="2605" y="1168" width="379" height="165" rx="12" />
+          <line className="monitor-stand" x1="2794" y1="1333" x2="2840" y2="1413" />
+          <g className="charging-dock"><rect x="2925" y="1423" width="500" height="230" rx="45" /><path d="M3035 1543Q3175 1433 3315 1543Q3265 1633 3175 1633Q3085 1633 3035 1543Z" /><circle cx="2990" cy="1538" r="48" /><circle cx="3360" cy="1538" r="48" /></g>
+          <rect className="tea-bag" x="3045" y="1173" width="220" height="130" rx="20" /><circle className="tea-cup" cx="3485" cy="1238" r="72" /><circle className="cup-handle" cx="3565" cy="1238" r="34" />
+          <rect className="power-strip" x="2975" y="1338" width="350" height="58" rx="24" />
+          <text className="work-label" x="3115" y="1913" textAnchor="middle">04 · 윤보라 · 잃어버린 방</text>
+          <text className="work-detail" x="3115" y="2103" textAnchor="middle">가로 1100 × 세로 600mm · 전원</text>
         </g>
 
         <g className={`floor-work${selected === "halfchairs" ? " is-selected" : ""}`} data-id="halfchairs" tabIndex="0" role="button" aria-label="이지우 Half Chairs 바닥 설치" onClick={() => onSelect("halfchairs")} onKeyDown={(event) => (event.key === "Enter" || event.key === " ") && onSelect("halfchairs")}>
@@ -197,8 +204,9 @@ function Plan({ circulation, electrical, selected, onSelect }) {
             <text x="3450" y="5740" textAnchor="middle">전시 지킴이 A</text>
           </g>
           <g aria-label="목재장 사이 전시 지킴이 자리">
-            <rect className="staff-zone" x="3888" y="280" width="650" height="650" rx="34" />
-            <rect className="staff-seat" x="4038" y="430" width="350" height="350" rx="28" /><line x1="4038" y1="430" x2="4388" y2="780" /><line x1="4388" y1="430" x2="4038" y2="780" />
+            <rect className="staff-zone" x="3915" y="280" width="650" height="650" rx="34" />
+            <rect className="staff-seat" x="4065" y="430" width="350" height="350" rx="28" /><line x1="4065" y1="430" x2="4415" y2="780" /><line x1="4415" y1="430" x2="4065" y2="780" />
+            <text x="4240" y="900" textAnchor="middle">전시 지킴이 B</text>
           </g>
         </g>
 
@@ -252,7 +260,7 @@ function ThreeView({ selected, onSelect }) {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const engine = new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true });
+    const engine = new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true }, true);
     const scene = new BABYLON.Scene(engine);
     scene.clearColor = new BABYLON.Color4(0.93, 0.94, 0.95, 1);
     const camera = new BABYLON.ArcRotateCamera("camera", Math.PI / 2, 0.62, 17.5, new BABYLON.Vector3(3.625, 0.25, 4.6), scene);
@@ -325,12 +333,15 @@ function ThreeView({ selected, onSelect }) {
     box("wall-notch", 2.90, 2.85, 0.14, 1.45, 1.425, 5.28, wallMat);
     box("wall-entry-a", 0.14, 2.85, 1.50, 2.83, 1.425, 6.00, wallMat);
     box("wall-entry-b", 0.14, 2.85, 1.22, 2.83, 1.425, 8.475, wallMat);
+    box("entrance-projecting-wall", 0.50, 2.85, 0.12, 2.515, 1.425, 8.75, wallMat);
 
+    const mirrorTexture = new BABYLON.MirrorTexture("entrance-mirror-reflection", 1024, scene, true);
+    mirrorTexture.mirrorPlane = new BABYLON.Plane(1, 0, 0, -4.335);
+    mirrorTexture.level = 0.88;
     const mirrorMat = new BABYLON.StandardMaterial("entrance-mirror-material", scene);
-    mirrorMat.diffuseColor = BABYLON.Color3.FromHexString("#b9c3ca");
-    mirrorMat.emissiveColor = BABYLON.Color3.FromHexString("#8f9ba4").scale(0.18);
+    mirrorMat.diffuseColor = new BABYLON.Color3(0.08, 0.10, 0.12);
     mirrorMat.specularColor = BABYLON.Color3.White();
-    mirrorMat.specularPower = 256;
+    mirrorMat.reflectionTexture = mirrorTexture;
     mirrorMat.backFaceCulling = false;
     const entranceMirror = BABYLON.MeshBuilder.CreatePlane("entrance-mirror", { width: 1.25, height: 1.95, sideOrientation: BABYLON.Mesh.DOUBLESIDE }, scene);
     entranceMirror.position.set(4.335, 1.155, 5.925);
@@ -357,95 +368,95 @@ function ThreeView({ selected, onSelect }) {
     [1.975, 2.925, 3.875, 4.825].forEach((z, index) => box(`left-storage-shelf-${index}`, 0.45, 0.82, 0.90, 0.325, 0.41, z, storageShelfMat));
     [2.925, 3.875, 4.825].forEach((z, index) => box(`partition-storage-shelf-${index}`, 0.38, 0.82, 0.88, 2.01, 0.41, z, storageShelfMat));
 
-    box("pillar", 0.8, 2.85, 0.8, 1.95, 1.425, 1.275, fixedMat);
+    box("pillar", 0.88, 2.85, 0.89, 1.84, 1.425, 1.417, fixedMat);
     box("external-pillar-notch", 0.8, 2.85, 0.8, 1.95, 1.425, 5.925, fixedMat);
     box("external-pillar-right-upper", 0.8, 2.85, 0.8, 7.88, 1.425, 1.275, fixedMat);
     box("external-pillar-right-lower", 0.8, 2.85, 0.8, 7.88, 1.425, 5.925, fixedMat);
-    box("cabinet-a", 1.5, 0.85, 0.6, 3.10, 0.425, 1.275, fixedMat);
-    box("cabinet-b", 2.0, 1.0, 0.6, 5.575, 0.5, 1.275, fixedMat);
-    box("right-shelf-return", 0.45, 1.0, 1.455, 7.025, 0.5, 0.8475, fixedMat);
-    box("cabinet-b-corner", 0.225, 1.0, 0.60, 6.6875, 0.5, 1.275, fixedMat);
-    box("cabinet-gap-barrier", 0.675, 0.012, 0.055, 4.2125, 0.006, 1.605, material("cabinet-gap-barrier-material", "#292d33"));
+    box("cabinet-a", 1.524, 0.85, 0.606, 3.115, 0.425, 1.408, fixedMat);
+    box("cabinet-b", 2.0, 1.0, 0.606, 5.603, 0.5, 1.408, fixedMat);
+    box("right-shelf-return", 0.455, 1.0, 1.59, 6.8675, 0.5, 0.916, fixedMat);
+    box("cabinet-b-corner", 0.264, 1.0, 0.606, 6.735, 0.5, 1.408, fixedMat);
+    box("cabinet-gap-barrier", 0.726, 0.012, 0.055, 4.24, 0.006, 1.735, material("cabinet-gap-barrier-material", "#292d33"));
     const shelfMat = material("shelf", "#a8a39b");
     const shelfRecessMat = material("shelf-recess", "#6f6b66");
     const shelfInteriorMat = material("shelf-interior", "#918c85");
-    box("right-shelf-bottom", 0.45, 0.32, 5.8, 7.025, 0.16, 4.475, shelfMat);
-    box("right-shelf-fascia", 0.45, 0.20, 5.8, 7.025, 0.77, 4.475, shelfMat);
-    const shelfPier = 0.216;
+    box("right-shelf-bottom", 0.455, 0.32, 5.866, 6.8675, 0.16, 4.644, shelfMat);
+    box("right-shelf-fascia", 0.455, 0.20, 5.866, 6.8675, 0.77, 4.644, shelfMat);
+    const shelfPier = 0.2277;
     for (let index = 0; index < 6; index += 1) {
-      const z = 1.575 + shelfPier / 2 + index * (0.9 + shelfPier);
-      box("right-shelf-pier-" + index, 0.45, 0.35, shelfPier, 7.025, 0.495, z, shelfMat);
+      const z = 1.711 + shelfPier / 2 + index * (0.9 + shelfPier);
+      box("right-shelf-pier-" + index, 0.455, 0.35, shelfPier, 6.8675, 0.495, z, shelfMat);
     }
     for (let index = 0; index < 5; index += 1) {
-      const z = 1.575 + shelfPier + 0.45 + index * (0.9 + shelfPier);
-      box("right-shelf-back-" + index, 0.018, 0.31, 0.84, 7.235, 0.495, z, shelfRecessMat);
-      box("right-shelf-inside-" + index, 0.40, 0.025, 0.84, 7.01, 0.345, z, shelfInteriorMat);
+      const z = 1.711 + shelfPier + 0.45 + index * (0.9 + shelfPier);
+      box("right-shelf-back-" + index, 0.018, 0.31, 0.84, 7.085, 0.495, z, shelfRecessMat);
+      box("right-shelf-inside-" + index, 0.405, 0.025, 0.84, 6.8675, 0.345, z, shelfInteriorMat);
     }
 
     const boraMat = material("mat-bora", works.find((work) => work.id === "bora").color, 0.9);
     const boraRoomscaleMat = material("bora-roomscale-zone-material", "#73d8d1", 0.32);
-    registerExhibitMesh("bora", box("bora-roomscale-zone", 1.5, 0.025, 1.0, 3.10, 0.0125, 2.15, boraRoomscaleMat, true), true);
-    registerExhibitMesh("bora", box("bora", 1.1, 0.06, 0.56, 3.10, 0.88, 1.275, boraMat, true));
-    registerExhibitMesh("bora", box("bora-monitor", 0.379, 0.264, 0.02, 2.78, 1.02, 1.08, material("monitor", "#22252b")));
-    registerExhibitMesh("bora", box("bora-dock", 0.50, 0.04, 0.23, 3.16, 0.92, 1.405, whiteMat));
+    registerExhibitMesh("bora", box("bora-roomscale-zone", 1.5, 0.025, 1.0, 3.115, 0.0125, 2.235, boraRoomscaleMat, true), true);
+    registerExhibitMesh("bora", box("bora", 1.1, 0.06, 0.56, 3.115, 0.88, 1.408, boraMat, true));
+    registerExhibitMesh("bora", box("bora-monitor", 0.379, 0.264, 0.02, 2.795, 1.02, 1.213, material("monitor", "#22252b")));
+    registerExhibitMesh("bora", box("bora-dock", 0.50, 0.04, 0.23, 3.175, 0.92, 1.538, whiteMat));
     const hmd = BABYLON.MeshBuilder.CreateTorus("bora-hmd", { diameter: 0.2, thickness: 0.06 }, scene);
-    hmd.position.set(3.16, 0.98, 1.405);
+    hmd.position.set(3.175, 0.98, 1.538);
     hmd.parent = orientationRoot;
     hmd.rotation.x = Math.PI / 2;
     hmd.material = material("hmd", "#424750");
     registerExhibitMesh("bora", hmd);
-    [2.975, 3.345].forEach((x, index) => {
+    [2.99, 3.36].forEach((x, index) => {
       const controller = BABYLON.MeshBuilder.CreateCylinder("bora-controller-" + index, { diameter: 0.09, height: 0.10 }, scene);
-      controller.position.set(x, 0.98, 1.405);
+      controller.position.set(x, 0.98, 1.538);
       controller.parent = orientationRoot;
       controller.material = material("controller-" + index, "#68707b");
       registerExhibitMesh("bora", controller);
     });
-    registerExhibitMesh("bora", box("bora-teabag", 0.22, 0.03, 0.13, 3.14, 0.91, 1.105, material("teabag", "#d6b06b")));
+    registerExhibitMesh("bora", box("bora-teabag", 0.22, 0.03, 0.13, 3.155, 0.91, 1.238, material("teabag", "#d6b06b")));
     const cup = BABYLON.MeshBuilder.CreateCylinder("bora-cup", { diameter: 0.14, height: 0.10 }, scene);
-    cup.position.set(3.47, 0.95, 1.105);
+    cup.position.set(3.485, 0.95, 1.238);
     cup.parent = orientationRoot;
     cup.material = whiteMat;
     registerExhibitMesh("bora", cup);
-    registerExhibitMesh("bora", box("bora-power-strip", 0.35, 0.04, 0.06, 3.135, 0.91, 1.235, whiteMat));
+    registerExhibitMesh("bora", box("bora-power-strip", 0.35, 0.04, 0.06, 3.15, 0.91, 1.368, whiteMat));
 
     const candleMat = material("mat-candle", works.find((work) => work.id === "candle").color, 0.9);
-    registerExhibitMesh("candle", box("candle", 0.9, 0.06, 0.6, 5.575, 1.03, 1.275, candleMat, true), true);
+    registerExhibitMesh("candle", box("candle", 0.9, 0.06, 0.56, 5.603, 1.03, 1.408, candleMat, true), true);
     const smallCandle = BABYLON.MeshBuilder.CreateCylinder("candle-surface-small", { diameter: 0.14, height: 0.10 }, scene);
-    smallCandle.position.set(5.88, 1.11, 1.34);
+    smallCandle.position.set(5.908, 1.11, 1.473);
     smallCandle.parent = orientationRoot;
     smallCandle.material = candleMat;
     registerExhibitMesh("candle", smallCandle);
     const largeCandleBase = BABYLON.MeshBuilder.CreateCylinder("candle-surface-base", { diameter: 0.28, height: 0.035 }, scene);
-    largeCandleBase.position.set(5.58, 1.078, 1.34);
+    largeCandleBase.position.set(5.608, 1.078, 1.473);
     largeCandleBase.parent = orientationRoot;
     largeCandleBase.material = whiteMat;
     registerExhibitMesh("candle", largeCandleBase);
     const largeCandle = BABYLON.MeshBuilder.CreateCylinder("candle-surface-large", { diameter: 0.17, height: 0.10 }, scene);
-    largeCandle.position.set(5.58, 1.145, 1.34);
+    largeCandle.position.set(5.608, 1.145, 1.473);
     largeCandle.parent = orientationRoot;
     largeCandle.material = candleMat;
     registerExhibitMesh("candle", largeCandle);
-    registerExhibitMesh("candle", box("candle-display-wall", 0.48, 0.38, 0.03, 5.77, 1.19, 0.995, whiteMat));
-    registerExhibitMesh("candle", box("candle-light-bar", 0.50, 0.06, 0.08, 5.77, 1.41, 1.02, whiteMat));
+    registerExhibitMesh("candle", box("candle-display-wall", 0.48, 0.38, 0.03, 5.408, 1.19, 1.128, whiteMat));
+    registerExhibitMesh("candle", box("candle-light-bar", 0.50, 0.06, 0.08, 5.408, 1.41, 1.153, whiteMat));
     const wallPiece = BABYLON.MeshBuilder.CreateCylinder("candle-wall", { diameter: 0.15, height: 0.018 }, scene);
-    wallPiece.position.set(5.89, 1.28, 1.02);
+    wallPiece.position.set(5.288, 1.28, 1.153);
     wallPiece.parent = orientationRoot;
     wallPiece.rotation.x = Math.PI / 2;
     wallPiece.material = candleMat;
     registerExhibitMesh("candle", wallPiece);
-    registerExhibitMesh("candle", box("candle-tablet", 0.17, 0.16, 0.04, 5.275, 1.12, 1.36, material("tablet", "#22252b")));
+    registerExhibitMesh("candle", box("candle-tablet", 0.17, 0.16, 0.04, 5.303, 1.12, 1.493, material("tablet", "#22252b")));
 
     const blueWork = works.find((work) => work.id === "blue-by-jjok");
     const bluePanelMat = material("blue-panel-material", "#ececee");
     const blueCubeLowerMat = material("blue-cube-lower-material", "#d8d5ca");
     const blueCubeUpperMat = material("blue-cube-upper-material", "#f3efe2");
     const blueAnchorMat = material("blue-installation-envelope", blueWork.color, 0.08);
-    registerExhibitMesh("blue-by-jjok", box("blue-installation-anchor", 2.70, 0.025, 0.68, 5.30, 0.0125, 8.51, blueAnchorMat, true), true);
-    registerExhibitMesh("blue-by-jjok", box("blue-panel-a", 0.70, 2.50, 0.06, 4.90, 1.25, 8.81, bluePanelMat, true));
-    registerExhibitMesh("blue-by-jjok", box("blue-panel-b", 0.70, 2.50, 0.06, 6.10, 1.25, 8.81, bluePanelMat, true));
-    registerExhibitMesh("blue-by-jjok", box("blue-stacked-cube-lower", 0.46, 0.50, 0.46, 4.24, 0.25, 8.50, blueCubeLowerMat, true));
-    registerExhibitMesh("blue-by-jjok", box("blue-stacked-cube-upper", 0.46, 0.50, 0.46, 4.34, 0.75, 8.42, blueCubeUpperMat, true));
+    registerExhibitMesh("blue-by-jjok", box("blue-installation-anchor", 2.53, 0.025, 0.90, 5.315, 0.0125, 8.20, blueAnchorMat, true), true);
+    registerExhibitMesh("blue-by-jjok", box("blue-panel-a", 0.70, 2.50, 0.06, 5.30, 1.25, 8.58, bluePanelMat, true));
+    registerExhibitMesh("blue-by-jjok", box("blue-panel-b", 0.70, 2.50, 0.06, 4.40, 1.25, 8.58, bluePanelMat, true));
+    registerExhibitMesh("blue-by-jjok", box("blue-stacked-cube-lower", 0.46, 0.50, 0.46, 6.40, 0.25, 8.20, blueCubeLowerMat, true));
+    registerExhibitMesh("blue-by-jjok", box("blue-stacked-cube-upper", 0.46, 0.50, 0.46, 6.30, 0.75, 8.12, blueCubeUpperMat, true));
     const blueFrameMats = [
       material("blue-frame-blue", "#0755c9"),
       material("blue-frame-purple", "#7130bd"),
@@ -478,11 +489,11 @@ function ThreeView({ selected, onSelect }) {
         blueBeam(`${prefix}-rail-z-right-${level}`, beam, beam, innerDepth, xRight, y, z);
       });
     };
-    createBlueFrame("blue-frame-left", 4.90, 8.50, 0.42, 0.52, 0.72);
-    createBlueFrame("blue-frame-low", 6.10, 8.50, 0.52, 0.52, 0.72);
+    createBlueFrame("blue-frame-left", 5.30, 8.20, 0.42, 0.52, 0.72);
+    createBlueFrame("blue-frame-low", 4.40, 8.20, 0.52, 0.52, 0.72);
 
     shelfWorks.forEach((work) => {
-      const mesh = box(work.id, 0.41, 0.05, work.shelfHeight / 1000 - 0.02, 7.015, 0.895, (work.shelfY + work.shelfHeight / 2) / 1000, material("mat-" + work.id, work.color, 0.9), true);
+      const mesh = box(work.id, 0.415, 0.05, work.shelfHeight / 1000 - 0.02, 6.8675, 0.895, (work.shelfY + work.shelfHeight / 2) / 1000, material("mat-" + work.id, work.color, 0.9), true);
       registerExhibitMesh(work.id, mesh, true);
     });
     const chairMat = material("chair", works.find((work) => work.id === "halfchairs").color, 0.9);
@@ -509,58 +520,35 @@ function ThreeView({ selected, onSelect }) {
       });
     };
     createStaffStation("staff-mirror", 3.45, 5.925, 0.70, 0.65);
-    createStaffStation("staff-cabinet-gap", 4.213, 0.605, 0.65, 0.65, "z");
+    createStaffStation("staff-cabinet-gap", 4.24, 0.605, 0.65, 0.65, "z");
 
-    BABYLON.SceneLoader.ImportMeshAsync("", import.meta.env.BASE_URL + "assets/", "person.glb", scene).then((result) => {
-      if (scene.isDisposed) return;
-      const modelRoot = result.meshes[0];
-      if (!modelRoot) return;
-      const personPivot = new BABYLON.TransformNode("scale-person", scene);
-      personPivot.parent = orientationRoot;
-      modelRoot.parent = personPivot;
-      modelRoot.rotationQuaternion = null;
-      modelRoot.rotation.x = -Math.PI / 2;
-      result.meshes.forEach((mesh) => {
-        mesh.isPickable = false;
-        mesh.alwaysSelectAsActiveMesh = true;
-        mesh.computeWorldMatrix(true);
-      });
-      personPivot.computeWorldMatrix(true);
-      const bounds = personPivot.getHierarchyBoundingVectors(true);
-      const height = bounds.max.y - bounds.min.y;
-      if (!Number.isFinite(height) || height <= 0) return;
-      const scale = 1.7 / height;
-      modelRoot.position.x -= (bounds.min.x + bounds.max.x) / 2;
-      modelRoot.position.y -= bounds.min.y;
-      modelRoot.position.z -= (bounds.min.z + bounds.max.z) / 2;
-      personPivot.scaling.setAll(scale);
-      personPivot.position.set(5.25, 0, 6.45);
-      personPivot.rotation.y = -0.38;
-      const idle = result.animationGroups.find((group) => /idle|stand/i.test(group.name)) || result.animationGroups[0];
-      if (idle) idle.start(true);
-    }).catch((error) => console.error("person.glb load failed", error));
-
-    const personLabelTexture = new BABYLON.DynamicTexture("person-height-label-texture", { width: 768, height: 180 }, scene, true);
-    const personLabelContext = personLabelTexture.getContext();
-    personLabelContext.fillStyle = "rgba(255,255,255,.94)";
-    personLabelContext.fillRect(0, 0, 768, 180);
-    personLabelContext.fillStyle = "#252a31";
-    personLabelContext.font = "700 58px Arial";
-    personLabelContext.textAlign = "center";
-    personLabelContext.textBaseline = "middle";
-    personLabelContext.fillText("170cm", 384, 92);
-    personLabelTexture.update();
-    const personLabelMat = new BABYLON.StandardMaterial("person-height-label-material", scene);
-    personLabelMat.diffuseTexture = personLabelTexture;
-    personLabelMat.opacityTexture = personLabelTexture;
-    personLabelMat.emissiveColor = BABYLON.Color3.White();
-    personLabelMat.disableLighting = true;
-    const personLabel = BABYLON.MeshBuilder.CreatePlane("person-height-label", { width: 0.85, height: 0.20, sideOrientation: BABYLON.Mesh.DOUBLESIDE }, scene);
-    personLabel.position.set(5.25, 1.84, 6.45);
-    personLabel.parent = orientationRoot;
-    personLabel.billboardMode = BABYLON.Mesh.BILLBOARDMODE_ALL;
-    personLabel.material = personLabelMat;
-    personLabel.isPickable = false;
+    const loadSeatedAttendant = (name, x, z, rotationY) => {
+      BABYLON.SceneLoader.ImportMeshAsync("", import.meta.env.BASE_URL + "assets/", "attendant-woman.glb", scene).then((result) => {
+        if (scene.isDisposed) return;
+        const modelRoot = result.meshes[0];
+        if (!modelRoot) return;
+        const personPivot = new BABYLON.TransformNode(name, scene);
+        modelRoot.parent = personPivot;
+        result.meshes.forEach((mesh) => {
+          mesh.isPickable = false;
+          mesh.alwaysSelectAsActiveMesh = true;
+          mesh.computeWorldMatrix(true);
+        });
+        personPivot.computeWorldMatrix(true);
+        const bounds = personPivot.getHierarchyBoundingVectors(true);
+        const height = bounds.max.y - bounds.min.y;
+        if (!Number.isFinite(height) || height <= 0) return;
+        modelRoot.position.x -= (bounds.min.x + bounds.max.x) / 2;
+        modelRoot.position.y -= bounds.min.y;
+        modelRoot.position.z -= (bounds.min.z + bounds.max.z) / 2;
+        personPivot.scaling.setAll(1.32 / height);
+        personPivot.parent = orientationRoot;
+        personPivot.position.set(x, 0, z);
+        personPivot.rotation.y = rotationY;
+      }).catch((error) => console.error("attendant-woman.glb load failed", error));
+    };
+    loadSeatedAttendant("attendant-mirror", 3.59, 5.925, Math.PI / 2);
+    loadSeatedAttendant("attendant-cabinet-gap", 4.24, 0.745, 0);
 
     const selectionBandMat = material("selection-band-material", "#f5b700", 0.95);
     selectionBandMat.emissiveColor = BABYLON.Color3.FromHexString("#f5b700").scale(0.7);
@@ -596,9 +584,11 @@ function ThreeView({ selected, onSelect }) {
       const target = new BABYLON.Vector3(worldAnchor.x, id === "blue-by-jjok" ? 1.20 : Math.max(worldAnchor.y, 0.65), worldAnchor.z);
       const isShelf = shelfWorks.some((work) => work.id === id);
       const view = isShelf
-        ? { alpha: Math.PI, beta: 1.08, radius: 5.2 }
+        ? { alpha: 0, beta: 1.08, radius: 4.6 }
         : id === "blue-by-jjok"
           ? { alpha: -1.30, beta: 1.12, radius: 3.2 }
+        : id === "halfchairs"
+          ? { alpha: Math.PI / 2, beta: 1.08, radius: 4.2 }
         : id === "bora" || id === "candle"
           ? { alpha: Math.PI / 2, beta: 1.02, radius: 4.8 }
           : { alpha: -0.82, beta: 1.02, radius: 5.4 };

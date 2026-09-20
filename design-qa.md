@@ -21,6 +21,11 @@
 
 ## Interaction and browser checks
 
+- The 2D architectural base is generated directly from `G09_PLAN.pdf` vector rectangles, lines, and curves, normalized to the stated 7250 × 9100 extents; the three source-only movable pedestals are excluded.
+- The fixed partition, internal/external columns, left storage shelving, cabinet return, right-wall shelf, and entrance swing now follow that extracted vector layer. The 3D equivalents use the same millimetre positions at 1/1000 scale.
+- Two attendant seats are separated: A at the mirror and B directly below the 726 cabinet gap.
+- The initial 3D camera is oriented so the right-wall shelf appears on screen-right and the left fixed partition appears on screen-left, matching G09_PLAN.pdf.
+
 - 2D/3D switching, layer toggles, selection synchronization, orbit, pan, zoom, and artwork focus: passed.
 - Production build: passed.
 - Sites-compatible worker tests: 4/4 passed.

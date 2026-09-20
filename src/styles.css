@@ -44,6 +44,8 @@ main { padding: 18px; }
 .sheet-body { display: grid; grid-template-columns: minmax(0,1fr) 310px; min-height: 690px; }
 .drawing-wrap { min-width: 0; display: grid; place-items: center; padding: 8px 12px 4px; overflow: hidden; }
 #floorSvg { width: min(82vh, 100%); max-height: 700px; display: block; }
+.source-plan-vector { pointer-events: none; }
+.manual-plan-geometry { display: none; }
 
 .floor { fill: #fff; }
 .grid { opacity: .72; }
@@ -51,7 +53,9 @@ main { padding: 18px; }
 .inner-wall { fill: none; stroke: #5a5f68; stroke-width: 12; }
 .fixed rect { fill: url(#fixedHatch); stroke: #3f444d; stroke-width: 18; }
 .fixed .storage-zone { fill: rgba(210, 214, 221, .2); stroke: #7d838d; stroke-width: 14; stroke-dasharray: 55 32; }
+.fixed .storage-shelf { fill: #dedede; stroke: #444951; stroke-width: 14; }
 .fixed .partition-face { fill: #737880; stroke: #353a42; stroke-width: 12; }
+.fixed .cabinet-corner { fill: url(#fixedHatch); stroke: #3f444d; stroke-width: 18; }
 .fixed .storage-label { fill: #555b64; font-size: 112px; font-weight: 850; }
 .fixed .shelf-base { fill: #d7d9dd; }
 .fixed .mirror { fill: #dcecff; stroke: #3777b7; stroke-width: 12; }
@@ -63,12 +67,13 @@ main { padding: 18px; }
 .fixed .rotated-label { font-size: 138px; writing-mode: vertical-rl; }
 .context-pillars rect { fill: url(#fixedHatch); stroke: #717680; stroke-width: 18; }
 .context-pillars text { fill: #373b42; text-anchor: middle; dominant-baseline: middle; font-size: 250px; font-weight: 900; }
-.door line, .door path { fill: none; stroke: #4c515a; stroke-width: 18; }
+.door line, .door path, .door circle { fill: none; stroke: #4c515a; stroke-width: 18; }
 .door .door-opening { stroke: #fff; stroke-width: 150; }
 .door .fixed-glass { stroke: #3d8fa5; stroke-width: 20; }
 .door .door-jamb { stroke-width: 26; }
 .door .door-leaf { stroke-width: 24; }
 .door .door-swing { stroke-dasharray: 60 45; }
+.door .door-hinge { fill: #fff; stroke-width: 22; }
 .door text { fill: #3f444c; font-size: 150px; font-weight: 700; }
 .glass-wall-plan line { stroke: #3d8fa5; stroke-width: 18; }
 .glass-wall-plan text { fill: #286a7a; text-anchor: middle; font-size: 120px; font-weight: 850; }
@@ -153,6 +158,10 @@ main { padding: 18px; }
 .dimensions line { stroke: #515660; stroke-width: 14; }
 .dimensions .dimension-line { marker-start: url(#dimArrowStart); marker-end: url(#dimArrowEnd); }
 .dimensions text { fill: #393e46; stroke: #fff; stroke-width: 28; paint-order: stroke; stroke-linejoin: round; text-anchor: middle; font-size: 155px; font-weight: 750; }
+.fixture-dimensions line, .storage-dimensions line { stroke: #353a42; stroke-width: 10; }
+.fixture-dimensions text, .storage-dimensions text { fill: #16191e; stroke: #fff; stroke-width: 20; paint-order: stroke; text-anchor: middle; font-size: 105px; font-weight: 850; }
+.source-plan-vector ~ .fixture-dimensions line, .source-plan-vector ~ .dimensions line { display: none; }
+.source-plan-labels text { fill: #272b31; stroke: #fff; stroke-width: 22; paint-order: stroke; text-anchor: middle; font-size: 115px; font-weight: 850; }
 .selection-overlay { pointer-events: none; }
 .selection-overlay .selection-halo { fill: none; stroke: #fff; stroke-width: 92; opacity: .96; stroke-linejoin: round; }
 .selection-overlay .selection-outline { fill: none; stroke: var(--selection); stroke-width: 48; stroke-linejoin: round; filter: drop-shadow(0 0 28px rgba(245,183,0,.72)); }

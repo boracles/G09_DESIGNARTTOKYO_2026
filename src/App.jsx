@@ -334,6 +334,7 @@ function ThreeView({ selected, onSelect, onOpen2D, onShowOverview }) {
     box("wall-notch", 2.90, 2.85, 0.14, 1.45, 1.425, 5.28, wallMat);
     box("wall-entry-upper", 0.14, 2.85, 1.25, 2.83, 1.425, 5.925, wallMat);
     box("entry-corner-pier", 0.46, 2.85, 1.40, 3.105, 1.425, 8.34, wallMat);
+    box("entry-pier-wall-connector", 0.18, 2.85, 1.40, 2.84, 1.425, 8.34, wallMat);
 
     const mirrorTexture = new BABYLON.MirrorTexture("entrance-mirror-reflection", 1024, scene, true);
     mirrorTexture.mirrorPlane = new BABYLON.Plane(1, 0, 0, -4.255);

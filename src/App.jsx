@@ -106,9 +106,14 @@ function Plan({ circulation, electrical, selected, onSelect, onOpen3D }) {
         </g>
 
         <g className="glass-wall-plan manual-plan-geometry" aria-label="외부 조망 유리벽">
-          <line x1="3142" y1="9040" x2="7250" y2="9040" />
-          <line x1="3142" y1="9090" x2="7250" y2="9090" />
-          <text x="5196" y="8920">외부 조망 유리벽 · 3면 균등</text>
+          {[[3215, 4399], [4472, 5668], [5741, 6925]].map(([x1, x2], index) => (
+            <g key={`front-glass-plan-${index}`}>
+              <line x1={x1} y1="9040" x2={x2} y2="9040" />
+              <line x1={x1} y1="9090" x2={x2} y2="9090" />
+            </g>
+          ))}
+          <rect x="6995" y="9040" width="255" height="100" className="front-solid-wall" />
+          <text x="5196" y="8920">외부 조망 유리벽 · 3면 + 우측 벽체</text>
         </g>
 
         <g className="door manual-plan-geometry" aria-label="고정 유리와 여닫이 유리문으로 구성된 폭 1200밀리미터 출입구">
@@ -325,19 +330,28 @@ function ThreeView({ selected, onSelect, onOpen2D, onShowOverview }) {
     box("floor-lower", 4.4, 0.08, 3.8, 5.05, -0.04, 7.2, floorMat);
     box("wall-top", 7.34, 2.85, 0.14, 3.625, 1.425, 0.02, wallMat);
     const rightWall = box("wall-right", 0.14, 2.85, 9.18, 7.23, 1.425, 4.55, wallMat);
-    const exteriorGlassStart = 3.142;
-    const exteriorGlassEnd = 7.25;
-    const exteriorGlassWidth = exteriorGlassEnd - exteriorGlassStart;
-    const exteriorGlassCenter = (exteriorGlassStart + exteriorGlassEnd) / 2;
-    const exteriorGlassPanelWidth = exteriorGlassWidth / 3;
-    box("exterior-glass-wall", exteriorGlassWidth, 2.08, 0.026, exteriorGlassCenter, 1.08, 9.065, glassMat);
-    [0, 1, 2, 3].forEach((index) => {
-      const x = exteriorGlassStart + exteriorGlassPanelWidth * index;
-      box("glass-mullion-" + index, 0.065, 2.18, 0.045, x, 1.09, 9.035, glassFrameMat);
+    const exteriorGlassPanels = [
+      { start: 3.215, end: 4.399 },
+      { start: 4.472, end: 5.668 },
+      { start: 5.741, end: 6.925 },
+    ];
+    exteriorGlassPanels.forEach(({ start, end }, index) => {
+      const width = end - start;
+      const center = (start + end) / 2;
+      box(`exterior-glass-panel-${index}`, width, 2.08, 0.026, center, 1.08, 9.065, glassMat);
+      box(`glass-frame-top-${index}`, width, 0.07, 0.045, center, 2.18, 9.035, glassFrameMat);
+      box(`glass-frame-bottom-${index}`, width, 0.07, 0.045, center, 0.035, 9.035, glassFrameMat);
     });
-    box("glass-frame-top", exteriorGlassWidth, 0.07, 0.045, exteriorGlassCenter, 2.18, 9.035, glassFrameMat);
-    box("glass-frame-bottom", exteriorGlassWidth, 0.07, 0.045, exteriorGlassCenter, 0.035, 9.035, glassFrameMat);
-    box("glass-wall-header", exteriorGlassWidth, 0.67, 0.14, exteriorGlassCenter, 2.515, 9.06, wallMat);
+    [
+      { start: 3.142, end: 3.215 },
+      { start: 4.399, end: 4.472 },
+      { start: 5.668, end: 5.741 },
+      { start: 6.925, end: 6.995 },
+    ].forEach(({ start, end }, index) => {
+      box(`glass-mullion-${index}`, end - start, 2.18, 0.075, (start + end) / 2, 1.09, 9.035, glassFrameMat);
+    });
+    box("front-right-solid-wall", 0.255, 2.85, 0.14, 7.1225, 1.425, 9.06, wallMat);
+    box("glass-wall-header", 4.108, 0.67, 0.14, 5.196, 2.515, 9.06, wallMat);
     box("outside-sidewalk", 4.35, 0.08, 1.45, 5.025, -0.04, 9.825, material("outside-sidewalk-material", "#686c70"));
     box("exterior-glass-center-pillar", 1.50, 2.85, 1.20, 5.05, 1.425, 10.45, fixedMat);
     box("wall-left-upper", 0.14, 2.85, 5.38, 0.02, 1.425, 2.65, wallMat);

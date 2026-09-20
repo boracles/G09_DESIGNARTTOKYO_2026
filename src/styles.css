@@ -50,6 +50,9 @@ main { padding: 18px; }
 .wall { fill: none; stroke: var(--ink); stroke-width: 90; stroke-linejoin: miter; }
 .inner-wall { fill: none; stroke: #5a5f68; stroke-width: 12; }
 .fixed rect { fill: url(#fixedHatch); stroke: #3f444d; stroke-width: 18; }
+.fixed .storage-zone { fill: rgba(210, 214, 221, .2); stroke: #7d838d; stroke-width: 14; stroke-dasharray: 55 32; }
+.fixed .partition-face { fill: #737880; stroke: #353a42; stroke-width: 12; }
+.fixed .storage-label { fill: #555b64; font-size: 112px; font-weight: 850; }
 .fixed .shelf-base { fill: #d7d9dd; }
 .fixed .mirror { fill: #dcecff; stroke: #3777b7; stroke-width: 12; }
 .fixed .intro-graphic-plan { fill: #f3efe5; stroke: #155eef; stroke-width: 20; }
@@ -81,7 +84,7 @@ main { padding: 18px; }
 .shelf-segment .segment-zone { font-size: 100px; letter-spacing: -4px; }
 .shelf-segment .segment-length { font-size: 112px; font-weight: 700; }
 .shelf-segment .segment-depth { font-size: 98px; font-weight: 700; }
-.shelf-segment .segment-name { font-size: 108px; font-weight: 900; letter-spacing: 1px; }
+.shelf-segment .segment-name { fill: #111318; text-anchor: end; font-size: 108px; font-weight: 900; letter-spacing: 1px; }
 .blue-work { cursor: pointer; outline: none; }
 .blue-work .installation-envelope { fill: rgba(56,106,140,.08); stroke: #386a8c; stroke-width: 20; stroke-dasharray: 72 36; }
 .blue-work .panel { fill: #f4f4f5; stroke: #7e8791; stroke-width: 18; }

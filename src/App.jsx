@@ -6,7 +6,7 @@ const works = [
   { id: "sunok", index: "01", zone: "하단 1/2", color: "#b5477b", title: "홍선옥 · Code to Coil", detail: "우측 선반 · 하단 절반", size: "가로 2900 × 세로 450mm", shelfY: 4475, shelfHeight: 2900 },
   { id: "eunsil", index: "02", zone: "상단 1/2", color: "#6b8f71", title: "지은실 · Hybrid Nature", detail: "우측 선반 · 상단 절반", size: "가로 2900 × 세로 450mm", shelfY: 1575, shelfHeight: 2900 },
   { id: "candle", index: "03", color: "#f26a21", title: "권정현 · Candle", detail: "목재장 B · 3점 + 태블릿 · 전원", prep: "개별 준비 · 멀티탭", size: "가로 900 × 세로 600mm" },
-  { id: "bora", index: "04", color: "#258b85", title: "윤보라 · 잃어버린 방", detail: "LG 17MT70 · Quest 3 · 충전 독 · 티백 · 찻잔", prep: "개별 준비 · 멀티탭 · PD 충전기 · 충전 독 어댑터 · 전원·영상 케이블", size: "테이블 1100 × 600 · VR 동작 구역 1100 × 2000mm" },
+  { id: "bora", index: "04", color: "#258b85", title: "윤보라 · 잃어버린 방", detail: "LG 17MT70 · Quest 3 · 충전 독 · 티백 · 찻잔", prep: "개별 준비 · 멀티탭 · PD 충전기 · 충전 독 어댑터 · 전원·영상 케이블", size: "테이블 1100 × 600 · VR 동작 구역 약 2000 × 1700mm" },
   { id: "blue-by-jjok", index: "05", color: "#386a8c", title: "권정륜 · 신하진 · Blue by jjok", detail: "고정 파티션 전면 · 바닥 자립 2점", prep: "패널 H2500 · 구조체 H1000/H720", size: "패널 W700 · 바닥 모듈 420–520mm" },
   { id: "halfchairs", index: "06", color: "#6d50d4", title: "이지우 · Half Chairs", detail: "중앙 우측 · 관람 동선 사이 바닥 설치", size: "가로 330 × 세로 425 × 높이 885mm" },
 ];
@@ -18,7 +18,7 @@ const selectionBounds = {
   eunsil: { x: 6840, y: 1575, width: 370, height: 2900 },
   sunok: { x: 6840, y: 4475, width: 370, height: 2900 },
   candle: { x: 4875, y: 975, width: 900, height: 600 },
-  bora: { x: 2310, y: 975, width: 1100, height: 2725 },
+  bora: { x: 2310, y: 975, width: 2390, height: 2375 },
   halfchairs: { x: 4500, y: 4250, width: 800, height: 900 },
 };
 
@@ -155,8 +155,8 @@ function Plan({ circulation, electrical, selected, onSelect }) {
         </g>
 
         <g className={`bora-work${selected === "bora" ? " is-selected" : ""}`} data-id="bora" tabIndex="0" role="button" aria-label="윤보라 잃어버린 방 기존 목재장 A 설치" onClick={() => onSelect("bora")} onKeyDown={(event) => (event.key === "Enter" || event.key === " ") && onSelect("bora")}>
-          <rect className="roomscale-zone" x="2310" y="1700" width="1100" height="2000" rx="50" />
-          <text className="roomscale-label" x="2860" y="3500" textAnchor="middle">VR 동작 구역 1100 × 2000</text>
+          <rect className="roomscale-zone" x="2700" y="1650" width="2000" height="1700" rx="50" />
+          <text className="roomscale-label" x="3700" y="3170" textAnchor="middle">VR 동작 구역 약 2000 × 1700</text>
           <rect className="surface" x="2310" y="995" width="1100" height="560" />
           <rect className="monitor" x="2350" y="1035" width="379" height="165" rx="12" />
           <line className="monitor-stand" x1="2539" y1="1200" x2="2585" y2="1280" />
@@ -363,7 +363,7 @@ function ThreeView({ selected, onSelect }) {
 
     const boraMat = material("mat-bora", works.find((work) => work.id === "bora").color, 0.9);
     const boraRoomscaleMat = material("bora-roomscale-zone-material", "#73d8d1", 0.32);
-    registerExhibitMesh("bora", box("bora-roomscale-zone", 1.1, 0.025, 2.0, 2.86, 0.0125, 2.70, boraRoomscaleMat, true), true);
+    registerExhibitMesh("bora", box("bora-roomscale-zone", 2.0, 0.025, 1.7, 3.70, 0.0125, 2.50, boraRoomscaleMat, true), true);
     registerExhibitMesh("bora", box("bora", 1.1, 0.06, 0.56, 2.86, 0.88, 1.275, boraMat, true));
     registerExhibitMesh("bora", box("bora-monitor", 0.379, 0.264, 0.02, 2.54, 1.02, 1.08, material("monitor", "#22252b")));
     registerExhibitMesh("bora", box("bora-dock", 0.50, 0.04, 0.23, 2.92, 0.92, 1.405, whiteMat));

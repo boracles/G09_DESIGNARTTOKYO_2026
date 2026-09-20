@@ -114,10 +114,12 @@ function Plan({ circulation, electrical, selected, onSelect, onOpen3D }) {
         <g className="door manual-plan-geometry" aria-label="고정 유리와 여닫이 유리문으로 구성된 폭 1200밀리미터 출입구">
           <line className="door-opening" x1="2850" y1="6550" x2="2850" y2="7640" />
           <line className="door-jamb" x1="2805" y1="6550" x2="2895" y2="6550" />
+          <line className="fixed-glass" x1="2850" y1="6550" x2="2850" y2="6850" />
+          <line className="door-jamb" x1="2805" y1="6850" x2="2895" y2="6850" />
           <line className="door-jamb" x1="2805" y1="7640" x2="2895" y2="7640" />
           <circle className="door-hinge" cx="2850" cy="7640" r="34" />
-          <line className="door-leaf" x1="2850" y1="7640" x2="3940" y2="7640" />
-          <path className="door-swing" d="M2850 6550A1090 1090 0 0 1 3940 7640" />
+          <line className="door-leaf" x1="2850" y1="7640" x2="3640" y2="7640" />
+          <path className="door-swing" d="M2850 6850A790 790 0 0 1 3640 7640" />
           <text x="3190" y="8140">유리 출입문 W1200</text>
         </g>
 
@@ -355,7 +357,7 @@ function ThreeView({ selected, onSelect, onOpen2D, onShowOverview }) {
     box("mirror-frame-side-a", 0.035, 2.02, 0.035, 2.97, 1.155, 5.285, mirrorFrameMat);
     box("mirror-frame-side-b", 0.035, 2.02, 0.035, 2.97, 1.155, 6.565, mirrorFrameMat);
 
-    const entryDoorAngle = Math.PI * 65 / 180;
+    const entryDoorAngle = Math.PI * 78 / 180;
     const entryDoorHinge = { x: 2.91, z: 7.64 };
     const entryDoorPoint = (distance, faceOffset = 0) => ({
       x: entryDoorHinge.x + Math.cos(entryDoorAngle) * distance + Math.sin(entryDoorAngle) * faceOffset,
@@ -367,14 +369,18 @@ function ThreeView({ selected, onSelect, onOpen2D, onShowOverview }) {
       mesh.rotation.y = entryDoorAngle;
       return mesh;
     };
-    entryDoorBox("entry-glass-door", 1.09, 2.08, 0.026, 0.545, 1.08, glassMat);
-    box("entry-frame-upper-jamb", 0.045, 2.18, 0.075, 2.91, 1.09, 6.55, glassFrameMat);
+    box("entry-fixed-sidelight", 0.026, 2.08, 0.30, 2.91, 1.08, 6.70, glassMat);
+    box("entry-sidelight-upper-jamb", 0.055, 2.18, 0.075, 2.91, 1.09, 6.55, glassFrameMat);
+    box("entry-sidelight-door-mullion", 0.055, 2.18, 0.075, 2.91, 1.09, 6.85, glassFrameMat);
+    box("entry-sidelight-top-rail", 0.055, 0.075, 0.34, 2.91, 2.18, 6.70, glassFrameMat);
+    box("entry-sidelight-bottom-rail", 0.055, 0.075, 0.34, 2.91, 0.04, 6.70, glassFrameMat);
+    entryDoorBox("entry-glass-door", 0.79, 2.08, 0.026, 0.395, 1.08, glassMat);
     box("entry-frame-hinge-jamb", 0.045, 2.18, 0.075, 2.91, 1.09, 7.64, glassFrameMat);
     entryDoorBox("entry-door-hinge-rail", 0.075, 2.14, 0.045, 0, 1.08, glassFrameMat);
-    entryDoorBox("entry-door-free-rail", 0.075, 2.14, 0.045, 1.09, 1.08, glassFrameMat);
-    entryDoorBox("entry-door-top-rail", 1.165, 0.075, 0.045, 0.545, 2.14, glassFrameMat);
-    entryDoorBox("entry-door-bottom-rail", 1.165, 0.075, 0.045, 0.545, 0.04, glassFrameMat);
-    entryDoorBox("entry-handle", 0.05, 0.34, 0.045, 0.87, 1.03, glassFrameMat, 0.05);
+    entryDoorBox("entry-door-free-rail", 0.075, 2.14, 0.045, 0.79, 1.08, glassFrameMat);
+    entryDoorBox("entry-door-top-rail", 0.865, 0.075, 0.045, 0.395, 2.14, glassFrameMat);
+    entryDoorBox("entry-door-bottom-rail", 0.865, 0.075, 0.045, 0.395, 0.04, glassFrameMat);
+    entryDoorBox("entry-handle", 0.05, 0.34, 0.045, 0.63, 1.03, glassFrameMat, 0.05);
     box("entry-lintel", 0.10, 0.67, 1.09, 2.845, 2.515, 7.095, wallMat);
     box("entry-passage-floor", 1.70, 0.08, 1.20, 2.00, -0.04, 7.32, material("passage-floor", "#aeb0b2"));
     const fixedPartition = box("fixed-partition", 0.055, 2.85, 3.70, 2.2135, 1.425, 3.48, wallMat);

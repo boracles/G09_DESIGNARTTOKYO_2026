@@ -23,12 +23,14 @@
 - Extend the 3D partition length slightly into both adjoining structures so neither end shows a light gap, while preserving its source-plan centerline.
 - Keep the upper 800×800 structural pillar at the source-plan coordinate and butt cabinet A directly against its right face with zero visible gap.
 - Keep cabinet B power outlets, TEL, and LAN in a clean row outside the exhibit footprint; emphasize the two outlets with red location rings and labels.
-- Focus Half Chairs from the front of the seat (opposite the chair back) at close range; do not present the rear view.
+- Focus Half Chairs from the side where the low seat is in front and the tall backrest sits behind it; do not show the tall back panel as the foremost face.
 - Focus Bora's cabinet work diagonally from the central aisle, keeping both camera and artwork on the gallery side of the storage partition.
+- Use Bora's actual cabinet-top artwork surface as the 3D focus anchor; keep the VR floor zone visible but never use it as the camera or selection center.
 - Focus both right-shelf works from a lower, closer interior viewpoint that fills the frame with the assigned shelf span instead of the wall above it.
 - Never hide architectural walls during artwork focus; solve visibility only through an interior-side camera angle and closer radius so spatial relationships remain truthful.
 - Model the source-plan structural pillar outside the center of the glass facade as a full-height fixed element, approximately 1500×1200mm in plan.
 - Build cabinet B as a 2000×600mm straight body, a 225mm connector, and a 450×1455mm wall-aligned return; the return and full right shelf must align to source-plan X 6800–7250mm without a T-shaped overhang.
+- Join the right-shelf straight run directly to the L return at plan Y 1575mm with no gap; split its exact 5800mm run into two 2900mm artwork zones at Y 4475mm.
 - Keep the entrance mirror outside the mirrored scene root and use the original Babylon planar-reflection material; keep its clipping plane aligned to the final mirrored wall coordinate.
 - In the final 3D view, the Blue by jjok stacked cubes belong to the left of both colored frames, with roughly 350–400mm clearance to the nearest frame.
 - Preserve the source-plan entrance projection at the left end of the glass facade in 3D, aligned with the entrance jamb.

@@ -3,8 +3,8 @@ import * as BABYLON from "babylonjs";
 import "babylonjs-loaders";
 
 const works = [
-  { id: "sunok", index: "01", zone: "하단 1/2", color: "#b5477b", title: "홍선옥 · Code to Coil", detail: "우측 선반 · 하단 절반", size: "가로 2900 × 세로 450mm", shelfY: 4644, shelfHeight: 2933 },
-  { id: "eunsil", index: "02", zone: "상단 1/2", color: "#6b8f71", title: "지은실 · Hybrid Nature", detail: "우측 선반 · 상단 절반", size: "가로 2900 × 세로 450mm", shelfY: 1711, shelfHeight: 2933 },
+  { id: "sunok", index: "01", zone: "하단 1/2", color: "#b5477b", title: "홍선옥 · Code to Coil", detail: "우측 선반 · 하단 절반", size: "가로 2900 × 세로 450mm", shelfY: 4475, shelfHeight: 2900 },
+  { id: "eunsil", index: "02", zone: "상단 1/2", color: "#6b8f71", title: "지은실 · Hybrid Nature", detail: "우측 선반 · 상단 절반", size: "가로 2900 × 세로 450mm", shelfY: 1575, shelfHeight: 2900 },
   { id: "candle", index: "03", color: "#f26a21", title: "권정현 · Candle", detail: "목재장 B · 3점 + 태블릿 · 전원", prep: "개별 준비 · 멀티탭", size: "가로 900 × 세로 600mm" },
   { id: "bora", index: "04", color: "#258b85", title: "윤보라 · 잃어버린 방", detail: "LG 17MT70 · Quest 3 · 충전 독 · 티백 · 찻잔", prep: "개별 준비 · 멀티탭 · PD 충전기 · 충전 독 어댑터 · 전원·영상 케이블", size: "목재장 A 폭 기준 · VR 동작 구역 1500 × 1000mm" },
   { id: "blue-by-jjok", index: "05", color: "#386a8c", title: "권정륜 · 신하진 · Blue by jjok", detail: "외부 조망 유리벽 앞 · 바닥 자립 2점", prep: "패널 H2500 · 프레임 H720 2점 · 적층 큐브 H1000", size: "패널 W700 · 프레임 W420/W520mm" },
@@ -15,8 +15,8 @@ const shelfWorks = ["eunsil", "sunok"].map((id) => works.find((work) => work.id 
 
 const selectionBounds = {
   "blue-by-jjok": { x: 4050, y: 7850, width: 2530, height: 900 },
-  eunsil: { x: 6640, y: 1711, width: 455, height: 2933 },
-  sunok: { x: 6640, y: 4644, width: 455, height: 2933 },
+  eunsil: { x: 6800, y: 1575, width: 450, height: 2900 },
+  sunok: { x: 6800, y: 4475, width: 450, height: 2900 },
   candle: { x: 5153, y: 1128, width: 900, height: 560 },
   bora: { x: 2353, y: 1105, width: 1524, height: 1606 },
   halfchairs: { x: 4500, y: 4250, width: 800, height: 900 },
@@ -381,23 +381,24 @@ function ThreeView({ selected, onSelect }) {
     const shelfMat = material("shelf", "#a8a39b");
     const shelfRecessMat = material("shelf-recess", "#6f6b66");
     const shelfInteriorMat = material("shelf-interior", "#918c85");
-    box("right-shelf-bottom", 0.45, 0.32, 5.866, 7.025, 0.16, 4.644, shelfMat);
-    box("right-shelf-fascia", 0.45, 0.20, 5.866, 7.025, 0.77, 4.644, shelfMat);
-    const shelfPier = 0.2277;
+    box("right-shelf-bottom", 0.45, 0.32, 5.81, 7.025, 0.16, 4.47, shelfMat);
+    box("right-shelf-fascia", 0.45, 0.20, 5.81, 7.025, 0.77, 4.47, shelfMat);
+    const shelfStart = 1.575;
+    const shelfPier = (5.8 - 4.5) / 6;
     for (let index = 0; index < 6; index += 1) {
-      const z = 1.711 + shelfPier / 2 + index * (0.9 + shelfPier);
+      const z = shelfStart + shelfPier / 2 + index * (0.9 + shelfPier);
       box("right-shelf-pier-" + index, 0.45, 0.35, shelfPier, 7.025, 0.495, z, shelfMat);
     }
     for (let index = 0; index < 5; index += 1) {
-      const z = 1.711 + shelfPier + 0.45 + index * (0.9 + shelfPier);
+      const z = shelfStart + shelfPier + 0.45 + index * (0.9 + shelfPier);
       box("right-shelf-back-" + index, 0.018, 0.31, 0.84, 7.24, 0.495, z, shelfRecessMat);
       box("right-shelf-inside-" + index, 0.40, 0.025, 0.84, 7.025, 0.345, z, shelfInteriorMat);
     }
 
     const boraMat = material("mat-bora", works.find((work) => work.id === "bora").color, 0.9);
     const boraRoomscaleMat = material("bora-roomscale-zone-material", "#73d8d1", 0.32);
-    registerExhibitMesh("bora", box("bora-roomscale-zone", 1.5, 0.025, 1.0, 3.115, 0.0125, 2.235, boraRoomscaleMat, true), true);
-    registerExhibitMesh("bora", box("bora", 1.1, 0.06, 0.56, 3.10, 0.88, 1.275, boraMat, true));
+    registerExhibitMesh("bora", box("bora-roomscale-zone", 1.5, 0.025, 1.0, 3.115, 0.0125, 2.235, boraRoomscaleMat, true));
+    registerExhibitMesh("bora", box("bora", 1.1, 0.06, 0.56, 3.10, 0.88, 1.275, boraMat, true), true);
     registerExhibitMesh("bora", box("bora-monitor", 0.379, 0.264, 0.02, 2.78, 1.02, 1.08, material("monitor", "#22252b")));
     registerExhibitMesh("bora", box("bora-dock", 0.50, 0.04, 0.23, 3.16, 0.92, 1.405, whiteMat));
     const hmd = BABYLON.MeshBuilder.CreateTorus("bora-hmd", { diameter: 0.2, thickness: 0.06 }, scene);
@@ -596,7 +597,7 @@ function ThreeView({ selected, onSelect }) {
         : id === "blue-by-jjok"
           ? { alpha: -1.30, beta: 1.12, radius: 3.2 }
         : id === "halfchairs"
-          ? { alpha: Math.PI / 2, beta: 1.05, radius: 2.8 }
+          ? { alpha: -Math.PI / 2, beta: 1.05, radius: 2.8 }
         : id === "bora"
           ? { alpha: Math.PI / 2, beta: 1.05, radius: 2.7 }
         : id === "candle"

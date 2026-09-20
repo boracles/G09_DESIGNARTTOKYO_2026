@@ -357,7 +357,7 @@ function ThreeView({ selected, onSelect, onOpen2D, onShowOverview }) {
     box("mirror-frame-side-a", 0.035, 2.02, 0.035, 2.97, 1.155, 5.285, mirrorFrameMat);
     box("mirror-frame-side-b", 0.035, 2.02, 0.035, 2.97, 1.155, 6.565, mirrorFrameMat);
 
-    const entryDoorAngle = Math.PI * 65 / 180;
+    const entryDoorAngle = Math.PI * 115 / 180;
     const entryDoorHinge = { x: 2.91, z: 6.72 };
     const entryDoorPoint = (distance, faceOffset = 0) => ({
       x: entryDoorHinge.x + Math.cos(entryDoorAngle) * distance + Math.sin(entryDoorAngle) * faceOffset,

@@ -254,7 +254,7 @@ function Plan({ circulation, electrical, selected, onSelect, onOpen3D }) {
   );
 }
 
-function ThreeView({ selected, onSelect, onOpen2D }) {
+function ThreeView({ selected, onSelect, onOpen2D, onShowOverview }) {
   const canvasRef = useRef(null);
   const focusRef = useRef(null);
 
@@ -355,15 +355,19 @@ function ThreeView({ selected, onSelect, onOpen2D }) {
     box("mirror-frame-side-a", 0.035, 2.02, 0.035, 2.925, 1.155, 5.285, mirrorFrameMat);
     box("mirror-frame-side-b", 0.035, 2.02, 0.035, 2.925, 1.155, 6.565, mirrorFrameMat);
 
-    box("entry-glass", 0.026, 2.08, 1.12, 2.875, 1.08, 7.32, glassMat);
+    box("entry-glass-door", 1.12, 2.08, 0.026, 3.47, 1.08, 6.72, glassMat);
     box("entry-frame-a", 0.045, 2.18, 0.075, 2.91, 1.09, 6.72, glassFrameMat);
     box("entry-frame-b", 0.045, 2.18, 0.075, 2.91, 1.09, 7.92, glassFrameMat);
     box("entry-frame-top", 0.045, 0.075, 1.29, 2.91, 2.18, 7.32, glassFrameMat);
     box("entry-frame-bottom", 0.045, 0.075, 1.29, 2.91, 0.04, 7.32, glassFrameMat);
-    box("entry-side-divider", 0.045, 2.14, 0.055, 2.91, 1.08, 6.98, glassFrameMat);
-    box("entry-handle", 0.045, 0.34, 0.05, 2.95, 1.03, 7.70, glassFrameMat);
+    box("entry-door-hinge-rail", 0.075, 2.14, 0.045, 2.91, 1.08, 6.72, glassFrameMat);
+    box("entry-door-free-rail", 0.075, 2.14, 0.045, 4.03, 1.08, 6.72, glassFrameMat);
+    box("entry-door-top-rail", 1.19, 0.075, 0.045, 3.47, 2.14, 6.72, glassFrameMat);
+    box("entry-door-bottom-rail", 1.19, 0.075, 0.045, 3.47, 0.04, 6.72, glassFrameMat);
+    box("entry-handle", 0.05, 0.34, 0.045, 3.82, 1.03, 6.67, glassFrameMat);
     box("entry-lintel", 0.10, 0.67, 1.20, 2.845, 2.515, 7.32, wallMat);
     box("entry-passage-floor", 1.70, 0.08, 1.20, 2.00, -0.04, 7.32, material("passage-floor", "#aeb0b2"));
+    box("entry-exterior-projection", 0.76, 0.16, 0.16, 2.43, 0.92, 7.46, fixedMat);
     const fixedPartition = box("fixed-partition", 0.055, 2.85, 3.70, 2.2135, 1.425, 3.48, wallMat);
     const storageShelfMat = material("storage-shelf-material", "#bbb8b0");
     [1.975, 2.925, 3.875, 4.825].forEach((z, index) => box(`left-storage-shelf-${index}`, 0.45, 0.82, 0.90, 0.325, 0.41, z, storageShelfMat));
@@ -563,7 +567,33 @@ function ThreeView({ selected, onSelect, onOpen2D }) {
     selectionBand.isPickable = false;
     selectionBand.isVisible = false;
 
+    const animateCamera = (name, property, from, to) => {
+      const easing = new BABYLON.CubicEase();
+      easing.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEINOUT);
+      return BABYLON.Animation.CreateAndStartAnimation(name, camera, property, 30, 24, from, to, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT, easing);
+    };
+
+    const showOverview = () => {
+      [...exhibitMeshes.values()].flat().forEach((mesh) => {
+        mesh.renderOutline = false;
+        mesh.renderOverlay = false;
+        mesh.visibility = 1;
+      });
+      selectionBand.isVisible = false;
+      fixedPartition.isVisible = true;
+      rightWall.isVisible = true;
+      scene.stopAnimation(camera);
+      animateCamera("overview-target", "target", camera.target.clone(), new BABYLON.Vector3(3.625, 0.25, 4.6));
+      animateCamera("overview-alpha", "alpha", camera.alpha, Math.PI / 2);
+      animateCamera("overview-beta", "beta", camera.beta, 0.62);
+      animateCamera("overview-radius", "radius", camera.radius, 17.5);
+    };
+
     const focusExhibit = (id) => {
+      if (!id) {
+        showOverview();
+        return;
+      }
       [...exhibitMeshes.values()].flat().forEach((mesh) => {
         mesh.renderOutline = false;
         mesh.renderOverlay = false;
@@ -605,9 +635,6 @@ function ThreeView({ selected, onSelect, onOpen2D }) {
           ? { alpha: Math.PI / 2, beta: 1.02, radius: 4.8 }
           : { alpha: -0.82, beta: 1.02, radius: 5.4 };
       scene.stopAnimation(camera);
-      const easing = new BABYLON.CubicEase();
-      easing.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEINOUT);
-      const animateCamera = (name, property, from, to) => BABYLON.Animation.CreateAndStartAnimation(name, camera, property, 30, 24, from, to, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT, easing);
       animateCamera("focus-target", "target", camera.target.clone(), target);
       animateCamera("focus-alpha", "alpha", camera.alpha, view.alpha);
       animateCamera("focus-beta", "beta", camera.beta, view.beta);
@@ -638,10 +665,16 @@ function ThreeView({ selected, onSelect, onOpen2D }) {
 
   return (
     <div className="three-view is-active no-print" id="threeView">
-      <button className="canvas-2d-cta" type="button" onClick={onOpen2D}>
-        <span>배치와 치수를 확인하세요</span>
-        <strong>2D 도면 보기</strong>
-      </button>
+      <div className="canvas-view-actions">
+        <button className="canvas-overview-cta" type="button" onClick={onShowOverview}>
+          <span>공간 전체를 한눈에</span>
+          <strong>전체뷰 보기</strong>
+        </button>
+        <button className="canvas-2d-cta" type="button" onClick={onOpen2D}>
+          <span>배치와 치수를 확인하세요</span>
+          <strong>2D 도면 보기</strong>
+        </button>
+      </div>
       <canvas ref={canvasRef} id="renderCanvas" aria-label="G09 전시 공간 3D 확인" style={{ touchAction: "none" }} />
       <p>좌클릭 드래그 회전 · 우클릭/두 손가락 드래그 이동 · 휠/핀치 확대 · 작품 클릭</p>
     </div>
@@ -705,7 +738,7 @@ export function App() {
         <section className="sheet">
           <div className="sheet-heading"><div><p className="drawing-no">EXHIBITION LAYOUT · G09 / B-111</p><h2>작품 배치 평면도</h2></div><div className="revision">REV. 30 · 2026.09.20</div></div>
           <div className="sheet-body">
-            {view === "plan" ? <Plan circulation={circulation} electrical={electrical} selected={selected} onSelect={setSelected} onOpen3D={() => setView("three")} /> : <ThreeView selected={selected} onSelect={setSelected} onOpen2D={() => setView("plan")} />}
+            {view === "plan" ? <Plan circulation={circulation} electrical={electrical} selected={selected} onSelect={setSelected} onOpen3D={() => setView("three")} /> : <ThreeView selected={selected} onSelect={setSelected} onOpen2D={() => setView("plan")} onShowOverview={() => setSelected(null)} />}
             <Legend selected={selected} onSelect={setSelected} />
           </div>
           <footer className="title-block"><div><span>PROJECT</span><strong>DESIGNART TOKYO 2026</strong></div><div><span>SPACE</span><strong>HIBIYA OKUROJI G09 / B-111</strong></div><div><span>DRAWING</span><strong>작품 · 전기 배치 평면도</strong></div><div><span>SCALE</span><strong>1:50 @ A3</strong></div><div><span>AREA / CH</span><strong>55.15㎡ / 2850</strong></div><div><span>STATUS</span><strong>배치 계획안 · 현장 실측 전</strong></div></footer>

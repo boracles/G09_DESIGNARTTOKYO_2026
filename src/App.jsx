@@ -596,7 +596,7 @@ function ThreeView({ selected, onSelect }) {
         : id === "blue-by-jjok"
           ? { alpha: -1.30, beta: 1.12, radius: 3.2 }
         : id === "halfchairs"
-          ? { alpha: -Math.PI / 2, beta: 1.05, radius: 2.8 }
+          ? { alpha: Math.PI / 2, beta: 1.05, radius: 2.8 }
         : id === "bora"
           ? { alpha: Math.PI / 2, beta: 1.05, radius: 2.7 }
         : id === "candle"

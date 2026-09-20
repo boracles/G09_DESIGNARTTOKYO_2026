@@ -23,7 +23,7 @@
 - Extend the 3D partition length slightly into both adjoining structures so neither end shows a light gap, while preserving its source-plan centerline.
 - Keep the upper 800×800 structural pillar at the source-plan coordinate and butt cabinet A directly against its right face with zero visible gap.
 - Keep cabinet B power outlets, TEL, and LAN in a clean row outside the exhibit footprint; emphasize the two outlets with red location rings and labels.
-- Focus Half Chairs from the interior/north side at close range so the entrance wall never occludes the work.
+- Focus Half Chairs from the front of the seat (opposite the chair back) at close range; do not present the rear view.
 - Focus Bora's cabinet work diagonally from the central aisle, keeping both camera and artwork on the gallery side of the storage partition.
 - Focus both right-shelf works from a lower, closer interior viewpoint that fills the frame with the assigned shelf span instead of the wall above it.
 - Never hide architectural walls during artwork focus; solve visibility only through an interior-side camera angle and closer radius so spatial relationships remain truthful.

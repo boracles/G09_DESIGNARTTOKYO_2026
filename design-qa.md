@@ -14,7 +14,7 @@
 - The exhibition banner is separated from Hong Sunok's shelf allocation and centered on the 1725mm blank wall segment after the right shelf.
 - The 5800mm right shelf is split evenly: Ji Eunsil 2900mm and Hong Sunok 2900mm.
 - Half Chairs is moved farther inside from the entrance and receives a clearly marked 800 × 900mm floor zone.
-- The Lost Room has an approximately 2000 × 1700mm VR movement zone positioned to the right of Blue by jjok, following the user's marked plan reference.
+- The Lost Room has an approximately 2000 × 1500mm VR movement zone aligned to the user's final red-box plan reference, clear of Blue by jjok.
 - The entrance/mirror wall seam is closed and the mirror remains unobstructed.
 
 ## Interaction and browser checks

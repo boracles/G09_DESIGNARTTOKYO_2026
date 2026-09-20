@@ -59,7 +59,7 @@ function Plan({ circulation, electrical, selected, onSelect, onOpen3D }) {
           <line x1="2850" y1="5300" x2="2850" y2="6720" />
           <line x1="2850" y1="7920" x2="2850" y2="8870" />
         </g>
-        <rect className="partition-wall-solid" x="2350" y="1859" width="55" height="3322" aria-label="고정 파티션 벽체" />
+        <rect className="partition-wall-solid" x="2186" y="1859" width="55" height="3322" aria-label="고정 파티션 벽체" />
 
         <path className="floor manual-plan-geometry" d="M0 0H7250V9100H2850V5300H0Z" />
         <path className="grid manual-plan-geometry" d="M0 0H7250V9100H2850V5300H0Z" fill="url(#grid500)" />
@@ -70,7 +70,7 @@ function Plan({ circulation, electrical, selected, onSelect, onOpen3D }) {
           <rect className="storage-zone" x="100" y="1500" width="2200" height="3800" />
           {[1500, 2450, 3400, 4350].map((y) => <rect key={`left-storage-${y}`} className="storage-shelf" x="100" y={y} width="450" height="950" />)}
           {[2450, 3400, 4350].map((y) => <rect key={`partition-storage-${y}`} className="storage-shelf" x="1850" y={y} width="450" height="950" />)}
-          <rect className="partition-face" x="2350" y="1859" width="55" height="3322" />
+          <rect className="partition-face" x="2186" y="1859" width="55" height="3322" />
           <text className="storage-label" x="1200" y="3900">파티션 뒤</text>
           <text className="storage-label" x="1200" y="4140">짐 보관 가능 공간</text>
           <text className="storage-label" x="1200" y="4380">H2850</text>
@@ -173,8 +173,8 @@ function Plan({ circulation, electrical, selected, onSelect, onOpen3D }) {
           <circle className="wall-piece" cx="5288" cy="1223" r="82" />
           <circle cx="5353" cy="1413" r="82" /><circle cx="5603" cy="1413" r="82" />
           <rect className="tablet" x="5818" y="1453" width="170" height="110" rx="16" />
-          <text className="work-label" x="5603" y="1913" textAnchor="middle">03 · 권정현 · Candle</text>
-          <text className="work-detail" x="5603" y="2103" textAnchor="middle">목재장 B 직선부 중앙 · 900 × 600mm · 전원</text>
+          <text className="work-label" x="5603" y="2075" textAnchor="middle">03 · 권정현 · Candle</text>
+          <text className="work-detail" x="5603" y="2240" textAnchor="middle">목재장 B 직선부 중앙 · 900 × 600mm · 전원</text>
         </g>
 
         <g className={`bora-work${selected === "bora" ? " is-selected" : ""}`} data-id="bora" tabIndex="0" role="button" aria-label="윤보라 잃어버린 방 기존 목재장 A 설치" onClick={() => onSelect("bora")} onKeyDown={(event) => (event.key === "Enter" || event.key === " ") && onSelect("bora")}>
@@ -219,10 +219,10 @@ function Plan({ circulation, electrical, selected, onSelect, onOpen3D }) {
           <g className="outlet" transform="translate(3010 5100)"><circle r="72" /><path d="M-36 0H36M0 0V55" /><text x="-120" y="-105" textAnchor="end">2P 15A/125V</text></g>
           <g className="outlet" transform="translate(6880 8720)"><circle r="72" /><path d="M-36 0H36M0 0V55" /><text x="-120" y="-90" textAnchor="end">2P 15A/125V</text></g>
           <g className="counter-ports">
-            <g className="outlet" transform="translate(5550 1520)"><circle r="66" /><path d="M-32 0H32M0 0V50" /></g>
-            <g className="outlet" transform="translate(5880 1520)"><circle r="66" /><path d="M-32 0H32M0 0V50" /></g>
-            <g className="tel" transform="translate(6200 1520)"><circle r="66" /><text y="30">T</text></g>
-            <g className="lan" transform="translate(6480 1520)"><circle r="66" /><text y="30">L</text></g>
+            <g className="outlet emphasized" transform="translate(5325 1775)"><circle className="outlet-halo" r="104" /><circle r="66" /><path d="M-32 0H32M0 0V50" /><text className="port-caption" y="175">콘센트</text></g>
+            <g className="outlet emphasized" transform="translate(5675 1775)"><circle className="outlet-halo" r="104" /><circle r="66" /><path d="M-32 0H32M0 0V50" /><text className="port-caption" y="175">콘센트</text></g>
+            <g className="tel" transform="translate(6075 1775)"><circle r="66" /><text y="30">T</text><text className="port-caption" y="175">TEL</text></g>
+            <g className="lan" transform="translate(6425 1775)"><circle r="66" /><text y="30">L</text><text className="port-caption" y="175">LAN</text></g>
             <text x="6030" y="720">목재장 B 전원 · TEL · LAN</text>
           </g>
         </g>
@@ -364,17 +364,17 @@ function ThreeView({ selected, onSelect }) {
     box("entry-handle", 0.045, 0.34, 0.05, 2.95, 1.03, 7.70, glassFrameMat);
     box("entry-lintel", 0.10, 0.67, 1.20, 2.845, 2.515, 7.32, wallMat);
     box("entry-passage-floor", 1.70, 0.08, 1.20, 2.00, -0.04, 7.32, material("passage-floor", "#aeb0b2"));
-    box("fixed-partition", 0.055, 2.85, 3.322, 2.3775, 1.425, 3.5204, wallMat);
+    box("fixed-partition", 0.055, 2.85, 3.322, 2.2135, 1.425, 3.5204, wallMat);
     const storageShelfMat = material("storage-shelf-material", "#bbb8b0");
     [1.975, 2.925, 3.875, 4.825].forEach((z, index) => box(`left-storage-shelf-${index}`, 0.45, 0.82, 0.90, 0.325, 0.41, z, storageShelfMat));
     [2.925, 3.875, 4.825].forEach((z, index) => box(`partition-storage-shelf-${index}`, 0.38, 0.82, 0.88, 2.01, 0.41, z, storageShelfMat));
 
-    box("pillar", 0.88, 2.85, 0.89, 1.84, 1.425, 1.417, fixedMat);
+    box("pillar", 0.80, 2.85, 0.80, 1.95, 1.425, 1.275, fixedMat);
     box("external-pillar-notch", 0.8, 2.85, 0.8, 1.95, 1.425, 5.925, fixedMat);
     box("external-pillar-right-upper", 0.8, 2.85, 0.8, 7.88, 1.425, 1.275, fixedMat);
     box("external-pillar-right-lower", 0.8, 2.85, 0.8, 7.88, 1.425, 5.925, fixedMat);
-    box("cabinet-a", 1.524, 0.85, 0.606, 3.115, 0.425, 1.408, fixedMat);
-    box("cabinet-b", 2.0, 1.0, 0.606, 5.603, 0.5, 1.408, fixedMat);
+    box("cabinet-a", 1.51, 0.85, 0.60, 3.10, 0.425, 1.275, fixedMat);
+    box("cabinet-b", 2.0, 1.0, 0.60, 5.575, 0.5, 1.275, fixedMat);
     box("right-shelf-return", 0.455, 1.0, 1.59, 6.8675, 0.5, 0.916, fixedMat);
     box("cabinet-b-corner", 0.264, 1.0, 0.606, 6.735, 0.5, 1.408, fixedMat);
     const shelfMat = material("shelf", "#a8a39b");
@@ -396,56 +396,56 @@ function ThreeView({ selected, onSelect }) {
     const boraMat = material("mat-bora", works.find((work) => work.id === "bora").color, 0.9);
     const boraRoomscaleMat = material("bora-roomscale-zone-material", "#73d8d1", 0.32);
     registerExhibitMesh("bora", box("bora-roomscale-zone", 1.5, 0.025, 1.0, 3.115, 0.0125, 2.235, boraRoomscaleMat, true), true);
-    registerExhibitMesh("bora", box("bora", 1.1, 0.06, 0.56, 3.115, 0.88, 1.408, boraMat, true));
-    registerExhibitMesh("bora", box("bora-monitor", 0.379, 0.264, 0.02, 2.795, 1.02, 1.213, material("monitor", "#22252b")));
-    registerExhibitMesh("bora", box("bora-dock", 0.50, 0.04, 0.23, 3.175, 0.92, 1.538, whiteMat));
+    registerExhibitMesh("bora", box("bora", 1.1, 0.06, 0.56, 3.10, 0.88, 1.275, boraMat, true));
+    registerExhibitMesh("bora", box("bora-monitor", 0.379, 0.264, 0.02, 2.78, 1.02, 1.08, material("monitor", "#22252b")));
+    registerExhibitMesh("bora", box("bora-dock", 0.50, 0.04, 0.23, 3.16, 0.92, 1.405, whiteMat));
     const hmd = BABYLON.MeshBuilder.CreateTorus("bora-hmd", { diameter: 0.2, thickness: 0.06 }, scene);
-    hmd.position.set(3.175, 0.98, 1.538);
+    hmd.position.set(3.16, 0.98, 1.405);
     hmd.parent = orientationRoot;
     hmd.rotation.x = Math.PI / 2;
     hmd.material = material("hmd", "#424750");
     registerExhibitMesh("bora", hmd);
     [2.99, 3.36].forEach((x, index) => {
       const controller = BABYLON.MeshBuilder.CreateCylinder("bora-controller-" + index, { diameter: 0.09, height: 0.10 }, scene);
-      controller.position.set(x, 0.98, 1.538);
+      controller.position.set(x - 0.015, 0.98, 1.405);
       controller.parent = orientationRoot;
       controller.material = material("controller-" + index, "#68707b");
       registerExhibitMesh("bora", controller);
     });
-    registerExhibitMesh("bora", box("bora-teabag", 0.22, 0.03, 0.13, 3.155, 0.91, 1.238, material("teabag", "#d6b06b")));
+    registerExhibitMesh("bora", box("bora-teabag", 0.22, 0.03, 0.13, 3.14, 0.91, 1.105, material("teabag", "#d6b06b")));
     const cup = BABYLON.MeshBuilder.CreateCylinder("bora-cup", { diameter: 0.14, height: 0.10 }, scene);
-    cup.position.set(3.485, 0.95, 1.238);
+    cup.position.set(3.47, 0.95, 1.105);
     cup.parent = orientationRoot;
     cup.material = whiteMat;
     registerExhibitMesh("bora", cup);
-    registerExhibitMesh("bora", box("bora-power-strip", 0.35, 0.04, 0.06, 3.15, 0.91, 1.368, whiteMat));
+    registerExhibitMesh("bora", box("bora-power-strip", 0.35, 0.04, 0.06, 3.135, 0.91, 1.235, whiteMat));
 
     const candleMat = material("mat-candle", works.find((work) => work.id === "candle").color, 0.9);
-    registerExhibitMesh("candle", box("candle", 0.9, 0.06, 0.56, 5.603, 1.03, 1.408, candleMat, true), true);
+    registerExhibitMesh("candle", box("candle", 0.9, 0.06, 0.56, 5.575, 1.03, 1.275, candleMat, true), true);
     const smallCandle = BABYLON.MeshBuilder.CreateCylinder("candle-surface-small", { diameter: 0.14, height: 0.10 }, scene);
-    smallCandle.position.set(5.908, 1.11, 1.473);
+    smallCandle.position.set(5.88, 1.11, 1.34);
     smallCandle.parent = orientationRoot;
     smallCandle.material = candleMat;
     registerExhibitMesh("candle", smallCandle);
     const largeCandleBase = BABYLON.MeshBuilder.CreateCylinder("candle-surface-base", { diameter: 0.28, height: 0.035 }, scene);
-    largeCandleBase.position.set(5.608, 1.078, 1.473);
+    largeCandleBase.position.set(5.58, 1.078, 1.34);
     largeCandleBase.parent = orientationRoot;
     largeCandleBase.material = whiteMat;
     registerExhibitMesh("candle", largeCandleBase);
     const largeCandle = BABYLON.MeshBuilder.CreateCylinder("candle-surface-large", { diameter: 0.17, height: 0.10 }, scene);
-    largeCandle.position.set(5.608, 1.145, 1.473);
+    largeCandle.position.set(5.58, 1.145, 1.34);
     largeCandle.parent = orientationRoot;
     largeCandle.material = candleMat;
     registerExhibitMesh("candle", largeCandle);
-    registerExhibitMesh("candle", box("candle-display-wall", 0.48, 0.38, 0.03, 5.408, 1.19, 1.128, whiteMat));
-    registerExhibitMesh("candle", box("candle-light-bar", 0.50, 0.06, 0.08, 5.408, 1.41, 1.153, whiteMat));
+    registerExhibitMesh("candle", box("candle-display-wall", 0.48, 0.38, 0.03, 5.38, 1.19, 0.995, whiteMat));
+    registerExhibitMesh("candle", box("candle-light-bar", 0.50, 0.06, 0.08, 5.38, 1.41, 1.02, whiteMat));
     const wallPiece = BABYLON.MeshBuilder.CreateCylinder("candle-wall", { diameter: 0.15, height: 0.018 }, scene);
-    wallPiece.position.set(5.288, 1.28, 1.153);
+    wallPiece.position.set(5.26, 1.28, 1.02);
     wallPiece.parent = orientationRoot;
     wallPiece.rotation.x = Math.PI / 2;
     wallPiece.material = candleMat;
     registerExhibitMesh("candle", wallPiece);
-    registerExhibitMesh("candle", box("candle-tablet", 0.17, 0.16, 0.04, 5.303, 1.12, 1.493, material("tablet", "#22252b")));
+    registerExhibitMesh("candle", box("candle-tablet", 0.17, 0.16, 0.04, 5.275, 1.12, 1.36, material("tablet", "#22252b")));
 
     const blueWork = works.find((work) => work.id === "blue-by-jjok");
     const bluePanelMat = material("blue-panel-material", "#ececee");

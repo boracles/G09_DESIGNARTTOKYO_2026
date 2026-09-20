@@ -184,6 +184,9 @@ main { padding: 18px; }
 .outlet path { fill: none; stroke: #111318; stroke-width: 18; }
 .tel text, .lan text { fill: #111318; text-anchor: middle; font-size: 120px; font-weight: 900; }
 .counter-ports > text { text-anchor: middle; }
+.counter-ports .outlet-halo { fill: rgba(217, 72, 49, .12); stroke: #d94831; stroke-width: 18; }
+.counter-ports .port-caption { fill: #b72f1d; stroke: none; text-anchor: middle; font-size: 76px; font-weight: 900; }
+.counter-ports .tel .port-caption, .counter-ports .lan .port-caption { fill: #4c515a; }
 .dimensions line { stroke: #515660; stroke-width: 14; }
 .dimensions .dimension-line { marker-start: url(#dimArrowStart); marker-end: url(#dimArrowEnd); }
 .dimensions text { fill: #393e46; stroke: #fff; stroke-width: 28; paint-order: stroke; stroke-linejoin: round; text-anchor: middle; font-size: 155px; font-weight: 750; }

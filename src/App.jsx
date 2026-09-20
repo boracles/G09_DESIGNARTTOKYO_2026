@@ -3,8 +3,8 @@ import * as BABYLON from "babylonjs";
 import "babylonjs-loaders";
 
 const works = [
-  { id: "sunok", index: "01", zone: "하단 1/2", color: "#b5477b", title: "홍선옥 · Code to Coil", detail: "우측 선반 · 하단 절반", size: "가로 2900 × 세로 450mm", shelfY: 4475, shelfHeight: 2900 },
-  { id: "eunsil", index: "02", zone: "상단 1/2", color: "#6b8f71", title: "지은실 · Hybrid Nature", detail: "우측 선반 · 상단 절반", size: "가로 2900 × 세로 450mm", shelfY: 1575, shelfHeight: 2900 },
+  { id: "sunok", index: "01", zone: "하단 1/2", color: "#b5477b", title: "홍선옥 · Code to Coil", detail: "우측 선반 · 하단 절반", size: "가로 2900 × 세로 450mm", shelfY: 4611, shelfHeight: 2900 },
+  { id: "eunsil", index: "02", zone: "상단 1/2", color: "#6b8f71", title: "지은실 · Hybrid Nature", detail: "우측 선반 · 상단 절반", size: "가로 2900 × 세로 450mm", shelfY: 1711, shelfHeight: 2900 },
   { id: "candle", index: "03", color: "#f26a21", title: "권정현 · Candle", detail: "목재장 B · 3점 + 태블릿 · 전원", prep: "개별 준비 · 멀티탭", size: "가로 900 × 세로 600mm" },
   { id: "bora", index: "04", color: "#258b85", title: "윤보라 · 잃어버린 방", detail: "LG 17MT70 · Quest 3 · 충전 독 · 티백 · 찻잔", prep: "개별 준비 · 멀티탭 · PD 충전기 · 충전 독 어댑터 · 전원·영상 케이블", size: "목재장 A 폭 기준 · VR 동작 구역 1500 × 1500mm" },
   { id: "blue-by-jjok", index: "05", color: "#386a8c", title: "권정륜 · 신하진 · Blue by jjok", detail: "외부 조망 유리벽 앞 · 바닥 자립 2점", prep: "패널 H2500 · 프레임 H720 2점 · 적층 큐브 H1000", size: "패널 W700 · 프레임 W420/W520mm" },
@@ -115,9 +115,11 @@ function Plan({ circulation, electrical, selected, onSelect, onOpen3D }) {
           <line className="door-opening" x1="2850" y1="6720" x2="2850" y2="7920" />
           <line className="door-jamb" x1="2805" y1="6720" x2="2895" y2="6720" />
           <line className="door-jamb" x1="2805" y1="7920" x2="2895" y2="7920" />
-          <circle className="door-hinge" cx="2850" cy="7920" r="34" />
-          <line className="door-leaf" x1="2850" y1="7920" x2="4050" y2="7920" />
-          <path className="door-swing" d="M2850 6720A1200 1200 0 0 0 4050 7920" />
+          <line className="fixed-glass" x1="2850" y1="7640" x2="2850" y2="7920" />
+          <line className="door-jamb" x1="2805" y1="7640" x2="2895" y2="7640" />
+          <circle className="door-hinge" cx="2850" cy="7640" r="34" />
+          <line className="door-leaf" x1="2850" y1="7640" x2="3770" y2="7640" />
+          <path className="door-swing" d="M2850 6720A920 920 0 0 0 3770 7640" />
           <text x="3190" y="8140">유리 출입문 W1200</text>
         </g>
 
@@ -334,10 +336,10 @@ function ThreeView({ selected, onSelect, onOpen2D, onShowOverview }) {
     box("wall-notch", 2.90, 2.85, 0.14, 1.45, 1.425, 5.28, wallMat);
     box("wall-entry-a", 0.14, 2.85, 1.50, 2.83, 1.425, 6.00, wallMat);
     box("wall-entry-b", 0.14, 2.85, 1.145, 2.83, 1.425, 8.4925, wallMat);
-    box("entry-glass-corner-pier", 0.34, 2.85, 0.34, 2.93, 1.425, 8.895, wallMat);
+    box("entry-glass-corner-return", 0.76, 2.85, 0.16, 2.45, 1.425, 8.75, wallMat);
 
     const mirrorTexture = new BABYLON.MirrorTexture("entrance-mirror-reflection", 1024, scene, true);
-    mirrorTexture.mirrorPlane = new BABYLON.Plane(1, 0, 0, -4.335);
+    mirrorTexture.mirrorPlane = new BABYLON.Plane(1, 0, 0, -4.28);
     mirrorTexture.level = 0.88;
     const mirrorMat = new BABYLON.StandardMaterial("entrance-mirror-material", scene);
     mirrorMat.diffuseColor = new BABYLON.Color3(0.08, 0.10, 0.12);
@@ -345,26 +347,41 @@ function ThreeView({ selected, onSelect, onOpen2D, onShowOverview }) {
     mirrorMat.reflectionTexture = mirrorTexture;
     mirrorMat.backFaceCulling = false;
     const entranceMirror = BABYLON.MeshBuilder.CreatePlane("entrance-mirror", { width: 1.25, height: 1.95, sideOrientation: BABYLON.Mesh.DOUBLESIDE }, scene);
-    entranceMirror.position.set(4.335, 1.155, 5.925);
+    entranceMirror.position.set(4.28, 1.155, 5.925);
     entranceMirror.rotation.y = -Math.PI / 2;
     entranceMirror.material = mirrorMat;
     entranceMirror.isPickable = false;
     const mirrorFrameMat = material("entrance-mirror-frame", "#30353b");
-    box("mirror-frame-top", 0.035, 0.035, 1.32, 2.925, 2.148, 5.925, mirrorFrameMat);
-    box("mirror-frame-bottom", 0.035, 0.035, 1.32, 2.925, 0.163, 5.925, mirrorFrameMat);
-    box("mirror-frame-side-a", 0.035, 2.02, 0.035, 2.925, 1.155, 5.285, mirrorFrameMat);
-    box("mirror-frame-side-b", 0.035, 2.02, 0.035, 2.925, 1.155, 6.565, mirrorFrameMat);
+    box("mirror-wall-buildout", 0.14, 2.85, 1.42, 2.90, 1.425, 5.925, wallMat);
+    box("mirror-frame-top", 0.035, 0.035, 1.32, 2.97, 2.148, 5.925, mirrorFrameMat);
+    box("mirror-frame-bottom", 0.035, 0.035, 1.32, 2.97, 0.163, 5.925, mirrorFrameMat);
+    box("mirror-frame-side-a", 0.035, 2.02, 0.035, 2.97, 1.155, 5.285, mirrorFrameMat);
+    box("mirror-frame-side-b", 0.035, 2.02, 0.035, 2.97, 1.155, 6.565, mirrorFrameMat);
 
-    box("entry-glass-door", 1.12, 2.08, 0.026, 3.47, 1.08, 7.92, glassMat);
-    box("entry-frame-a", 0.045, 2.18, 0.075, 2.91, 1.09, 6.72, glassFrameMat);
-    box("entry-frame-b", 0.045, 2.18, 0.075, 2.91, 1.09, 7.92, glassFrameMat);
-    box("entry-frame-top", 0.045, 0.075, 1.29, 2.91, 2.18, 7.32, glassFrameMat);
-    box("entry-frame-bottom", 0.045, 0.075, 1.29, 2.91, 0.04, 7.32, glassFrameMat);
-    box("entry-door-hinge-rail", 0.075, 2.14, 0.045, 2.91, 1.08, 7.92, glassFrameMat);
-    box("entry-door-free-rail", 0.075, 2.14, 0.045, 4.03, 1.08, 7.92, glassFrameMat);
-    box("entry-door-top-rail", 1.19, 0.075, 0.045, 3.47, 2.14, 7.92, glassFrameMat);
-    box("entry-door-bottom-rail", 1.19, 0.075, 0.045, 3.47, 0.04, 7.92, glassFrameMat);
-    box("entry-handle", 0.05, 0.34, 0.045, 3.82, 1.03, 7.97, glassFrameMat);
+    const entryDoorAngle = Math.PI * 65 / 180;
+    const entryDoorHinge = { x: 3.09, z: 7.64 };
+    const entryDoorPoint = (distance, faceOffset = 0) => ({
+      x: entryDoorHinge.x + Math.cos(entryDoorAngle) * distance + Math.sin(entryDoorAngle) * faceOffset,
+      z: entryDoorHinge.z - Math.sin(entryDoorAngle) * distance + Math.cos(entryDoorAngle) * faceOffset,
+    });
+    const entryDoorBox = (name, width, height, depth, distance, y, mat, faceOffset = 0) => {
+      const position = entryDoorPoint(distance, faceOffset);
+      const mesh = box(name, width, height, depth, position.x, y, position.z, mat);
+      mesh.rotation.y = entryDoorAngle;
+      return mesh;
+    };
+    box("entry-fixed-sidelight", 0.026, 2.08, 0.24, 3.09, 1.08, 7.78, glassMat);
+    entryDoorBox("entry-glass-door", 0.90, 2.08, 0.026, 0.45, 1.08, glassMat);
+    box("entry-frame-a", 0.24, 2.18, 0.075, 2.97, 1.09, 6.72, glassFrameMat);
+    box("entry-frame-b", 0.24, 2.18, 0.075, 2.97, 1.09, 7.92, glassFrameMat);
+    box("entry-frame-top", 0.24, 0.075, 1.29, 2.97, 2.18, 7.32, glassFrameMat);
+    box("entry-frame-bottom", 0.24, 0.075, 1.29, 2.97, 0.04, 7.32, glassFrameMat);
+    box("entry-sidelight-divider", 0.24, 2.18, 0.075, 2.97, 1.09, 7.64, glassFrameMat);
+    entryDoorBox("entry-door-hinge-rail", 0.075, 2.14, 0.045, 0, 1.08, glassFrameMat);
+    entryDoorBox("entry-door-free-rail", 0.075, 2.14, 0.045, 0.90, 1.08, glassFrameMat);
+    entryDoorBox("entry-door-top-rail", 0.975, 0.075, 0.045, 0.45, 2.14, glassFrameMat);
+    entryDoorBox("entry-door-bottom-rail", 0.975, 0.075, 0.045, 0.45, 0.04, glassFrameMat);
+    entryDoorBox("entry-handle", 0.05, 0.34, 0.045, 0.72, 1.03, glassFrameMat, 0.05);
     box("entry-lintel", 0.10, 0.67, 1.20, 2.845, 2.515, 7.32, wallMat);
     box("entry-passage-floor", 1.70, 0.08, 1.20, 2.00, -0.04, 7.32, material("passage-floor", "#aeb0b2"));
     const fixedPartition = box("fixed-partition", 0.055, 2.85, 3.70, 2.2135, 1.425, 3.48, wallMat);

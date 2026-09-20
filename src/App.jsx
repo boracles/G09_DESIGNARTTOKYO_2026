@@ -112,7 +112,6 @@ function Plan({ circulation, electrical, selected, onSelect, onOpen3D }) {
         </g>
 
         <g className="door manual-plan-geometry" aria-label="고정 유리와 여닫이 유리문으로 구성된 폭 1200밀리미터 출입구">
-          <line className="fixed-glass" x1="2850" y1="5300" x2="2850" y2="6550" />
           <line className="door-opening" x1="2850" y1="6550" x2="2850" y2="7640" />
           <line className="door-jamb" x1="2805" y1="6550" x2="2895" y2="6550" />
           <line className="door-jamb" x1="2805" y1="7640" x2="2895" y2="7640" />
@@ -333,6 +332,8 @@ function ThreeView({ selected, onSelect, onOpen2D, onShowOverview }) {
     box("exterior-glass-center-pillar", 1.50, 2.85, 1.20, 5.05, 1.425, 10.45, fixedMat);
     box("wall-left-upper", 0.14, 2.85, 5.38, 0.02, 1.425, 2.65, wallMat);
     box("wall-notch", 2.90, 2.85, 0.14, 1.45, 1.425, 5.28, wallMat);
+    box("wall-entry-upper", 0.14, 2.85, 1.25, 2.83, 1.425, 5.925, wallMat);
+    box("entry-corner-pier", 0.46, 2.85, 1.40, 3.105, 1.425, 8.34, wallMat);
 
     const mirrorTexture = new BABYLON.MirrorTexture("entrance-mirror-reflection", 1024, scene, true);
     mirrorTexture.mirrorPlane = new BABYLON.Plane(1, 0, 0, -4.255);
@@ -353,7 +354,7 @@ function ThreeView({ selected, onSelect, onOpen2D, onShowOverview }) {
     box("mirror-frame-side-a", 0.035, 2.02, 0.035, 2.97, 1.155, 5.285, mirrorFrameMat);
     box("mirror-frame-side-b", 0.035, 2.02, 0.035, 2.97, 1.155, 6.565, mirrorFrameMat);
 
-    const entryDoorAngle = -Math.PI * 115 / 180;
+    const entryDoorAngle = -Math.PI * 65 / 180;
     const entryDoorHinge = { x: 2.91, z: 6.55 };
     const entryDoorPoint = (distance, faceOffset = 0) => ({
       x: entryDoorHinge.x + Math.cos(entryDoorAngle) * distance + Math.sin(entryDoorAngle) * faceOffset,
@@ -365,24 +366,8 @@ function ThreeView({ selected, onSelect, onOpen2D, onShowOverview }) {
       mesh.rotation.y = entryDoorAngle;
       return mesh;
     };
-    box("entry-fixed-glass-wall", 0.026, 2.08, 1.25, 2.875, 1.08, 5.925, glassMat);
-    box("entry-bay-glass-door-side", 0.46, 2.08, 0.026, 3.105, 1.08, 7.64, glassMat);
-    box("entry-bay-glass-inner-face", 0.026, 2.08, 1.40, 3.335, 1.08, 8.34, glassMat);
-    box("entry-bay-glass-exterior-side", 0.46, 2.08, 0.026, 3.105, 1.08, 9.04, glassMat);
-    [[2.875, 7.64], [3.335, 7.64], [3.335, 9.04], [2.875, 9.04]].forEach(([x, z], index) => {
-      box(`entry-bay-frame-post-${index}`, 0.055, 2.18, 0.055, x, 1.09, z, glassFrameMat);
-    });
-    box("entry-bay-frame-top-a", 0.52, 0.075, 0.055, 3.105, 2.18, 7.64, glassFrameMat);
-    box("entry-bay-frame-top-b", 0.055, 0.075, 1.40, 3.335, 2.18, 8.34, glassFrameMat);
-    box("entry-bay-frame-top-c", 0.52, 0.075, 0.055, 3.105, 2.18, 9.04, glassFrameMat);
-    box("entry-bay-frame-bottom-a", 0.52, 0.075, 0.055, 3.105, 0.04, 7.64, glassFrameMat);
-    box("entry-bay-frame-bottom-b", 0.055, 0.075, 1.40, 3.335, 0.04, 8.34, glassFrameMat);
-    box("entry-bay-frame-bottom-c", 0.52, 0.075, 0.055, 3.105, 0.04, 9.04, glassFrameMat);
     entryDoorBox("entry-glass-door", 1.09, 2.08, 0.026, 0.545, 1.08, glassMat);
-    box("entry-frame-a", 0.045, 2.18, 0.075, 2.91, 1.09, 5.30, glassFrameMat);
     box("entry-frame-b", 0.045, 2.18, 0.075, 2.91, 1.09, 6.55, glassFrameMat);
-    box("entry-frame-top", 0.045, 0.075, 1.32, 2.91, 2.18, 5.925, glassFrameMat);
-    box("entry-frame-bottom", 0.045, 0.075, 1.32, 2.91, 0.04, 5.925, glassFrameMat);
     entryDoorBox("entry-door-hinge-rail", 0.075, 2.14, 0.045, 0, 1.08, glassFrameMat);
     entryDoorBox("entry-door-free-rail", 0.075, 2.14, 0.045, 1.09, 1.08, glassFrameMat);
     entryDoorBox("entry-door-top-rail", 1.165, 0.075, 0.045, 0.545, 2.14, glassFrameMat);

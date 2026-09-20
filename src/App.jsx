@@ -59,7 +59,7 @@ function Plan({ circulation, electrical, selected, onSelect, onOpen3D }) {
           <line x1="2850" y1="5300" x2="2850" y2="6720" />
           <line x1="2850" y1="7920" x2="2850" y2="8870" />
         </g>
-        <rect className="partition-wall-solid" x="2260" y="1775" width="100" height="3525" aria-label="고정 파티션 벽체" />
+        <rect className="partition-wall-solid" x="2350" y="1859" width="55" height="3322" aria-label="고정 파티션 벽체" />
 
         <path className="floor manual-plan-geometry" d="M0 0H7250V9100H2850V5300H0Z" />
         <path className="grid manual-plan-geometry" d="M0 0H7250V9100H2850V5300H0Z" fill="url(#grid500)" />
@@ -70,7 +70,7 @@ function Plan({ circulation, electrical, selected, onSelect, onOpen3D }) {
           <rect className="storage-zone" x="100" y="1500" width="2200" height="3800" />
           {[1500, 2450, 3400, 4350].map((y) => <rect key={`left-storage-${y}`} className="storage-shelf" x="100" y={y} width="450" height="950" />)}
           {[2450, 3400, 4350].map((y) => <rect key={`partition-storage-${y}`} className="storage-shelf" x="1850" y={y} width="450" height="950" />)}
-          <rect className="partition-face" x="2300" y="1775" width="60" height="3525" />
+          <rect className="partition-face" x="2350" y="1859" width="55" height="3322" />
           <text className="storage-label" x="1200" y="3900">파티션 뒤</text>
           <text className="storage-label" x="1200" y="4140">짐 보관 가능 공간</text>
           <text className="storage-label" x="1200" y="4380">H2850</text>
@@ -364,7 +364,7 @@ function ThreeView({ selected, onSelect }) {
     box("entry-handle", 0.045, 0.34, 0.05, 2.95, 1.03, 7.70, glassFrameMat);
     box("entry-lintel", 0.10, 0.67, 1.20, 2.845, 2.515, 7.32, wallMat);
     box("entry-passage-floor", 1.70, 0.08, 1.20, 2.00, -0.04, 7.32, material("passage-floor", "#aeb0b2"));
-    box("fixed-partition", 0.12, 2.85, 3.525, 2.30, 1.425, 3.5375, wallMat);
+    box("fixed-partition", 0.055, 2.85, 3.322, 2.3775, 1.425, 3.5204, wallMat);
     const storageShelfMat = material("storage-shelf-material", "#bbb8b0");
     [1.975, 2.925, 3.875, 4.825].forEach((z, index) => box(`left-storage-shelf-${index}`, 0.45, 0.82, 0.90, 0.325, 0.41, z, storageShelfMat));
     [2.925, 3.875, 4.825].forEach((z, index) => box(`partition-storage-shelf-${index}`, 0.38, 0.82, 0.88, 2.01, 0.41, z, storageShelfMat));
@@ -687,7 +687,7 @@ export function App() {
           <div className="view-switch" aria-label="도면 보기 전환">
             <span className="view-switch-label">보기 전환</span>
             <button className={`tab plan-tab${view === "plan" ? " is-active" : ""}`} aria-pressed={view === "plan"} type="button" onClick={() => setView("plan")}>2D 도면</button>
-            <button className={`tab three-tab${view === "three" ? " is-active" : ""}`} aria-pressed={view === "three"} type="button" onClick={() => setView("three")}><span className="recommended-badge">추천</span>3D로 둘러보기</button>
+            <button className={`tab three-tab${view === "three" ? " is-active" : ""}`} aria-pressed={view === "three"} type="button" onClick={() => setView("three")}>3D로 둘러보기</button>
           </div>
           <label className="layer-toggle"><input aria-label="예상 동선" type="checkbox" checked={circulation} onChange={(event) => setCirculation(event.target.checked)} /> 예상 동선</label>
           <label className="layer-toggle"><input aria-label="전기" type="checkbox" checked={electrical} onChange={(event) => setElectrical(event.target.checked)} /> 전기</label>

@@ -19,7 +19,7 @@
 - Do not show an exhibition-introduction banner in the current layout.
 - Avoid coplanar faces in the 3D model; inset exhibit surfaces and overlap wall junctions slightly so seams do not flicker or open.
 - Keep storage shelves fully behind the fixed partition surface, and extend the partition into the structural column so no gap is visible between them.
-- Draw the fixed partition as a distinct double-line/filled architectural wall in 2D and as a 120mm-thick full-height wall in 3D; never let it read as another storage-shelf outline.
+- Draw the fixed partition as a distinct thin architectural wall in 2D and 3D, approximately 55mm thick; keep it to the right of the existing shelving and never let it read as another storage-shelf outline.
 - Keep the entrance mirror outside the mirrored scene root and use the original Babylon planar-reflection material; keep its clipping plane aligned to the final mirrored wall coordinate.
 - In the final 3D view, the Blue by jjok stacked cubes belong to the left of both colored frames, with roughly 350–400mm clearance to the nearest frame.
 - Preserve the source-plan entrance projection at the left end of the glass facade in 3D, aligned with the entrance jamb.

@@ -15,8 +15,8 @@ const shelfWorks = ["eunsil", "sunok"].map((id) => works.find((work) => work.id 
 
 const selectionBounds = {
   "blue-by-jjok": { x: 4050, y: 7850, width: 2530, height: 900 },
-  eunsil: { x: 6664, y: 1599, width: 407, height: 2852 },
-  sunok: { x: 6664, y: 4499, width: 407, height: 2852 },
+  eunsil: { x: 6664, y: 1735, width: 407, height: 2852 },
+  sunok: { x: 6664, y: 4635, width: 407, height: 2852 },
   candle: { x: 5153, y: 1128, width: 900, height: 560 },
   bora: { x: 2353, y: 1105, width: 1524, height: 2130 },
   halfchairs: { x: 4500, y: 4250, width: 800, height: 900 },
@@ -115,11 +115,10 @@ function Plan({ circulation, electrical, selected, onSelect, onOpen3D }) {
           <line className="door-opening" x1="2850" y1="6720" x2="2850" y2="7920" />
           <line className="door-jamb" x1="2805" y1="6720" x2="2895" y2="6720" />
           <line className="door-jamb" x1="2805" y1="7920" x2="2895" y2="7920" />
-          <line className="fixed-glass" x1="2850" y1="7640" x2="2850" y2="7920" />
-          <line className="door-jamb" x1="2805" y1="7640" x2="2895" y2="7640" />
-          <circle className="door-hinge" cx="2850" cy="7640" r="34" />
-          <line className="door-leaf" x1="2850" y1="7640" x2="3770" y2="7640" />
-          <path className="door-swing" d="M2850 6720A920 920 0 0 0 3770 7640" />
+          <line className="fixed-glass" x1="2850" y1="6720" x2="2850" y2="7920" />
+          <circle className="door-hinge" cx="2850" cy="6720" r="34" />
+          <line className="door-leaf" x1="2850" y1="6720" x2="3770" y2="6720" />
+          <path className="door-swing" d="M2850 5800A920 920 0 0 1 3770 6720" />
           <text x="3190" y="8140">유리 출입문 W1200</text>
         </g>
 
@@ -339,7 +338,7 @@ function ThreeView({ selected, onSelect, onOpen2D, onShowOverview }) {
     box("entry-glass-corner-return", 0.76, 2.85, 0.16, 2.45, 1.425, 8.75, wallMat);
 
     const mirrorTexture = new BABYLON.MirrorTexture("entrance-mirror-reflection", 1024, scene, true);
-    mirrorTexture.mirrorPlane = new BABYLON.Plane(1, 0, 0, -4.28);
+    mirrorTexture.mirrorPlane = new BABYLON.Plane(1, 0, 0, -4.255);
     mirrorTexture.level = 0.88;
     const mirrorMat = new BABYLON.StandardMaterial("entrance-mirror-material", scene);
     mirrorMat.diffuseColor = new BABYLON.Color3(0.08, 0.10, 0.12);
@@ -347,7 +346,7 @@ function ThreeView({ selected, onSelect, onOpen2D, onShowOverview }) {
     mirrorMat.reflectionTexture = mirrorTexture;
     mirrorMat.backFaceCulling = false;
     const entranceMirror = BABYLON.MeshBuilder.CreatePlane("entrance-mirror", { width: 1.25, height: 1.95, sideOrientation: BABYLON.Mesh.DOUBLESIDE }, scene);
-    entranceMirror.position.set(4.28, 1.155, 5.925);
+    entranceMirror.position.set(4.255, 1.155, 5.925);
     entranceMirror.rotation.y = -Math.PI / 2;
     entranceMirror.material = mirrorMat;
     entranceMirror.isPickable = false;
@@ -359,7 +358,7 @@ function ThreeView({ selected, onSelect, onOpen2D, onShowOverview }) {
     box("mirror-frame-side-b", 0.035, 2.02, 0.035, 2.97, 1.155, 6.565, mirrorFrameMat);
 
     const entryDoorAngle = Math.PI * 65 / 180;
-    const entryDoorHinge = { x: 3.09, z: 7.64 };
+    const entryDoorHinge = { x: 2.91, z: 6.72 };
     const entryDoorPoint = (distance, faceOffset = 0) => ({
       x: entryDoorHinge.x + Math.cos(entryDoorAngle) * distance + Math.sin(entryDoorAngle) * faceOffset,
       z: entryDoorHinge.z - Math.sin(entryDoorAngle) * distance + Math.cos(entryDoorAngle) * faceOffset,
@@ -370,13 +369,12 @@ function ThreeView({ selected, onSelect, onOpen2D, onShowOverview }) {
       mesh.rotation.y = entryDoorAngle;
       return mesh;
     };
-    box("entry-fixed-sidelight", 0.026, 2.08, 0.24, 3.09, 1.08, 7.78, glassMat);
+    box("entry-fixed-glass-wall", 0.026, 2.08, 1.12, 2.875, 1.08, 7.32, glassMat);
     entryDoorBox("entry-glass-door", 0.90, 2.08, 0.026, 0.45, 1.08, glassMat);
-    box("entry-frame-a", 0.24, 2.18, 0.075, 2.97, 1.09, 6.72, glassFrameMat);
-    box("entry-frame-b", 0.24, 2.18, 0.075, 2.97, 1.09, 7.92, glassFrameMat);
-    box("entry-frame-top", 0.24, 0.075, 1.29, 2.97, 2.18, 7.32, glassFrameMat);
-    box("entry-frame-bottom", 0.24, 0.075, 1.29, 2.97, 0.04, 7.32, glassFrameMat);
-    box("entry-sidelight-divider", 0.24, 2.18, 0.075, 2.97, 1.09, 7.64, glassFrameMat);
+    box("entry-frame-a", 0.045, 2.18, 0.075, 2.91, 1.09, 6.72, glassFrameMat);
+    box("entry-frame-b", 0.045, 2.18, 0.075, 2.91, 1.09, 7.92, glassFrameMat);
+    box("entry-frame-top", 0.045, 0.075, 1.29, 2.91, 2.18, 7.32, glassFrameMat);
+    box("entry-frame-bottom", 0.045, 0.075, 1.29, 2.91, 0.04, 7.32, glassFrameMat);
     entryDoorBox("entry-door-hinge-rail", 0.075, 2.14, 0.045, 0, 1.08, glassFrameMat);
     entryDoorBox("entry-door-free-rail", 0.075, 2.14, 0.045, 0.90, 1.08, glassFrameMat);
     entryDoorBox("entry-door-top-rail", 0.975, 0.075, 0.045, 0.45, 2.14, glassFrameMat);
@@ -473,11 +471,11 @@ function ThreeView({ selected, onSelect, onOpen2D, onShowOverview }) {
     const blueCubeLowerMat = material("blue-cube-lower-material", "#d8d5ca");
     const blueCubeUpperMat = material("blue-cube-upper-material", "#f3efe2");
     const blueAnchorMat = material("blue-installation-envelope", blueWork.color, 0.08);
-    registerExhibitMesh("blue-by-jjok", box("blue-installation-anchor", 2.53, 0.025, 0.90, 5.315, 0.0125, 8.20, blueAnchorMat, true), true);
-    registerExhibitMesh("blue-by-jjok", box("blue-panel-a", 0.70, 2.50, 0.06, 5.30, 1.25, 8.58, bluePanelMat, true));
-    registerExhibitMesh("blue-by-jjok", box("blue-panel-b", 0.70, 2.50, 0.06, 4.40, 1.25, 8.58, bluePanelMat, true));
-    registerExhibitMesh("blue-by-jjok", box("blue-stacked-cube-lower", 0.46, 0.50, 0.46, 6.40, 0.25, 8.20, blueCubeLowerMat, true));
-    registerExhibitMesh("blue-by-jjok", box("blue-stacked-cube-upper", 0.46, 0.50, 0.46, 6.30, 0.75, 8.12, blueCubeUpperMat, true));
+    registerExhibitMesh("blue-by-jjok", box("blue-installation-anchor", 2.53, 0.025, 0.90, 5.315, 0.0125, 8.50, blueAnchorMat, true), true);
+    registerExhibitMesh("blue-by-jjok", box("blue-panel-a", 0.70, 2.50, 0.06, 5.30, 1.25, 8.78, bluePanelMat, true));
+    registerExhibitMesh("blue-by-jjok", box("blue-panel-b", 0.70, 2.50, 0.06, 4.40, 1.25, 8.78, bluePanelMat, true));
+    registerExhibitMesh("blue-by-jjok", box("blue-stacked-cube-lower", 0.46, 0.50, 0.46, 6.40, 0.25, 8.50, blueCubeLowerMat, true));
+    registerExhibitMesh("blue-by-jjok", box("blue-stacked-cube-upper", 0.46, 0.50, 0.46, 6.30, 0.75, 8.42, blueCubeUpperMat, true));
     const blueFrameMats = [
       material("blue-frame-blue", "#0755c9"),
       material("blue-frame-purple", "#7130bd"),
@@ -510,8 +508,8 @@ function ThreeView({ selected, onSelect, onOpen2D, onShowOverview }) {
         blueBeam(`${prefix}-rail-z-right-${level}`, beam, beam, innerDepth, xRight, y, z);
       });
     };
-    createBlueFrame("blue-frame-left", 5.30, 8.20, 0.42, 0.52, 0.72);
-    createBlueFrame("blue-frame-low", 4.40, 8.20, 0.52, 0.52, 0.72);
+    createBlueFrame("blue-frame-left", 5.30, 8.50, 0.42, 0.52, 0.72);
+    createBlueFrame("blue-frame-low", 4.40, 8.50, 0.52, 0.52, 0.72);
 
     shelfWorks.forEach((work) => {
       const mesh = box(work.id, 0.41, 0.05, work.shelfHeight / 1000 - 0.02, 7.025, 0.895, (work.shelfY + work.shelfHeight / 2) / 1000, material("mat-" + work.id, work.color, 0.9), true);
@@ -683,12 +681,12 @@ function ThreeView({ selected, onSelect, onOpen2D, onShowOverview }) {
     <div className="three-view is-active no-print" id="threeView">
       <div className="canvas-view-actions">
         <button className="canvas-overview-cta" type="button" onClick={onShowOverview}>
-          <span>공간 전체를 한눈에</span>
-          <strong>전체뷰 보기</strong>
+          <svg className="canvas-action-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M21 16v5h-5M8 21H3v-5" /><path d="M8 8h8v8H8z" /></svg>
+          <span className="canvas-action-copy"><span>공간 전체를 한눈에</span><strong>전체뷰 보기</strong></span>
         </button>
         <button className="canvas-2d-cta" type="button" onClick={onOpen2D}>
-          <span>배치와 치수를 확인하세요</span>
-          <strong>2D 도면 보기</strong>
+          <svg className="canvas-action-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5 9 3l6 2.5L20 3v15.5L15 21l-6-2.5L4 21z" /><path d="M9 3v15.5M15 5.5V21" /></svg>
+          <span className="canvas-action-copy"><span>배치와 치수를 확인하세요</span><strong>2D 도면 보기</strong></span>
         </button>
       </div>
       <canvas ref={canvasRef} id="renderCanvas" aria-label="G09 전시 공간 3D 확인" style={{ touchAction: "none" }} />

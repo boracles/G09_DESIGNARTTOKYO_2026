@@ -126,8 +126,8 @@ function Plan({ circulation, electrical, selected, onSelect }) {
         </g>
 
         <g className={`blue-work${selected === "blue-by-jjok" ? " is-selected" : ""}`} data-id="blue-by-jjok" tabIndex="0" role="button" aria-label="권정륜 신하진 Blue by jjok, 고정 파티션 전면 바닥 자립형 2점" onClick={() => onSelect("blue-by-jjok")} onKeyDown={(event) => (event.key === "Enter" || event.key === " ") && onSelect("blue-by-jjok")}>
-          <text className="work-label" x="2160" y="1950">05 · 권정륜 · 신하진</text>
-          <text className="work-detail" x="2160" y="2100">고정 파티션 전면 · 바닥 자립 2점</text>
+          <text className="work-label" x="2160" y="2450">05 · 권정륜 · 신하진</text>
+          <text className="work-detail" x="2160" y="2620">고정 파티션 전면 · 바닥 자립 2점</text>
           <rect className="installation-envelope" x="1300" y="2980" width="650" height="1690" rx="32" />
           <rect className="panel" x="1315" y="3050" width="70" height="700" />
           <rect className="panel" x="1315" y="4250" width="70" height="700" />

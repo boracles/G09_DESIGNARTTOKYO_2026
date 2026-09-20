@@ -3,11 +3,11 @@ import * as BABYLON from "babylonjs";
 import "babylonjs-loaders";
 
 const works = [
-  { id: "sunok", index: "01", zone: "하단 1/2", color: "#b5477b", title: "홍선옥 · Code to Coil", detail: "우측 선반 · 하단 절반", size: "가로 2900 × 세로 450mm", shelfY: 4611, shelfHeight: 2900 },
-  { id: "eunsil", index: "02", zone: "상단 1/2", color: "#6b8f71", title: "지은실 · Hybrid Nature", detail: "우측 선반 · 상단 절반", size: "가로 2900 × 세로 450mm", shelfY: 1711, shelfHeight: 2900 },
-  { id: "candle", index: "03", color: "#f26a21", title: "권정현 · Candle", detail: "목재장 B · 3점 + 태블릿 · 전원", prep: "개별 준비 · 멀티탭", size: "가로 900 × 세로 600mm" },
-  { id: "bora", index: "04", color: "#258b85", title: "윤보라 · 잃어버린 방", detail: "LG 17MT70 · Quest 3 · 충전 독 · 티백 · 찻잔", prep: "개별 준비 · 멀티탭 · PD 충전기 · 충전 독 어댑터 · 전원·영상 케이블", size: "목재장 A 폭 기준 · VR 동작 구역 1500 × 1500mm" },
-  { id: "blue-by-jjok", index: "05", color: "#386a8c", title: "권정륜 · 신하진 · Blue by jjok", detail: "외부 조망 유리벽 앞 · 바닥 자립 2점", prep: "패널 H2500 · 프레임 H720 2점 · 적층 큐브 H1000", size: "패널 W700 · 프레임 W420/W520mm" },
+  { id: "blue-by-jjok", index: "01", color: "#386a8c", title: "권정륜 · 신하진 · Blue by jjok", detail: "외부 조망 유리벽 앞 · 바닥 자립 2점", prep: "개별 준비 · 패널 · 프레임 2점 · 적층 큐브", size: "패널 W700 × H2500 · 프레임 W420/W520 × H720 · 적층 큐브 H1000" },
+  { id: "sunok", index: "02", zone: "하단 1/2", color: "#b5477b", title: "홍선옥 · Code to Coil", detail: "우측 선반 · 하단 절반", size: "가로 2900 × 세로 450mm", shelfY: 4611, shelfHeight: 2900 },
+  { id: "eunsil", index: "03", zone: "상단 1/2", color: "#6b8f71", title: "지은실 · Hybrid Nature", detail: "우측 선반 · 상단 절반", size: "가로 2900 × 세로 450mm", shelfY: 1711, shelfHeight: 2900 },
+  { id: "candle", index: "04", color: "#f26a21", title: "권정현 · Candle", detail: "목재장 B · 3점 + 태블릿 · 전원", prep: "개별 준비 · 멀티탭", size: "가로 900 × 세로 600mm" },
+  { id: "bora", index: "05", color: "#258b85", title: "윤보라 · 잃어버린 방", detail: "LG 17MT70 · Quest 3 · 충전 독 · 티백 · 찻잔", prep: "개별 준비 · 멀티탭 · PD 충전기 · 충전 독 어댑터 · 전원·영상 케이블", size: "목재장 A 폭 기준 · VR 동작 구역 1500 × 1500mm" },
   { id: "halfchairs", index: "06", color: "#6d50d4", title: "이지우 · Half Chairs", detail: "중앙 우측 · 관람 동선 사이 바닥 설치", size: "가로 330 × 세로 425 × 높이 885mm" },
 ];
 
@@ -154,7 +154,7 @@ function Plan({ circulation, electrical, selected, onSelect, onOpen3D }) {
         </g>
 
         <g className={`blue-work${selected === "blue-by-jjok" ? " is-selected" : ""}`} data-id="blue-by-jjok" tabIndex="0" role="button" aria-label="권정륜 신하진 Blue by jjok, 외부 조망 유리벽 앞 바닥 자립형 2점" onClick={() => onSelect("blue-by-jjok")} onKeyDown={(event) => (event.key === "Enter" || event.key === " ") && onSelect("blue-by-jjok")}>
-          <text className="work-label" x="4070" y="7550">05 · 권정륜 · 신하진</text>
+          <text className="work-label" x="4070" y="7550">01 · 권정륜 · 신하진</text>
           <text className="work-detail" x="4070" y="7720">문 회전 반경 밖 · 벽에서 이격 · 3점 균등 배치</text>
           <rect className="installation-envelope" x="4050" y="7850" width="2530" height="900" rx="32" />
           <rect className="stacked-cube" x="4120" y="8010" width="460" height="460" />
@@ -180,7 +180,7 @@ function Plan({ circulation, electrical, selected, onSelect, onOpen3D }) {
           <circle className="wall-piece" cx="5288" cy="1223" r="82" />
           <circle cx="5353" cy="1413" r="82" /><circle cx="5603" cy="1413" r="82" />
           <rect className="tablet" x="5818" y="1453" width="170" height="110" rx="16" />
-          <text className="work-label" x="5603" y="2075" textAnchor="middle">03 · 권정현 · Candle</text>
+          <text className="work-label" x="5603" y="2075" textAnchor="middle">04 · 권정현 · Candle</text>
           <text className="work-detail" x="5603" y="2240" textAnchor="middle">목재장 B 직선부 중앙 · 900 × 600mm · 전원</text>
         </g>
 
@@ -193,7 +193,7 @@ function Plan({ circulation, electrical, selected, onSelect, onOpen3D }) {
           <g className="charging-dock"><rect x="2925" y="1423" width="500" height="230" rx="45" /><path d="M3035 1543Q3175 1433 3315 1543Q3265 1633 3175 1633Q3085 1633 3035 1543Z" /><circle cx="2990" cy="1538" r="48" /><circle cx="3360" cy="1538" r="48" /></g>
           <rect className="tea-bag" x="3045" y="1173" width="220" height="130" rx="20" /><circle className="tea-cup" cx="3485" cy="1238" r="72" /><circle className="cup-handle" cx="3565" cy="1238" r="34" />
           <rect className="power-strip" x="2975" y="1338" width="350" height="58" rx="24" />
-          <text className="work-label" x="3115" y="1913" textAnchor="middle">04 · 윤보라 · 잃어버린 방</text>
+          <text className="work-label" x="3115" y="1913" textAnchor="middle">05 · 윤보라 · 잃어버린 방</text>
           <text className="work-detail" x="3115" y="2103" textAnchor="middle">가로 1100 × 세로 600mm · 전원</text>
         </g>
 
@@ -358,9 +358,12 @@ function ThreeView({ selected, onSelect, onOpen2D, onShowOverview }) {
     box("wall-notch", 2.90, 2.85, 0.14, 1.45, 1.425, 5.28, wallMat);
     box("wall-entry-upper", 0.10, 2.85, 1.478, 2.84, 1.425, 5.996, wallMat);
     box("entry-corner-pier", 0.352, 2.85, 1.111, 2.966, 1.425, 8.644, wallMat);
+    // The mirror is mounted on a full-height buildout, while the entrance glazing
+    // stays on the original thin plan line. Keep these as visibly different planes.
+    box("entrance-mirror-wall-buildout", 0.18, 2.85, 1.43, 2.98, 1.425, 5.996, wallMat);
 
     const mirrorTexture = new BABYLON.MirrorTexture("entrance-mirror-reflection", 1024, scene, true);
-    mirrorTexture.mirrorPlane = new BABYLON.Plane(1, 0, 0, -4.255);
+    mirrorTexture.mirrorPlane = new BABYLON.Plane(1, 0, 0, -4.142);
     mirrorTexture.level = 0.88;
     const mirrorMat = new BABYLON.StandardMaterial("entrance-mirror-material", scene);
     mirrorMat.diffuseColor = new BABYLON.Color3(0.08, 0.10, 0.12);
@@ -368,15 +371,15 @@ function ThreeView({ selected, onSelect, onOpen2D, onShowOverview }) {
     mirrorMat.reflectionTexture = mirrorTexture;
     mirrorMat.backFaceCulling = false;
     const entranceMirror = BABYLON.MeshBuilder.CreatePlane("entrance-mirror", { width: 1.25, height: 1.95, sideOrientation: BABYLON.Mesh.DOUBLESIDE }, scene);
-    entranceMirror.position.set(4.255, 1.155, 5.925);
+    entranceMirror.position.set(4.142, 1.155, 5.925);
     entranceMirror.rotation.y = -Math.PI / 2;
     entranceMirror.material = mirrorMat;
     entranceMirror.isPickable = false;
     const mirrorFrameMat = material("entrance-mirror-frame", "#30353b");
-    box("mirror-frame-top", 0.035, 0.035, 1.32, 2.97, 2.148, 5.925, mirrorFrameMat);
-    box("mirror-frame-bottom", 0.035, 0.035, 1.32, 2.97, 0.163, 5.925, mirrorFrameMat);
-    box("mirror-frame-side-a", 0.035, 2.02, 0.035, 2.97, 1.155, 5.285, mirrorFrameMat);
-    box("mirror-frame-side-b", 0.035, 2.02, 0.035, 2.97, 1.155, 6.565, mirrorFrameMat);
+    box("mirror-frame-top", 0.035, 0.035, 1.32, 3.0875, 2.148, 5.925, mirrorFrameMat);
+    box("mirror-frame-bottom", 0.035, 0.035, 1.32, 3.0875, 0.163, 5.925, mirrorFrameMat);
+    box("mirror-frame-side-a", 0.035, 2.02, 0.035, 3.0875, 1.155, 5.285, mirrorFrameMat);
+    box("mirror-frame-side-b", 0.035, 2.02, 0.035, 3.0875, 1.155, 6.565, mirrorFrameMat);
 
     const entryDoorAngle = Math.PI * 78 / 180;
     const entryDoorHinge = { x: 2.839, z: 8.019 };

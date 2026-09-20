@@ -115,9 +115,9 @@ function Plan({ circulation, electrical, selected, onSelect, onOpen3D }) {
           <line className="door-opening" x1="2850" y1="6720" x2="2850" y2="7920" />
           <line className="door-jamb" x1="2805" y1="6720" x2="2895" y2="6720" />
           <line className="door-jamb" x1="2805" y1="7920" x2="2895" y2="7920" />
-          <circle className="door-hinge" cx="2850" cy="6720" r="34" />
-          <line className="door-leaf" x1="2850" y1="6720" x2="4050" y2="6720" />
-          <path className="door-swing" d="M2850 7920A1200 1200 0 0 1 4050 6720" />
+          <circle className="door-hinge" cx="2850" cy="7920" r="34" />
+          <line className="door-leaf" x1="2850" y1="7920" x2="4050" y2="7920" />
+          <path className="door-swing" d="M2850 6720A1200 1200 0 0 0 4050 7920" />
           <text x="3190" y="8140">유리 출입문 W1200</text>
         </g>
 
@@ -323,18 +323,18 @@ function ThreeView({ selected, onSelect, onOpen2D, onShowOverview }) {
     box("floor-lower", 4.4, 0.08, 3.8, 5.05, -0.04, 7.2, floorMat);
     box("wall-top", 7.34, 2.85, 0.14, 3.625, 1.425, 0.02, wallMat);
     const rightWall = box("wall-right", 0.14, 2.85, 9.18, 7.23, 1.425, 4.55, wallMat);
-    box("exterior-glass-wall", 4.35, 2.08, 0.026, 5.025, 1.08, 9.065, glassMat);
+    box("exterior-glass-wall", 4.40, 2.08, 0.026, 5.05, 1.08, 9.065, glassMat);
     [2.85, 4.30, 5.75, 7.20].forEach((x, index) => box("glass-mullion-" + index, 0.065, 2.18, 0.045, x, 1.09, 9.035, glassFrameMat));
-    box("glass-frame-top", 4.35, 0.07, 0.045, 5.025, 2.18, 9.035, glassFrameMat);
-    box("glass-frame-bottom", 4.35, 0.07, 0.045, 5.025, 0.035, 9.035, glassFrameMat);
-    box("glass-wall-header", 4.45, 0.67, 0.14, 5.00, 2.515, 9.06, wallMat);
+    box("glass-frame-top", 4.40, 0.07, 0.045, 5.05, 2.18, 9.035, glassFrameMat);
+    box("glass-frame-bottom", 4.40, 0.07, 0.045, 5.05, 0.035, 9.035, glassFrameMat);
+    box("glass-wall-header", 4.40, 0.67, 0.14, 5.05, 2.515, 9.06, wallMat);
     box("outside-sidewalk", 4.35, 0.08, 1.45, 5.025, -0.04, 9.825, material("outside-sidewalk-material", "#686c70"));
     box("exterior-glass-center-pillar", 1.50, 2.85, 1.20, 5.05, 1.425, 10.45, fixedMat);
     box("wall-left-upper", 0.14, 2.85, 5.38, 0.02, 1.425, 2.65, wallMat);
     box("wall-notch", 2.90, 2.85, 0.14, 1.45, 1.425, 5.28, wallMat);
     box("wall-entry-a", 0.14, 2.85, 1.50, 2.83, 1.425, 6.00, wallMat);
-    box("wall-entry-b", 0.14, 2.85, 1.22, 2.83, 1.425, 8.475, wallMat);
-    box("entrance-projecting-wall", 0.50, 2.85, 0.12, 2.515, 1.425, 8.75, wallMat);
+    box("wall-entry-b", 0.14, 2.85, 1.145, 2.83, 1.425, 8.4925, wallMat);
+    box("entry-glass-corner-pier", 0.34, 2.85, 0.34, 2.93, 1.425, 8.895, wallMat);
 
     const mirrorTexture = new BABYLON.MirrorTexture("entrance-mirror-reflection", 1024, scene, true);
     mirrorTexture.mirrorPlane = new BABYLON.Plane(1, 0, 0, -4.335);
@@ -355,19 +355,18 @@ function ThreeView({ selected, onSelect, onOpen2D, onShowOverview }) {
     box("mirror-frame-side-a", 0.035, 2.02, 0.035, 2.925, 1.155, 5.285, mirrorFrameMat);
     box("mirror-frame-side-b", 0.035, 2.02, 0.035, 2.925, 1.155, 6.565, mirrorFrameMat);
 
-    box("entry-glass-door", 1.12, 2.08, 0.026, 3.47, 1.08, 6.72, glassMat);
+    box("entry-glass-door", 1.12, 2.08, 0.026, 3.47, 1.08, 7.92, glassMat);
     box("entry-frame-a", 0.045, 2.18, 0.075, 2.91, 1.09, 6.72, glassFrameMat);
     box("entry-frame-b", 0.045, 2.18, 0.075, 2.91, 1.09, 7.92, glassFrameMat);
     box("entry-frame-top", 0.045, 0.075, 1.29, 2.91, 2.18, 7.32, glassFrameMat);
     box("entry-frame-bottom", 0.045, 0.075, 1.29, 2.91, 0.04, 7.32, glassFrameMat);
-    box("entry-door-hinge-rail", 0.075, 2.14, 0.045, 2.91, 1.08, 6.72, glassFrameMat);
-    box("entry-door-free-rail", 0.075, 2.14, 0.045, 4.03, 1.08, 6.72, glassFrameMat);
-    box("entry-door-top-rail", 1.19, 0.075, 0.045, 3.47, 2.14, 6.72, glassFrameMat);
-    box("entry-door-bottom-rail", 1.19, 0.075, 0.045, 3.47, 0.04, 6.72, glassFrameMat);
-    box("entry-handle", 0.05, 0.34, 0.045, 3.82, 1.03, 6.67, glassFrameMat);
+    box("entry-door-hinge-rail", 0.075, 2.14, 0.045, 2.91, 1.08, 7.92, glassFrameMat);
+    box("entry-door-free-rail", 0.075, 2.14, 0.045, 4.03, 1.08, 7.92, glassFrameMat);
+    box("entry-door-top-rail", 1.19, 0.075, 0.045, 3.47, 2.14, 7.92, glassFrameMat);
+    box("entry-door-bottom-rail", 1.19, 0.075, 0.045, 3.47, 0.04, 7.92, glassFrameMat);
+    box("entry-handle", 0.05, 0.34, 0.045, 3.82, 1.03, 7.97, glassFrameMat);
     box("entry-lintel", 0.10, 0.67, 1.20, 2.845, 2.515, 7.32, wallMat);
     box("entry-passage-floor", 1.70, 0.08, 1.20, 2.00, -0.04, 7.32, material("passage-floor", "#aeb0b2"));
-    box("entry-exterior-projection", 0.76, 0.16, 0.16, 2.43, 0.92, 7.46, fixedMat);
     const fixedPartition = box("fixed-partition", 0.055, 2.85, 3.70, 2.2135, 1.425, 3.48, wallMat);
     const storageShelfMat = material("storage-shelf-material", "#bbb8b0");
     [1.975, 2.925, 3.875, 4.825].forEach((z, index) => box(`left-storage-shelf-${index}`, 0.45, 0.82, 0.90, 0.325, 0.41, z, storageShelfMat));

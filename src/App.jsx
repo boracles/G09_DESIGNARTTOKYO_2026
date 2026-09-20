@@ -7,7 +7,7 @@ const works = [
   { id: "eunsil", index: "02", zone: "상단 1/2", color: "#6b8f71", title: "지은실 · Hybrid Nature", detail: "우측 선반 · 상단 절반", size: "가로 2900 × 세로 450mm", shelfY: 1575, shelfHeight: 2900 },
   { id: "candle", index: "03", color: "#f26a21", title: "권정현 · Candle", detail: "목재장 B · 3점 + 태블릿 · 전원", prep: "개별 준비 · 멀티탭", size: "가로 900 × 세로 600mm" },
   { id: "bora", index: "04", color: "#258b85", title: "윤보라 · 잃어버린 방", detail: "LG 17MT70 · Quest 3 · 충전 독 · 티백 · 찻잔", prep: "개별 준비 · 멀티탭 · PD 충전기 · 충전 독 어댑터 · 전원·영상 케이블", size: "목재장 A 폭 기준 · VR 동작 구역 1500 × 1000mm" },
-  { id: "blue-by-jjok", index: "05", color: "#386a8c", title: "권정륜 · 신하진 · Blue by jjok", detail: "외부 조망 유리벽 앞 · 바닥 자립 2점", prep: "패널 H2500 · 구조체 H1000/H720", size: "패널 W700 · 바닥 모듈 420–520mm" },
+  { id: "blue-by-jjok", index: "05", color: "#386a8c", title: "권정륜 · 신하진 · Blue by jjok", detail: "외부 조망 유리벽 앞 · 바닥 자립 2점", prep: "패널 H2500 · 프레임 H720 2점 · 적층 큐브 H1000", size: "패널 W700 · 프레임 W420/W520mm" },
   { id: "halfchairs", index: "06", color: "#6d50d4", title: "이지우 · Half Chairs", detail: "중앙 우측 · 관람 동선 사이 바닥 설치", size: "가로 330 × 세로 425 × 높이 885mm" },
 ];
 
@@ -146,10 +146,10 @@ function Plan({ circulation, electrical, selected, onSelect }) {
           <rect className="stacked-cube stacked-cube-top" x="4140" y="8250" width="460" height="460" />
           <rect className="panel" x="4550" y="8780" width="700" height="70" />
           <rect className="panel" x="5750" y="8780" width="700" height="70" />
-          <rect className="module module-a" x="4640" y="8290" width="520" height="420" />
+          <rect className="module module-a" x="4690" y="8240" width="420" height="520" />
           <rect className="module module-b" x="5840" y="8240" width="520" height="520" />
-          <line x1="4640" y1="8290" x2="5160" y2="8710" />
-          <line x1="5160" y1="8290" x2="4640" y2="8710" />
+          <line x1="4690" y1="8240" x2="5110" y2="8760" />
+          <line x1="5110" y1="8240" x2="4690" y2="8760" />
           <line x1="5840" y1="8240" x2="6360" y2="8760" />
           <line x1="6360" y1="8240" x2="5840" y2="8760" />
         </g>
@@ -478,7 +478,7 @@ function ThreeView({ selected, onSelect }) {
         blueBeam(`${prefix}-rail-z-right-${level}`, beam, beam, innerDepth, xRight, y, z);
       });
     };
-    createBlueFrame("blue-frame-tall", 4.90, 8.50, 0.52, 0.42, 1.00);
+    createBlueFrame("blue-frame-left", 4.90, 8.50, 0.42, 0.52, 0.72);
     createBlueFrame("blue-frame-low", 6.10, 8.50, 0.52, 0.52, 0.72);
 
     shelfWorks.forEach((work) => {

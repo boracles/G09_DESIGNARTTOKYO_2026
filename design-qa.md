@@ -8,7 +8,7 @@
 
 ## Final layout checks
 
-- Blue by jjok uses two W700 × H2500 panels, two open modular frames (H1000 and H720), and two offset white cubes stacked to approximately H1000.
+- Blue by jjok uses two W700 × H2500 panels, two H720 open modular frames (approximately W420 and W520), and two offset white cubes stacked to H1000.
 - The fixed partition now extends continuously from the 1500 line to the 5300 return wall; the former 700mm opening is removed in both 2D and 3D.
 - Blue by jjok is relocated from the fixed partition to the exterior-view glass wall, with both panel-and-frame assemblies facing into the gallery.
 - The exhibition banner is omitted from the current layout.

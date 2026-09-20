@@ -7,6 +7,7 @@
 - Place the two Blue by jjok freestanding panel-and-frame assemblies in front of the exterior-view glass wall, not against the fixed partition.
 - Keep the Blue by jjok group roughly 700mm farther from the entrance, toward the left wall/inner end of the glass wall.
 - Blue by jjok also includes two offset white cubes stacked to a total height of about 1000mm; never omit them when moving the installation.
+- Blue by jjok proportions follow the supplied front elevation: two W700 × H2500 panels, two H720 frames with approximate widths 420mm and 520mm, and stacked cubes totaling H1000.
 - When Blue by jjok is selected in 3D, view it from inside the gallery toward the glass wall; never position the focus camera behind the exterior wall.
 - Place attendant A at the entrance mirror and attendant B behind the cabinet line, inside the 726 mm gap between cabinets A and B.
 - Orient both attendant chairs toward the gallery center: A has its back to the mirror, and B has its back to the top wall.

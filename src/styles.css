@@ -93,8 +93,8 @@ main { padding: 18px; }
 .blue-work .module-b { stroke: #0755c9; }
 .blue-work line { stroke: #35adbb; stroke-width: 22; }
 .blue-work text { fill: #234e6b; text-anchor: middle; font-weight: 850; pointer-events: none; }
-.blue-work .work-label { font-size: 138px; }
-.blue-work .work-detail { font-size: 112px; }
+.blue-work .work-label { text-anchor: start; font-size: 138px; }
+.blue-work .work-detail { text-anchor: start; font-size: 112px; }
 .blue-work:hover .installation-envelope { stroke-width: 38; }
 .blue-work.is-selected .installation-envelope { stroke: var(--selection); stroke-width: 50; filter: drop-shadow(0 0 34px rgba(245,183,0,.68)); }
 .cabinet-sharing rect { fill: rgba(183,121,31,.07); stroke: #b7791f; stroke-width: 14; stroke-dasharray: 45 35; }

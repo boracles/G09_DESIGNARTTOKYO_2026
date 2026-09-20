@@ -14,11 +14,14 @@
 - Every 3D legend focus must remain inside the gallery: shelf works are viewed from the center toward the right shelf, and Half Chairs is viewed from the glass side toward the center.
 - Place attendant A at the entrance mirror and attendant B behind the cabinet line, inside the 726 mm gap between cabinets A and B.
 - Orient both attendant chairs toward the gallery center: A has its back to the mirror, and B has its back to the top wall.
+- Do not draw a separate access-control line between cabinets A and B while attendant B occupies that gap.
 - Use `attendant-woman.glb` for both seated attendants; do not retain a standing scale figure or height label in the gallery center.
 - Do not show an exhibition-introduction banner in the current layout.
 - Avoid coplanar faces in the 3D model; inset exhibit surfaces and overlap wall junctions slightly so seams do not flicker or open.
 - Keep storage shelves fully behind the fixed partition surface, and extend the partition into the structural column so no gap is visible between them.
+- Draw the fixed partition as a distinct double-line/filled architectural wall in 2D and as a 120mm-thick full-height wall in 3D; never let it read as another storage-shelf outline.
 - Keep the entrance mirror outside the mirrored scene root and use the original Babylon planar-reflection material; keep its clipping plane aligned to the final mirrored wall coordinate.
 - In the final 3D view, the Blue by jjok stacked cubes belong to the left of both colored frames, with roughly 350–400mm clearance to the nearest frame.
 - Preserve the source-plan entrance projection at the left end of the glass facade in 3D, aligned with the entrance jamb.
 - In the 2D plan, keep source dimensions visible while removing only long oblique annotation leaders.
+- Make 3D discovery explicit: keep `3D로 둘러보기` as the primary blue action with a recommendation badge in the header, and repeat the entry action over the 2D drawing.

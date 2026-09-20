@@ -22,10 +22,14 @@ const selectionBounds = {
   halfchairs: { x: 4500, y: 4250, width: 800, height: 900 },
 };
 
-function Plan({ circulation, electrical, selected, onSelect }) {
+function Plan({ circulation, electrical, selected, onSelect, onOpen3D }) {
   const selectedBounds = selectionBounds[selected];
   return (
     <div className="drawing-wrap" id="planView">
+      <button className="canvas-3d-cta no-print" type="button" onClick={onOpen3D}>
+        <span>공간을 입체로 확인하세요</span>
+        <strong>3D 공간 열기</strong>
+      </button>
       <svg id="floorSvg" viewBox="-1100 -700 9500 10600" role="img" aria-labelledby="planTitle planDesc">
         <title id="planTitle">HIBIYA OKUROJI G09 작품 배치 평면도</title>
         <desc id="planDesc">G09 원도면 비율, 고정 집기, 전기 지점, 우측 선반 작품 배정과 Half Chairs 바닥 설치를 표시한 도면</desc>
@@ -55,6 +59,7 @@ function Plan({ circulation, electrical, selected, onSelect }) {
           <line x1="2850" y1="5300" x2="2850" y2="6720" />
           <line x1="2850" y1="7920" x2="2850" y2="8870" />
         </g>
+        <rect className="partition-wall-solid" x="2260" y="1775" width="100" height="3525" aria-label="고정 파티션 벽체" />
 
         <path className="floor manual-plan-geometry" d="M0 0H7250V9100H2850V5300H0Z" />
         <path className="grid manual-plan-geometry" d="M0 0H7250V9100H2850V5300H0Z" fill="url(#grid500)" />
@@ -84,10 +89,6 @@ function Plan({ circulation, electrical, selected, onSelect }) {
           <rect x="4575" y="975" width="2000" height="600" />
           <path className="cabinet-corner" d="M6575 975H6800V1575H6575V1420L6705 1290L6575 1160Z" />
           <text x="5800" y="875">목재장 B · 2450 × 600 · H1000</text>
-          <g className="gap-barrier" aria-label="목재장 A와 B 사이 출입 금지 라인">
-            <line x1="3875" y1="1605" x2="4550" y2="1605" />
-            <text x="4212" y="1760">출입 금지</text>
-          </g>
           <rect x="6800" y="120" width="450" height="1455" className="shelf-base shelf-return" />
           <rect x="6800" y="1575" width="450" height="5800" className="shelf-base" />
           <text className="rotated-label" x="7040" y="4475">수납형 고정 선반 · 5800 × 450 · H870</text>
@@ -363,7 +364,7 @@ function ThreeView({ selected, onSelect }) {
     box("entry-handle", 0.045, 0.34, 0.05, 2.95, 1.03, 7.70, glassFrameMat);
     box("entry-lintel", 0.10, 0.67, 1.20, 2.845, 2.515, 7.32, wallMat);
     box("entry-passage-floor", 1.70, 0.08, 1.20, 2.00, -0.04, 7.32, material("passage-floor", "#aeb0b2"));
-    box("fixed-partition", 0.08, 2.85, 3.65, 2.27, 1.425, 3.475, wallMat);
+    box("fixed-partition", 0.12, 2.85, 3.525, 2.30, 1.425, 3.5375, wallMat);
     const storageShelfMat = material("storage-shelf-material", "#bbb8b0");
     [1.975, 2.925, 3.875, 4.825].forEach((z, index) => box(`left-storage-shelf-${index}`, 0.45, 0.82, 0.90, 0.325, 0.41, z, storageShelfMat));
     [2.925, 3.875, 4.825].forEach((z, index) => box(`partition-storage-shelf-${index}`, 0.38, 0.82, 0.88, 2.01, 0.41, z, storageShelfMat));
@@ -376,7 +377,6 @@ function ThreeView({ selected, onSelect }) {
     box("cabinet-b", 2.0, 1.0, 0.606, 5.603, 0.5, 1.408, fixedMat);
     box("right-shelf-return", 0.455, 1.0, 1.59, 6.8675, 0.5, 0.916, fixedMat);
     box("cabinet-b-corner", 0.264, 1.0, 0.606, 6.735, 0.5, 1.408, fixedMat);
-    box("cabinet-gap-barrier", 0.726, 0.012, 0.055, 4.24, 0.006, 1.735, material("cabinet-gap-barrier-material", "#292d33"));
     const shelfMat = material("shelf", "#a8a39b");
     const shelfRecessMat = material("shelf-recess", "#6f6b66");
     const shelfInteriorMat = material("shelf-interior", "#918c85");
@@ -533,6 +533,9 @@ function ThreeView({ selected, onSelect }) {
           mesh.isPickable = false;
           mesh.alwaysSelectAsActiveMesh = true;
           mesh.computeWorldMatrix(true);
+          if (mirrorTexture.renderList && mesh !== entranceMirror && !mirrorTexture.renderList.includes(mesh)) {
+            mirrorTexture.renderList.push(mesh);
+          }
         });
         personPivot.computeWorldMatrix(true);
         const bounds = personPivot.getHierarchyBoundingVectors(true);
@@ -549,6 +552,8 @@ function ThreeView({ selected, onSelect }) {
     };
     loadSeatedAttendant("attendant-mirror", 3.59, 5.925, Math.PI / 2);
     loadSeatedAttendant("attendant-cabinet-gap", 4.24, 0.745, 0);
+
+    mirrorTexture.renderList = scene.meshes.filter((mesh) => mesh !== entranceMirror);
 
     const selectionBandMat = material("selection-band-material", "#f5b700", 0.95);
     selectionBandMat.emissiveColor = BABYLON.Color3.FromHexString("#f5b700").scale(0.7);
@@ -679,8 +684,11 @@ export function App() {
       <header className="appbar no-print">
         <div><p>DESIGNART TOKYO 2026 · HIBIYA OKUROJI</p><h1>G09 작품 배치도</h1></div>
         <div className="actions">
-          <button className={`tab${view === "plan" ? " is-active" : ""}`} type="button" onClick={() => setView("plan")}>2D 도면</button>
-          <button className={`tab${view === "three" ? " is-active" : ""}`} type="button" onClick={() => setView("three")}>3D 공간</button>
+          <div className="view-switch" aria-label="도면 보기 전환">
+            <span className="view-switch-label">보기 전환</span>
+            <button className={`tab plan-tab${view === "plan" ? " is-active" : ""}`} aria-pressed={view === "plan"} type="button" onClick={() => setView("plan")}>2D 도면</button>
+            <button className={`tab three-tab${view === "three" ? " is-active" : ""}`} aria-pressed={view === "three"} type="button" onClick={() => setView("three")}><span className="recommended-badge">추천</span>3D로 둘러보기</button>
+          </div>
           <label className="layer-toggle"><input aria-label="예상 동선" type="checkbox" checked={circulation} onChange={(event) => setCirculation(event.target.checked)} /> 예상 동선</label>
           <label className="layer-toggle"><input aria-label="전기" type="checkbox" checked={electrical} onChange={(event) => setElectrical(event.target.checked)} /> 전기</label>
           <button className="print-button" type="button" onClick={() => window.print()}>A3 PDF 출력</button>
@@ -690,7 +698,7 @@ export function App() {
         <section className="sheet">
           <div className="sheet-heading"><div><p className="drawing-no">EXHIBITION LAYOUT · G09 / B-111</p><h2>작품 배치 평면도</h2></div><div className="revision">REV. 30 · 2026.09.20</div></div>
           <div className="sheet-body">
-            {view === "plan" ? <Plan circulation={circulation} electrical={electrical} selected={selected} onSelect={setSelected} /> : <ThreeView selected={selected} onSelect={setSelected} />}
+            {view === "plan" ? <Plan circulation={circulation} electrical={electrical} selected={selected} onSelect={setSelected} onOpen3D={() => setView("three")} /> : <ThreeView selected={selected} onSelect={setSelected} />}
             <Legend selected={selected} onSelect={setSelected} />
           </div>
           <footer className="title-block"><div><span>PROJECT</span><strong>DESIGNART TOKYO 2026</strong></div><div><span>SPACE</span><strong>HIBIYA OKUROJI G09 / B-111</strong></div><div><span>DRAWING</span><strong>작품 · 전기 배치 평면도</strong></div><div><span>SCALE</span><strong>1:50 @ A3</strong></div><div><span>AREA / CH</span><strong>55.15㎡ / 2850</strong></div><div><span>STATUS</span><strong>배치 계획안 · 현장 실측 전</strong></div></footer>

@@ -118,6 +118,8 @@ main { padding: 18px; }
 .candle-work:hover .surface { stroke-width: 42; }
 .candle-work.is-selected .surface { stroke: var(--selection); stroke-width: 50; filter: drop-shadow(0 0 34px rgba(245,183,0,.68)); }
 .bora-work { cursor: pointer; outline: none; }
+.bora-work .roomscale-zone { fill: rgba(37,139,133,.07); stroke: #258b85; stroke-width: 20; stroke-dasharray: 54 30; }
+.bora-work .roomscale-label { fill: #176864; font-size: 104px; font-weight: 900; letter-spacing: 3px; }
 .bora-work .surface { fill: rgba(37,139,133,.22); stroke: #258b85; stroke-width: 24; }
 .bora-work .monitor { fill: #22252b; stroke: #258b85; stroke-width: 18; }
 .bora-work .monitor-stand { stroke: #258b85; stroke-width: 16; }
@@ -129,8 +131,8 @@ main { padding: 18px; }
 .bora-work .cup-handle { fill: none; stroke: #258b85; stroke-width: 14; }
 .bora-work .power-strip { fill: #fff; stroke: #258b85; stroke-width: 16; }
 .bora-work text { fill: #184f4c; font-size: 145px; font-weight: 800; }
-.bora-work:hover .surface { stroke-width: 42; }
-.bora-work.is-selected .surface { stroke: var(--selection); stroke-width: 50; filter: drop-shadow(0 0 34px rgba(245,183,0,.68)); }
+.bora-work:hover .roomscale-zone { stroke-width: 38; }
+.bora-work.is-selected .roomscale-zone { stroke: var(--selection); stroke-width: 50; filter: drop-shadow(0 0 34px rgba(245,183,0,.68)); }
 .electrical-layer { color: #e2482d; transition: opacity .16s ease; }
 .electrical-layer.is-hidden { opacity: 0; pointer-events: none; }
 .electrical-layer .wiring { fill: none; stroke: #f05c45; stroke-width: 18; stroke-dasharray: 90 55; opacity: .65; }

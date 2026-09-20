@@ -14,6 +14,7 @@
 - The exhibition banner is separated from Hong Sunok's shelf allocation and centered on the 1725mm blank wall segment after the right shelf.
 - The 5800mm right shelf is split evenly: Ji Eunsil 2900mm and Hong Sunok 2900mm.
 - Half Chairs is moved farther inside from the entrance and receives a clearly marked 800 × 900mm floor zone.
+- The Lost Room has a matching 2000 × 2000mm minimum VR Roomscale floor zone in both 2D and 3D.
 - The entrance/mirror wall seam is closed and the mirror remains unobstructed.
 
 ## Interaction and browser checks

@@ -6,7 +6,7 @@ const works = [
   { id: "sunok", index: "01", zone: "하단 1/2", color: "#b5477b", title: "홍선옥 · Code to Coil", detail: "우측 선반 · 하단 절반", size: "가로 2900 × 세로 450mm", shelfY: 4475, shelfHeight: 2900 },
   { id: "eunsil", index: "02", zone: "상단 1/2", color: "#6b8f71", title: "지은실 · Hybrid Nature", detail: "우측 선반 · 상단 절반", size: "가로 2900 × 세로 450mm", shelfY: 1575, shelfHeight: 2900 },
   { id: "candle", index: "03", color: "#f26a21", title: "권정현 · Candle", detail: "목재장 B · 3점 + 태블릿 · 전원", prep: "개별 준비 · 멀티탭", size: "가로 900 × 세로 600mm" },
-  { id: "bora", index: "04", color: "#258b85", title: "윤보라 · 잃어버린 방", detail: "LG 17MT70 · Quest 3 · 충전 독 · 티백 · 찻잔", prep: "개별 준비 · 멀티탭 · PD 충전기 · 충전 독 어댑터 · 전원·영상 케이블", size: "가로 1100 × 세로 600mm" },
+  { id: "bora", index: "04", color: "#258b85", title: "윤보라 · 잃어버린 방", detail: "LG 17MT70 · Quest 3 · 충전 독 · 티백 · 찻잔", prep: "개별 준비 · 멀티탭 · PD 충전기 · 충전 독 어댑터 · 전원·영상 케이블", size: "테이블 1100 × 600 · Roomscale 최소 2000 × 2000mm" },
   { id: "blue-by-jjok", index: "05", color: "#386a8c", title: "권정륜 · 신하진 · Blue by jjok", detail: "고정 파티션 전면 · 바닥 자립 2점", prep: "패널 H2500 · 구조체 H1000/H720", size: "패널 W700 · 바닥 모듈 420–520mm" },
   { id: "halfchairs", index: "06", color: "#6d50d4", title: "이지우 · Half Chairs", detail: "중앙 우측 · 관람 동선 사이 바닥 설치", size: "가로 330 × 세로 425 × 높이 885mm" },
 ];
@@ -14,11 +14,11 @@ const works = [
 const shelfWorks = ["eunsil", "sunok"].map((id) => works.find((work) => work.id === id));
 
 const selectionBounds = {
-  "blue-by-jjok": { x: 1300, y: 3280, width: 650, height: 1690 },
+  "blue-by-jjok": { x: 1300, y: 2980, width: 650, height: 1690 },
   eunsil: { x: 6840, y: 1575, width: 370, height: 2900 },
   sunok: { x: 6840, y: 4475, width: 370, height: 2900 },
   candle: { x: 4875, y: 975, width: 900, height: 600 },
-  bora: { x: 2310, y: 995, width: 1100, height: 560 },
+  bora: { x: 2100, y: 975, width: 2000, height: 2725 },
   halfchairs: { x: 4500, y: 4250, width: 800, height: 900 },
 };
 
@@ -128,15 +128,15 @@ function Plan({ circulation, electrical, selected, onSelect }) {
         <g className={`blue-work${selected === "blue-by-jjok" ? " is-selected" : ""}`} data-id="blue-by-jjok" tabIndex="0" role="button" aria-label="권정륜 신하진 Blue by jjok, 고정 파티션 전면 바닥 자립형 2점" onClick={() => onSelect("blue-by-jjok")} onKeyDown={(event) => (event.key === "Enter" || event.key === " ") && onSelect("blue-by-jjok")}>
           <text className="work-label" x="2160" y="1950">05 · 권정륜 · 신하진</text>
           <text className="work-detail" x="2160" y="2100">고정 파티션 전면 · 바닥 자립 2점</text>
-          <rect className="installation-envelope" x="1300" y="3280" width="650" height="1690" rx="32" />
-          <rect className="panel" x="1315" y="3350" width="70" height="700" />
-          <rect className="panel" x="1315" y="4550" width="70" height="700" />
-          <rect className="module module-a" x="1390" y="3440" width="420" height="520" />
-          <rect className="module module-b" x="1390" y="4640" width="520" height="520" />
-          <line x1="1390" y1="3440" x2="1810" y2="3960" />
-          <line x1="1810" y1="3440" x2="1390" y2="3960" />
-          <line x1="1390" y1="4640" x2="1910" y2="5160" />
-          <line x1="1910" y1="4640" x2="1390" y2="5160" />
+          <rect className="installation-envelope" x="1300" y="2980" width="650" height="1690" rx="32" />
+          <rect className="panel" x="1315" y="3050" width="70" height="700" />
+          <rect className="panel" x="1315" y="4250" width="70" height="700" />
+          <rect className="module module-a" x="1390" y="3140" width="420" height="520" />
+          <rect className="module module-b" x="1390" y="4340" width="520" height="520" />
+          <line x1="1390" y1="3140" x2="1810" y2="3660" />
+          <line x1="1810" y1="3140" x2="1390" y2="3660" />
+          <line x1="1390" y1="4340" x2="1910" y2="4860" />
+          <line x1="1910" y1="4340" x2="1390" y2="4860" />
         </g>
 
         <g className="cabinet-sharing" aria-label="목재장 B 공유 가능 구간">
@@ -155,6 +155,8 @@ function Plan({ circulation, electrical, selected, onSelect }) {
         </g>
 
         <g className={`bora-work${selected === "bora" ? " is-selected" : ""}`} data-id="bora" tabIndex="0" role="button" aria-label="윤보라 잃어버린 방 기존 목재장 A 설치" onClick={() => onSelect("bora")} onKeyDown={(event) => (event.key === "Enter" || event.key === " ") && onSelect("bora")}>
+          <rect className="roomscale-zone" x="2100" y="1700" width="2000" height="2000" rx="50" />
+          <text className="roomscale-label" x="3100" y="3500" textAnchor="middle">VR ROOM­SCALE 최소 2000 × 2000</text>
           <rect className="surface" x="2310" y="995" width="1100" height="560" />
           <rect className="monitor" x="2350" y="1035" width="379" height="165" rx="12" />
           <line className="monitor-stand" x1="2539" y1="1200" x2="2585" y2="1280" />
@@ -360,7 +362,9 @@ function ThreeView({ selected, onSelect }) {
     }
 
     const boraMat = material("mat-bora", works.find((work) => work.id === "bora").color, 0.9);
-    registerExhibitMesh("bora", box("bora", 1.1, 0.06, 0.56, 2.86, 0.88, 1.275, boraMat, true), true);
+    const boraRoomscaleMat = material("bora-roomscale-zone-material", "#73d8d1", 0.32);
+    registerExhibitMesh("bora", box("bora-roomscale-zone", 2.0, 0.025, 2.0, 3.1, 0.0125, 2.70, boraRoomscaleMat, true), true);
+    registerExhibitMesh("bora", box("bora", 1.1, 0.06, 0.56, 2.86, 0.88, 1.275, boraMat, true));
     registerExhibitMesh("bora", box("bora-monitor", 0.379, 0.264, 0.02, 2.54, 1.02, 1.08, material("monitor", "#22252b")));
     registerExhibitMesh("bora", box("bora-dock", 0.50, 0.04, 0.23, 2.92, 0.92, 1.405, whiteMat));
     const hmd = BABYLON.MeshBuilder.CreateTorus("bora-hmd", { diameter: 0.2, thickness: 0.06 }, scene);
@@ -407,9 +411,9 @@ function ThreeView({ selected, onSelect }) {
     const blueWork = works.find((work) => work.id === "blue-by-jjok");
     const bluePanelMat = material("blue-panel-material", "#ececee");
     const blueAnchorMat = material("blue-installation-envelope", blueWork.color, 0.08);
-    registerExhibitMesh("blue-by-jjok", box("blue-installation-anchor", 0.72, 0.025, 1.78, 1.66, 0.0125, 4.25, blueAnchorMat, true), true);
-    registerExhibitMesh("blue-by-jjok", box("blue-panel-a", 0.06, 2.50, 0.70, 1.33, 1.25, 3.65, bluePanelMat, true));
-    registerExhibitMesh("blue-by-jjok", box("blue-panel-b", 0.06, 2.50, 0.70, 1.33, 1.25, 4.85, bluePanelMat, true));
+    registerExhibitMesh("blue-by-jjok", box("blue-installation-anchor", 0.72, 0.025, 1.78, 1.66, 0.0125, 3.95, blueAnchorMat, true), true);
+    registerExhibitMesh("blue-by-jjok", box("blue-panel-a", 0.06, 2.50, 0.70, 1.33, 1.25, 3.35, bluePanelMat, true));
+    registerExhibitMesh("blue-by-jjok", box("blue-panel-b", 0.06, 2.50, 0.70, 1.33, 1.25, 4.55, bluePanelMat, true));
     const blueFrameMats = [
       material("blue-frame-blue", "#0755c9"),
       material("blue-frame-purple", "#7130bd"),
@@ -441,8 +445,8 @@ function ThreeView({ selected, onSelect }) {
         blueBeam(`${prefix}-rail-x-right-${level}`, frameDepth, beam, beam, x, y, zRight);
       });
     };
-    createBlueFrame("blue-frame-tall", 3.65, 0.52, 0.42, 1.00);
-    createBlueFrame("blue-frame-low", 4.85, 0.52, 0.52, 0.72);
+    createBlueFrame("blue-frame-tall", 3.35, 0.52, 0.42, 1.00);
+    createBlueFrame("blue-frame-low", 4.55, 0.52, 0.52, 0.72);
 
     shelfWorks.forEach((work) => {
       const mesh = box(work.id, 0.37, 0.07, work.shelfHeight / 1000, 7.005, 0.905, (work.shelfY + work.shelfHeight / 2) / 1000, material("mat-" + work.id, work.color, 0.9), true);

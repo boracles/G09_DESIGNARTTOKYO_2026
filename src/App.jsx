@@ -18,7 +18,7 @@ const selectionBounds = {
   eunsil: { x: 6840, y: 1575, width: 370, height: 2900 },
   sunok: { x: 6840, y: 4475, width: 370, height: 2900 },
   candle: { x: 4875, y: 975, width: 900, height: 600 },
-  bora: { x: 2110, y: 975, width: 1500, height: 2175 },
+  bora: { x: 2110, y: 975, width: 1500, height: 1675 },
   halfchairs: { x: 4500, y: 4250, width: 800, height: 900 },
 };
 
@@ -156,8 +156,8 @@ function Plan({ circulation, electrical, selected, onSelect }) {
         </g>
 
         <g className={`bora-work${selected === "bora" ? " is-selected" : ""}`} data-id="bora" tabIndex="0" role="button" aria-label="윤보라 잃어버린 방 기존 목재장 A 설치" onClick={() => onSelect("bora")} onKeyDown={(event) => (event.key === "Enter" || event.key === " ") && onSelect("bora")}>
-          <rect className="roomscale-zone" x="2110" y="2150" width="1500" height="1000" rx="50" />
-          <text className="roomscale-label" x="2860" y="2970" textAnchor="middle">VR 동작 구역 1500 × 1000</text>
+          <rect className="roomscale-zone" x="2110" y="1650" width="1500" height="1000" rx="50" />
+          <text className="roomscale-label" x="2860" y="2470" textAnchor="middle">VR 동작 구역 1500 × 1000</text>
           <rect className="surface" x="2310" y="995" width="1100" height="560" />
           <rect className="monitor" x="2350" y="1035" width="379" height="165" rx="12" />
           <line className="monitor-stand" x1="2539" y1="1200" x2="2585" y2="1280" />
@@ -364,7 +364,7 @@ function ThreeView({ selected, onSelect }) {
 
     const boraMat = material("mat-bora", works.find((work) => work.id === "bora").color, 0.9);
     const boraRoomscaleMat = material("bora-roomscale-zone-material", "#73d8d1", 0.32);
-    registerExhibitMesh("bora", box("bora-roomscale-zone", 1.5, 0.025, 1.0, 2.86, 0.0125, 2.65, boraRoomscaleMat, true), true);
+    registerExhibitMesh("bora", box("bora-roomscale-zone", 1.5, 0.025, 1.0, 2.86, 0.0125, 2.15, boraRoomscaleMat, true), true);
     registerExhibitMesh("bora", box("bora", 1.1, 0.06, 0.56, 2.86, 0.88, 1.275, boraMat, true));
     registerExhibitMesh("bora", box("bora-monitor", 0.379, 0.264, 0.02, 2.54, 1.02, 1.08, material("monitor", "#22252b")));
     registerExhibitMesh("bora", box("bora-dock", 0.50, 0.04, 0.23, 2.92, 0.92, 1.405, whiteMat));
